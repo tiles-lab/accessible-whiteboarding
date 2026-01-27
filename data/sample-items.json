@@ -1,0 +1,683 @@
+[
+  {
+    "type": "frame",
+    "title": "Cluster Green Tag",
+    "childrenIds": [
+      "3458764656885202174",
+      "3458764656885299011"
+    ],
+    "style": {
+      "fillColor": "#ffffff"
+    },
+    "id": "3458764656885445754",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-25T19:56:33.953Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:47.921Z",
+    "modifiedBy": "3458764656879181187",
+    "x": 144.05698501562784,
+    "y": 1878.0872224864497,
+    "height": 479.1213059989828,
+    "width": 774.6831506087449,
+    "showContent": true
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "Hello, World!",
+    "style": {
+      "fillColor": "green",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202858"
+    ],
+    "id": "3458764656885202174",
+    "parentId": "3458764656885445754",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:51:59.613Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:38.396Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433442",
+      "3458764656937433511"
+    ],
+    "x": 557.6785331189458,
+    "y": 239.56065299949137,
+    "width": 309.5621425123298,
+    "height": 354.67421353171454
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>My other idea</p>",
+    "style": {
+      "fillColor": "orange",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202858"
+    ],
+    "id": "3458764656885299011",
+    "parentId": "3458764656885445754",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:53:13.570Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:38.396Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433473"
+    ],
+    "x": 217.004617489799,
+    "y": 239.56065299949137,
+    "width": 309.5621425123298,
+    "height": 354.67421353171454
+  },
+  {
+    "type": "frame",
+    "title": "Cluster Red Tag",
+    "childrenIds": [
+      "3458764656885202175"
+    ],
+    "style": {
+      "fillColor": "#ffffff"
+    },
+    "id": "3458764656885445753",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-25T19:56:33.953Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:51.040Z",
+    "modifiedBy": "3458764656879181187",
+    "x": -561.4024704081992,
+    "y": 1878.0872224864497,
+    "height": 479.1213059989828,
+    "width": 449.56512153800657,
+    "showContent": true
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>My idea</p>",
+    "style": {
+      "fillColor": "cyan",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202668"
+    ],
+    "id": "3458764656885202175",
+    "parentId": "3458764656885445753",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:51:59.613Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:38.396Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433473",
+      "3458764656937433511"
+    ],
+    "x": 217.0046174897991,
+    "y": 239.56065299949137,
+    "width": 309.5621425123298,
+    "height": 354.67421353171454
+  },
+  {
+    "type": "frame",
+    "title": "Frame 2",
+    "childrenIds": [
+      "3458764656885379465",
+      "3458764656885379446",
+      "3458764656885379232",
+      "3458764656885131600",
+      "3458764656885299405",
+      "3458764656885299318",
+      "3458764656885202338",
+      "3458764656885202173",
+      "3458764656937433421"
+    ],
+    "style": {
+      "fillColor": "#ffffff"
+    },
+    "id": "3458764656885202172",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-25T19:51:59.613Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.709Z",
+    "modifiedBy": "3458764656879181187",
+    "x": 444.9361215844806,
+    "y": 1511.6127455919332,
+    "height": 2139.9793055582845,
+    "width": 3276.6082670066726,
+    "showContent": true
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>This is an interesting topic!</p>",
+    "style": {
+      "fillColor": "light_yellow",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202668",
+      "3458764656885202762"
+    ],
+    "id": "3458764656885379465",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:55:08.465Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.706Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433442"
+    ],
+    "x": 686.5762943466613,
+    "y": 748.4085324717478,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>Still thinking...</p>",
+    "style": {
+      "fillColor": "light_yellow",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202668",
+      "3458764656885202762"
+    ],
+    "id": "3458764656885379446",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:55:05.020Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.706Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433421"
+    ],
+    "x": 567.964170714417,
+    "y": 479.1332051878326,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>Yet again I&#39;m thinking of some topic....</p>",
+    "style": {
+      "fillColor": "light_yellow",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202668",
+      "3458764656885202762"
+    ],
+    "id": "3458764656885379232",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:54:45.987Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.706Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 518.284967068167,
+    "y": 655.4743785538924,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "id": "3458764656885131600",
+    "parentId": "3458764656885202172",
+    "type": "stamp",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:51:08.168Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.706Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [
+      "3458764656937433421"
+    ],
+    "x": 1802.9502060556724,
+    "y": 531.333673332768,
+    "width": 251.34597530811843,
+    "height": 251.34597530811843
+  },
+  {
+    "type": "text",
+    "content": "<p>This is a rather long text that takes some space</p>",
+    "style": {
+      "fillColor": "transparent",
+      "fillOpacity": 1,
+      "fontFamily": "noto_sans",
+      "fontSize": 48,
+      "textAlign": "left",
+      "color": "#1a1a1a"
+    },
+    "id": "3458764656885299405",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:53:42.190Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:57:34.115Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 1308.682955201903,
+    "y": 1861.991725791652,
+    "width": 1059.428571428571,
+    "height": 68.57142857142857,
+    "rotation": 0
+  },
+  {
+    "type": "text",
+    "content": "<p>This is your text</p>",
+    "style": {
+      "fillColor": "transparent",
+      "fillOpacity": 1,
+      "fontFamily": "noto_sans",
+      "fontSize": 100.80918350847352,
+      "textAlign": "left",
+      "color": "#1a1a1a"
+    },
+    "id": "3458764656885299318",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:53:34.641Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:57:31.329Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 2458.0369062892237,
+    "y": 958.4623255172805,
+    "width": 748.8682203486605,
+    "height": 144.01311929781934,
+    "rotation": 0
+  },
+  {
+    "type": "text",
+    "content": "<p>This is my text</p>",
+    "style": {
+      "fillColor": "transparent",
+      "fillOpacity": 1,
+      "fontFamily": "noto_sans",
+      "fontSize": 48,
+      "textAlign": "left",
+      "color": "#1a1a1a"
+    },
+    "id": "3458764656885202338",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:52:17.172Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:56:57.706Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 909.9163299633027,
+    "y": 114.71997858055215,
+    "width": 322.2857142857142,
+    "height": 68.57142857142857,
+    "rotation": 0
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>I&#39;m thinking of this topic....</p>",
+    "style": {
+      "fillColor": "light_yellow",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [
+      "3458764656885202668",
+      "3458764656885202762"
+    ],
+    "id": "3458764656885202173",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:51:59.613Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:57:17.709Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 348.96751581507704,
+    "y": 614.1995579635804,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "frame",
+    "title": "Frame 1",
+    "childrenIds": [
+      "3458764656885131473",
+      "3458764656885131454",
+      "3458764656883757207",
+      "3458764656883607225",
+      "3458764656883757201"
+    ],
+    "style": {
+      "fillColor": "#ffffff"
+    },
+    "id": "3458764656885131277",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-25T19:50:43.756Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:50:51.372Z",
+    "modifiedBy": "3458764656879181187",
+    "x": 138.8727272478315,
+    "y": -101.58985111971094,
+    "height": 623.7961288869013,
+    "width": 1174.2407049935562,
+    "showContent": true
+  },
+  {
+    "id": "3458764656885131473",
+    "parentId": "3458764656885131277",
+    "type": "stamp",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:51:00.532Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:51:00.532Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 853.9731979148876,
+    "y": 559.6586142596586,
+    "width": 251.34597530811843,
+    "height": 251.34597530811843
+  },
+  {
+    "id": "3458764656885131454",
+    "parentId": "3458764656885131277",
+    "type": "stamp",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:50:58.981Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:50:58.982Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 960.036080003787,
+    "y": 336.2156188415284,
+    "width": 251.34597530811843,
+    "height": 251.34597530811843
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>My idea</p>",
+    "style": {
+      "fillColor": "cyan",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [],
+    "id": "3458764656883757207",
+    "parentId": "3458764656885131277",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:25:51.477Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:51:24.695Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 484.7826782488991,
+    "y": 133.66400325246332,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "Hello, World!",
+    "style": {
+      "fillColor": "green",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [],
+    "id": "3458764656883607225",
+    "parentId": "3458764656885131277",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:23:00.998Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:51:27.265Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 114.9196619008755,
+    "y": 217.51464937449896,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "sticky_note",
+    "shape": "square",
+    "content": "<p>Hey world!</p>",
+    "style": {
+      "fillColor": "light_yellow",
+      "textAlign": "center",
+      "textAlignVertical": "middle"
+    },
+    "tagIds": [],
+    "id": "3458764656883757201",
+    "parentId": "3458764656885131277",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-25T19:25:51.045Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-25T19:55:53.203Z",
+    "modifiedBy": "3458764656879181187",
+    "connectorIds": [],
+    "x": 369.8422679960234,
+    "y": 455.5344753293392,
+    "width": 199,
+    "height": 228
+  },
+  {
+    "type": "connector",
+    "shape": "curved",
+    "start": {
+      "item": "3458764656885379446",
+      "position": {
+        "x": 1,
+        "y": 0.5
+      },
+      "snapTo": "right"
+    },
+    "end": {
+      "item": "3458764656885131600",
+      "position": {
+        "x": 0,
+        "y": 0.5
+      },
+      "snapTo": "left"
+    },
+    "style": {
+      "startStrokeCap": "none",
+      "endStrokeCap": "rounded_stealth",
+      "strokeStyle": "normal",
+      "strokeWidth": 2,
+      "strokeColor": "#333333",
+      "color": "#1a1a1a",
+      "textOrientation": "horizontal"
+    },
+    "captions": [],
+    "id": "3458764656937433421",
+    "parentId": "3458764656885202172",
+    "origin": "center",
+    "relativeTo": "parent_top_left",
+    "createdAt": "2026-01-26T10:41:50.979Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-26T10:41:50.987Z",
+    "modifiedBy": "3458764656879181187",
+    "width": 1009.8130476871961,
+    "height": 52.20046814493537
+  },
+  {
+    "type": "connector",
+    "shape": "curved",
+    "start": {
+      "item": "3458764656885379465",
+      "position": {
+        "x": 1,
+        "y": 0.5
+      },
+      "snapTo": "right"
+    },
+    "end": {
+      "item": "3458764656885202174",
+      "position": {
+        "x": 0.5,
+        "y": 0
+      },
+      "snapTo": "top"
+    },
+    "style": {
+      "startStrokeCap": "none",
+      "endStrokeCap": "rounded_stealth",
+      "strokeStyle": "normal",
+      "strokeWidth": 2,
+      "strokeColor": "#333333",
+      "color": "#1a1a1a",
+      "textOrientation": "horizontal"
+    },
+    "captions": [],
+    "id": "3458764656937433442",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-26T10:41:55.121Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-26T10:41:55.140Z",
+    "modifiedBy": "3458764656879181187",
+    "width": 721.6856604023956,
+    "height": 510.7184904360538
+  },
+  {
+    "type": "connector",
+    "shape": "curved",
+    "start": {
+      "item": "3458764656885202175",
+      "position": {
+        "x": 1,
+        "y": 0.5
+      },
+      "snapTo": "right"
+    },
+    "end": {
+      "item": "3458764656885299011",
+      "position": {
+        "x": 0,
+        "y": 0.5
+      },
+      "snapTo": "left"
+    },
+    "style": {
+      "startStrokeCap": "none",
+      "endStrokeCap": "rounded_stealth",
+      "strokeStyle": "normal",
+      "strokeWidth": 2,
+      "strokeColor": "#333333",
+      "color": "#1a1a1a",
+      "textOrientation": "horizontal"
+    },
+    "captions": [],
+    "id": "3458764656937433473",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-26T10:41:59.433Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-26T10:41:59.447Z",
+    "modifiedBy": "3458764656879181187",
+    "width": 233.33829837612805,
+    "height": 0
+  },
+  {
+    "type": "connector",
+    "shape": "curved",
+    "start": {
+      "item": "3458764656885202175",
+      "position": {
+        "x": 1,
+        "y": 0.5
+      },
+      "snapTo": "right"
+    },
+    "end": {
+      "item": "3458764656885202174",
+      "position": {
+        "x": 0.5,
+        "y": 1
+      },
+      "snapTo": "bottom"
+    },
+    "style": {
+      "startStrokeCap": "none",
+      "endStrokeCap": "rounded_stealth",
+      "strokeStyle": "normal",
+      "strokeWidth": 2,
+      "strokeColor": "#333333",
+      "color": "#1a1a1a",
+      "textOrientation": "horizontal"
+    },
+    "captions": [],
+    "id": "3458764656937433511",
+    "parentId": null,
+    "origin": "center",
+    "relativeTo": "canvas_center",
+    "createdAt": "2026-01-26T10:42:04.122Z",
+    "createdBy": "3458764656879181187",
+    "modifiedAt": "2026-01-26T10:42:04.136Z",
+    "modifiedBy": "3458764656879181187",
+    "width": 728.7932852614397,
+    "height": 285.2087097022263
+  },
+  {
+    "type": "tag",
+    "title": "Red Tag",
+    "color": "red",
+    "id": "3458764656885202668"
+  },
+  {
+    "type": "tag",
+    "title": "Blue Tag",
+    "color": "blue",
+    "id": "3458764656885202762"
+  },
+  {
+    "type": "tag",
+    "title": "Green Tag",
+    "color": "dark_green",
+    "id": "3458764656885202858"
+  }
+]

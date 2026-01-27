@@ -1,0 +1,9 @@
+.a11ywb-app-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.a11ywb-app-title {
+  flex-shrink: 0;
+}
