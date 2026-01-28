@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Tag, type Item } from '@mirohq/websdk-types';
+import { Tag,   type Item } from '@mirohq/websdk-types';
 import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { buildHierarchy } from '@utils/hierarchy-builder';
+import { TopLevelItem } from '@models/item';
 
 async function listBoardItems(): Promise<Item[]> {
   return miro.board.get();
@@ -61,7 +62,12 @@ const App: React.FC = () => {
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
-    const children = hierarchyItems.map(item =>
+
+    const topLevelItems = hierarchyItems.filter(item => {
+      return !(item as TopLevelItem).parentId;
+    });
+
+    const children = topLevelItems.map(item =>
       buildHierarchy(item, { tagRecord, itemRecord })
     );
 

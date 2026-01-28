@@ -1,4 +1,15 @@
-import type { BaseItem, Tag } from '@mirohq/websdk-types';
+import type {
+  AppCard,
+  BaseItem,
+  Card,
+  Embed,
+  Shape,
+  StickyNote,
+  Tag,
+  Image,
+  Text,
+  Preview,
+} from '@mirohq/websdk-types';
 
 // Miro does not provide a type for Item types so we're defining it
 export type ItemType =
@@ -36,3 +47,13 @@ export interface HierarchyItem<T> {
   tags?: Tag[];
   children?: HierarchyItem<T>[];
 }
+
+export type TopLevelItem =
+  | StickyNote
+  | Card
+  | AppCard
+  | Image
+  | Text
+  | Shape
+  | Embed
+  | Preview;
