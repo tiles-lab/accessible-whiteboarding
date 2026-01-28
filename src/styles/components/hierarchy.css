@@ -1,0 +1,34 @@
+.a11ywb-board-item,
+.a11ywb-board {
+  ol > li + li {
+    margin-top: 4px;
+  }
+}
+
+.a11ywb-board {
+  position: relative;
+  overflow-y: auto;
+
+  > .a11ywb-accordion-header {
+    position: sticky;
+    background-color: white;
+  }
+}
+
+
+
+.a11ywb-board,
+.a11ywb-board-item--frame-type {
+  &:open > summary {
+    border-bottom: 1px solid black;
+  }
+}
+
+.a11ywb-board-item--sticky-note-type,
+.a11ywb-board-item--text-type,
+.a11ywb-board-item--unsupported-type  {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 8px;
+}
+

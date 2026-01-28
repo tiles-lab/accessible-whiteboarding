@@ -1,53 +1,19 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import {
-  Tag,
-  type Frame,
-  type Item,
-  type StickyNote,
-  type Text,
-} from '@mirohq/websdk-types';
-import TitledSection from '@components/titled-section';
+import { Tag, type Item } from '@mirohq/websdk-types';
 import SampleItems from '@data/sample-items.json';
+import { HierarchyBoard } from '@components/hierarchy';
+import { buildHierarchy } from '@utils/hierarchy-builder';
 
 async function listBoardItems(): Promise<Item[]> {
-  return SampleItems as Item[];
+  return miro.board.get();
+  // return SampleItems as Item[];
 }
 
-function getLabel(item: Item): string {
-  switch (item.type) {
-    case 'sticky_note':
-      return (item as StickyNote).content;
-    case 'frame':
-      return (item as Frame).title;
-    case 'text':
-      return (item as Text).content;
-    default:
-      return `Unsupported ${item.type}`;
-  }
-}
-
-interface HierarchyItem {
-  id: Item['id'];
-  type: Item['type'];
-  item: Item;
-  tags?: Tag[];
-  label: string;
-}
-
-type TagRecord = Record<Tag['id'], Tag>;
-
-function getTags(item: Item, tagRecord: TagRecord): Tag[] {
-  if (!Object.hasOwn(item, 'tagIds')) {
-    return [];
-  }
-
-  return (item as StickyNote).tagIds
-    .map(tagId => tagRecord[tagId])
-    .filter(tag => !!tag);
-}
+const navigableItemTypes = ['sticky_note', 'frame', 'text'];
 
 const App: React.FC = () => {
+
   const [items, setItems] = React.useState<Item[]>([]);
 
   React.useEffect(() => {
@@ -57,6 +23,16 @@ const App: React.FC = () => {
       console.log(`Found ${boardItems.length}`);
     });
   }, []);
+
+  React.useEffect(() => {
+    miro.board.ui.on('items:create', async event => {
+      setItems([...items, ...event.items]);
+    });
+  }, [items]);
+
+  const hierarchyItems = React.useMemo(() => {
+    return items.filter(item => navigableItemTypes.includes(item.type));
+  }, [items]);
 
   const tagRecord = React.useMemo(() => {
     return items
@@ -73,63 +49,44 @@ const App: React.FC = () => {
       );
   }, [items]);
 
-  const hierarchyItems: HierarchyItem[] = React.useMemo(() => {
-    return items
-      .filter(item => item.type !== 'tag')
-      .map(item => {
-        return {
-          id: item.id,
-          type: item.type,
-          item,
-          label: getLabel(item),
-          tags: getTags(item, tagRecord),
-        };
-      });
-  }, [tagRecord]);
+  const itemRecord = React.useMemo(() => {
+    return items.reduce(
+      (acc, item) => {
+        acc[item.id] = item;
+
+        return acc;
+      },
+      {} as Record<Item['id'], Item>
+    );
+  }, [items]);
+
+  const hierarchyBoard = React.useMemo(() => {
+    const children = hierarchyItems.map(item =>
+      buildHierarchy(item, { tagRecord, itemRecord })
+    );
+
+    const hierarchyRoot = {
+      id: 'board',
+      label: 'Board',
+      type: 'board',
+      children,
+    };
+
+    return hierarchyRoot;
+  }, [tagRecord, itemRecord]);
+
 
   return (
-    <div className="app-container">
-      <TitledSection
-        title={`List of Board Items (count: ${items.length})`}
-        headingLevel="h1"
-      >
-        <table>
-          <thead>
-            <tr>
-              <th style={{ width: '20px' }}></th>
-              <th>Label</th>
-              <th>Item Type</th>
-              <th>Tags</th>
-            </tr>
-          </thead>
-          <tbody>
-            {hierarchyItems.map((hierarchyItem, index) => (
-              <tr key={hierarchyItem.id}>
-                <td>{index + 1}</td>
-                <td>{hierarchyItem.label}</td>
-                <td>{hierarchyItem.type}</td>
-                <td>
-                  {(hierarchyItem.tags ?? []).map(tag => (
-                    <span
-                      className="a11ywb-tag"
-                      data-tag-id={tag.id}
-                      style={{ backgroundColor: tag.color }}
-                    >
-                      {tag.title}
-                    </span>
-                  ))}
-                </td>
-              </tr>
-            ))}
+    <div className="a11ywb-app-container">
+      <h1 className="a11ywb-app-title">
+        List of Navigable Items (count: {hierarchyItems.length})
+      </h1>
 
-            {items.length === 0 && (
-              <tr>
-                <td colSpan={100}>No items found.</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </TitledSection>
+      <HierarchyBoard
+        type={hierarchyBoard.type}
+        label={hierarchyBoard.label}
+        children={hierarchyBoard.children}
+      />
     </div>
   );
 };

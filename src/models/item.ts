@@ -1,0 +1,38 @@
+import type { BaseItem, Tag } from '@mirohq/websdk-types';
+
+// Miro does not provide a type for Item types so we're defining it
+export type ItemType =
+  | 'frame'
+  | 'sticky_note'
+  | 'text'
+  | 'stamp'
+  | 'connector'
+  | 'tag'
+  | 'embed'
+  | 'shape'
+  | 'group';
+
+export interface ItemTypeConfig {
+  displayLabel: string;
+}
+
+export const ItemTypeConfigMap: Record<ItemType, ItemTypeConfig> = {
+  frame: { displayLabel: 'Frame' },
+  sticky_note: { displayLabel: 'Sticky Note' },
+  text: { displayLabel: 'Text' },
+  stamp: { displayLabel: 'Stamp' },
+  connector: { displayLabel: 'Connector' },
+  tag: { displayLabel: 'Tag' },
+  embed: { displayLabel: 'Embed' },
+  group: { displayLabel: 'Group' },
+  shape: { displayLabel: 'Shape' },
+};
+
+export interface HierarchyItem<T> {
+  id: BaseItem['id'];
+  type: BaseItem['type'];
+  data?: T;
+  label: string;
+  tags?: Tag[];
+  children?: HierarchyItem<T>[];
+}

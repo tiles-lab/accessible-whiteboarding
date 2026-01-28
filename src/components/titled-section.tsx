@@ -21,13 +21,17 @@ const TitledSection: React.FC<TitledSectionProps> = ({
   children,
 }) => {
   const HeadingTag = HeadingTagMap[headingLevel] as keyof JSX.IntrinsicElements;
-
+  const headingId = title.replaceAll(' ', '_');
   return (
-    <section className="a11ywb-titled-section">
-      <HeadingTag className="a11ywb-titled-section__title">{title}</HeadingTag>
+    <details className="a11ywb-titled-section">
+      <summary>
+        <HeadingTag id={headingId} className="a11ywb-titled-section__title">
+          {title}
+        </HeadingTag>
+      </summary>
 
-      <div className="a11ywb-titled-section__contents">{children}</div>
-    </section>
+      {children}
+    </details>
   );
 };
 
