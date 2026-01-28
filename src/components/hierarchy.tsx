@@ -18,12 +18,16 @@ export interface FrameTypeBoardItemProps {
   item: HierarchyItem<Frame>;
 }
 
+export interface ClusterTypeBoardItemProps {
+  item: HierarchyItem<Frame>;
+}
+
 const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ item }) => {
   return (
     <div className="a11ywb-board-item a11ywb-board-item--text-type">
-      <p>
+      <h4>
         (type: {item.type}) {item.label}
-      </p>
+      </h4>
     </div>
   );
 };
@@ -33,9 +37,9 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 }) => {
   return (
     <div className="a11ywb-board-item a11ywb-board-item--sticky-note-type">
-      <p>
+      <h3>
         (type: {item.type}) {item.label}
-      </p>
+      </h3>
 
       <Tags tags={item.tags} />
     </div>
@@ -47,6 +51,7 @@ export interface HierarchyBoardProps {
   label: string;
   children?: HierarchyItem<Item>[];
 }
+
 
 export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   type,
@@ -78,13 +83,43 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   );
 };
 
+const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
+  item,
+}) => {
+  const listItems = item.children ?? [];
+
+  return (
+    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--cluster-type">
+      <summary className="a11ywb-accordion-header">
+        <h2>(type: cluster) {item.label}</h2>
+      </summary>
+
+      <div className="a11ywb-accordion__contents">
+        {listItems.length > 0 && (
+          <ol>
+            {listItems.length > 0 &&
+              listItems.map(listItem => (
+                <li key={listItem.id}>
+                  <Hierarchy item={listItem} />
+                </li>
+              ))}
+          </ol>
+        )}
+        {listItems.length === 0 && <p>This frame has no items.</p>}
+      </div>
+    </details>
+  );
+};
+
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ item }) => {
   const listItems = item.children ?? [];
 
   return (
     <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--frame-type">
       <summary className="a11ywb-accordion-header">
-        (type: {item.type}) {item.label}
+        <h2>
+          (type: {item.type}) {item.label}
+        </h2>
       </summary>
 
       <div className="a11ywb-accordion__contents">
@@ -108,7 +143,11 @@ const Hierarchy: React.FC<HierarchyProps> = ({ item }) => {
   const { type } = item;
 
   if (type === 'frame') {
-    return <FrameTypeBoardItem item={item as HierarchyItem<Frame>} />;
+    if (item.label.startsWith('Cluster')) {
+      return <ClusterTypeBoardItem item={item as HierarchyItem<Frame>} />;
+    } else {
+      return <FrameTypeBoardItem item={item as HierarchyItem<Frame>} />;
+    }
   }
 
   if (type === 'text') {
@@ -121,9 +160,9 @@ const Hierarchy: React.FC<HierarchyProps> = ({ item }) => {
 
   return (
     <div className="a11ywb-board-item--unsupported-type">
-      <p>
+      <h5>
         (type: {item.type}) {item.label}
-      </p>
+      </h5>
     </div>
   );
 };

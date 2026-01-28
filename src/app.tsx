@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Tag,   type Item } from '@mirohq/websdk-types';
+import { Tag, type Item } from '@mirohq/websdk-types';
 import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { buildHierarchy } from '@utils/hierarchy-builder';
