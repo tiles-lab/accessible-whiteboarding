@@ -17,7 +17,7 @@ const Tags: React.FC<TagsProps> = ({ tags } = { tags: [] }) => {
               key={tag.id}
               className="a11ywb-tag"
               data-tag-id={tag.id}
-              style={{ backgroundColor: tag.color }}
+              data-color={tag.color}
             >
               {tag.title}
             </li>
