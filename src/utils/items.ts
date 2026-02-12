@@ -1,17 +1,19 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 
 export function getLabel(item: Item): string {
+  let label: string | undefined = undefined;
+
   if (item.type === 'sticky_note') {
-    return (item as StickyNote).content;
+    label = (item as StickyNote).content || 'Empty';
   }
 
   if (item.type === 'frame') {
-    return (item as Frame).title;
+    label = (item as Frame).title || 'No title';
   }
 
   if (item.type === 'text') {
-    return (item as Text).content;
+    label = (item as Text).content || 'Empty';
   }
 
-  return `Unsupported ${item.type}`;
+  return label || 'No label';
 }
