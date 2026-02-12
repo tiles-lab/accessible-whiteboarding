@@ -18,17 +18,16 @@
 
 
 .a11ywb-board,
-.a11ywb-board-item--frame-type {
+.a11ywb-board-item--type-frame {
   &:open > summary {
     border-bottom: 1px solid black;
   }
 }
 
-.a11ywb-board-item--sticky-note-type,
-.a11ywb-board-item--text-type,
-.a11ywb-board-item--unsupported-type  {
+.a11ywb-board-item--type-sticky_note,
+.a11ywb-board-item--type-text,
+.a11ywb-board-item--type-unsupported  {
   border: 1px solid black;
   border-radius: 4px;
   padding: 8px;
 }
-

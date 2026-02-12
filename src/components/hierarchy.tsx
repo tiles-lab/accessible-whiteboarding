@@ -6,6 +6,11 @@ export interface HierarchyProps {
   item: HierarchyItem<Item>;
 }
 
+export interface BoardItemProps<T> {
+  item: HierarchyItem<T>;
+  children?: React.ReactNode;
+}
+
 export interface TextTypeBoardItemProps {
   item: HierarchyItem<Text>;
 }
@@ -21,30 +26,6 @@ export interface FrameTypeBoardItemProps {
 export interface ClusterTypeBoardItemProps {
   item: HierarchyItem<Frame>;
 }
-
-const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ item }) => {
-  return (
-    <div className="a11ywb-board-item a11ywb-board-item--text-type">
-      <h4>
-        (type: {item.type}) {item.label}
-      </h4>
-    </div>
-  );
-};
-
-const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
-  item,
-}) => {
-  return (
-    <div className="a11ywb-board-item a11ywb-board-item--sticky-note-type">
-      <h3>
-        (type: {item.type}) {item.label}
-      </h3>
-
-      <Tags tags={item.tags} />
-    </div>
-  );
-};
 
 export interface HierarchyBoardProps {
   type: string;
@@ -63,7 +44,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   return (
     <details className="a11ywb-board a11ywb-accordion" open={true}>
       <summary className="a11ywb-accordion-header">
-        (type: {type}) {label}
+        {type}: {label}
       </summary>
 
       <div className="a11ywb-accordion__contents">
@@ -83,15 +64,53 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   );
 };
 
+const BoardItem: React.FC<BoardItemProps<Item>> = ({ item, children }) => {
+  return (
+    <div className={`a11ywb-board-item a11ywb-board-item--type-${item.type}`}>
+      <p>
+        {item.type}: {item.label ?? 'empty'}
+      </p>
+
+      {children}
+    </div>
+  );
+}
+
+const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ item }) => {
+  return (
+    <BoardItem item={item} />
+  );
+};
+
+const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ item }) => {
+  return (
+    <BoardItem item={item} />
+  );
+};
+
+const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
+  item,
+}) => {
+  const color = item.data?.style.fillColor;
+
+  return (
+    <BoardItem item={item}>
+      <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
+
+      <Tags tags={item.tags} />
+    </BoardItem>
+  );
+};
+
 const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
   item,
 }) => {
   const listItems = item.children ?? [];
 
   return (
-    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--cluster-type">
+    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-cluster">
       <summary className="a11ywb-accordion-header">
-        <h2>(type: cluster) {item.label}</h2>
+        <h2>cluster: {item.label}</h2>
       </summary>
 
       <div className="a11ywb-accordion__contents">
@@ -115,10 +134,10 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ item }) => {
   const listItems = item.children ?? [];
 
   return (
-    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--frame-type">
+    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-frame">
       <summary className="a11ywb-accordion-header">
         <h2>
-          (type: {item.type}) {item.label}
+          {item.type}: {item.label}
         </h2>
       </summary>
 
@@ -159,11 +178,7 @@ const Hierarchy: React.FC<HierarchyProps> = ({ item }) => {
   }
 
   return (
-    <div className="a11ywb-board-item--unsupported-type">
-      <h5>
-        (type: {item.type}) {item.label}
-      </h5>
-    </div>
+    <UnsupportedTypeBoardItem item={item} />
   );
 };
 
