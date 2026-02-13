@@ -9,6 +9,8 @@ import type {
   Image,
   Text,
   Preview,
+  Item,
+  Connector,
 } from '@mirohq/websdk-types';
 
 // Miro does not provide a type for Item types so we're defining it
@@ -39,13 +41,21 @@ export const ItemTypeConfigMap: Record<ItemType, ItemTypeConfig> = {
   shape: { displayLabel: 'Shape' },
 };
 
-export interface HierarchyItem<T> {
+export interface Connection {
+  id: Connector["id"];
+  connector: Connector;
+  startItem?: Item;
+  endItem?: Item;
+}
+
+export interface HierarchyItem<T extends Item = Item> {
   id: BaseItem['id'];
   type: BaseItem['type'];
-  data?: T;
+  item?: T;
   label: string;
   tags?: Tag[];
-  children?: HierarchyItem<T>[];
+  children?: HierarchyItem[];
+  connections?: Connection[]
 }
 
 export type TopLevelItem =

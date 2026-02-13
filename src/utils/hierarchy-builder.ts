@@ -1,25 +1,15 @@
-import type { Item, Frame, StickyNote, Tag } from '@mirohq/websdk-types';
-import { getLabel } from '@utils/items';
+import type { Item, Frame } from '@mirohq/websdk-types';
+import { ConnectionRecord, getLabel } from '@utils/items';
 import type { HierarchyItem } from '@models/item';
-
-export type TagRecord = Record<Tag['id'], Tag>;
-export type ItemRecord = Record<Item['id'], Item>;
-
-function getTags(item: Item, tagRecord: TagRecord): Tag[] | undefined {
-  if (item.type === 'sticky_note') {
-    return (item as StickyNote).tagIds
-      .map(tagId => tagRecord[tagId])
-      .filter(tag => !!tag);
-  }
-
-  return [];
-}
+import { ItemRecord, TagRecord } from '@models/record';
+import { getTags } from './tags';
 
 export function buildHierarchy(
   item: Item,
   builderOptions: {
     tagRecord: TagRecord;
     itemRecord: ItemRecord;
+    connectionRecord: ConnectionRecord;
   }
 ): HierarchyItem<Item> {
   const { tagRecord, itemRecord } = builderOptions;
@@ -27,7 +17,7 @@ export function buildHierarchy(
   const hierarchyItem: HierarchyItem<Item> = {
     id: item.id,
     type: item.type,
-    data: item,
+    item,
     label: getLabel(item),
     tags: getTags(item, tagRecord),
   };
@@ -36,6 +26,7 @@ export function buildHierarchy(
     const children: HierarchyItem<Item>[] = (item as Frame).childrenIds.map(
       childId => {
         const childItem = itemRecord[childId];
+
         return buildHierarchy(childItem, builderOptions);
       }
     );

@@ -1,0 +1,1569 @@
+[
+    {
+        "type": "frame",
+        "title": "Mini Concept Map",
+        "childrenIds": [
+            "3458764659477315029",
+            "3458764659476371125",
+            "3458764659476371629",
+            "3458764659477045858",
+            "3458764659476371180",
+            "3458764659477045820",
+            "3458764659475751432",
+            "3458764659476639392",
+            "3458764659477315189",
+            "3458764659476371771",
+            "3458764659477045798",
+            "3458764659476639557",
+            "3458764659477315220",
+            "3458764659475751248",
+            "3458764659477315076",
+            "3458764659477315131",
+            "3458764659477315244",
+            "3458764659476371848",
+            "3458764659475597502",
+            "3458764659477315297",
+            "3458764659476639024",
+            "3458764659477045740",
+            "3458764659477045717",
+            "3458764659475751705",
+            "3458764659475751074",
+            "3458764659476639159",
+            "3458764659477045141",
+            "3458764659477045124",
+            "3458764659477045334",
+            "3458764659477045269",
+            "3458764659476639375",
+            "3458764659476639324",
+            "3458764659476920375",
+            "3458764659477045470",
+            "3458764659477045518",
+            "3458764659477045442",
+            "3458764659476920474",
+            "3458764659477045491",
+            "3458764659476920295",
+            "3458764659476920793",
+            "3458764659477045678",
+            "3458764659476639913",
+            "3458764659477044936"
+        ],
+        "style": {
+            "fillColor": "#ffffff"
+        },
+        "id": "3458764659472239320",
+        "parentId": null,
+        "origin": "center",
+        "relativeTo": "canvas_center",
+        "createdAt": "2026-02-12T14:42:39.232Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:02:51.362Z",
+        "modifiedBy": "3458764656879181187",
+        "x": 5941.066098600727,
+        "y": -2459.7286092827926,
+        "height": 3328.6898197394116,
+        "width": 4965.717050318607,
+        "showContent": true
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Main Idea</p>",
+        "style": {
+            "fillColor": "light_yellow",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659475597502",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T14:57:03.456Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045717",
+            "3458764659477045740",
+            "3458764659477045798",
+            "3458764659477315076"
+        ],
+        "x": 2481.1978036370233,
+        "y": 1208.592851473296,
+        "width": 368.15000000000003,
+        "height": 421.8
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Holidays</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659475751074",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T14:57:15.112Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045124",
+            "3458764659477045141",
+            "3458764659477045269",
+            "3458764659477045334",
+            "3458764659477045717"
+        ],
+        "x": 3296.458202918697,
+        "y": 1760.2318306020748,
+        "width": 368.15000000000003,
+        "height": 421.8
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>School</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659475751248",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T14:57:26.530Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315076",
+            "3458764659477315131",
+            "3458764659477315297"
+        ],
+        "x": 1657.317578948057,
+        "y": 1788.4429259333938,
+        "width": 368.15000000000003,
+        "height": 421.8
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Career</p>",
+        "style": {
+            "fillColor": "dark_green",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659475751432",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T14:57:36.381Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045798",
+            "3458764659477045820",
+            "3458764659477045858",
+            "3458764659477315029"
+        ],
+        "x": 1739.9357867040621,
+        "y": 688.1947566389845,
+        "width": 368.15000000000003,
+        "height": 421.8
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Hobbies</p>",
+        "style": {
+            "fillColor": "green",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659475751705",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T14:57:49.636Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045740"
+        ],
+        "x": 3256.217104732404,
+        "y": 786.7928514732957,
+        "width": 368.15000000000003,
+        "height": 421.8
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Evaluation</p>",
+        "style": {
+            "fillColor": "dark_green",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476371125",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:00:06.699Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045820"
+        ],
+        "x": 1199.692769424351,
+        "y": 688.1947566389845,
+        "width": 286.4522767465503,
+        "height": 328.1965783829823
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Team Building</p>",
+        "style": {
+            "fillColor": "dark_green",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476371180",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:00:13.037Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045858"
+        ],
+        "x": 1292.733475179722,
+        "y": 1176.3612548824121,
+        "width": 311.8860726176682,
+        "height": 357.3368068182329
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Frequency per year</p>",
+        "style": {
+            "fillColor": "dark_green",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476371629",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:00:40.327Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315029"
+        ],
+        "x": 780.423957928811,
+        "y": 1127.0622074652565,
+        "width": 225.82896352982607,
+        "height": 258.73871198392135
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Scholarship</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476371771",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:00:53.111Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315131",
+            "3458764659477315189",
+            "3458764659477315220",
+            "3458764659477315244"
+        ],
+        "x": 1099.6572924832121,
+        "y": 1767.6656946440025,
+        "width": 249.77676937117252,
+        "height": 286.1763990785293
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Dorm applications</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476371848",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:00:59.887Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315244"
+        ],
+        "x": 1181.3550157366622,
+        "y": 2142.431125472659,
+        "width": 249.77676937117252,
+        "height": 286.1763990785293
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Buy textbooks</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639024",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:12.312Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315297"
+        ],
+        "x": 1598.1309636336432,
+        "y": 2310.9315634572176,
+        "width": 249.77676937117252,
+        "height": 286.1763990785293
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Destination ideas??</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639159",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:21.761Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045141"
+        ],
+        "x": 3237.2715876042835,
+        "y": 2278.054726394129,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Budget</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639324",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:31.824Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045269",
+            "3458764659477045442",
+            "3458764659477045470",
+            "3458764659477045491"
+        ],
+        "x": 3757.6007635374813,
+        "y": 2114.2200301413395,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>How many days?</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639375",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:37.486Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045124"
+        ],
+        "x": 3862.135777297272,
+        "y": 1535.1433639179522,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Application</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639392",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:40.530Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315189"
+        ],
+        "x": 780.423957928811,
+        "y": 1627.856512610199,
+        "width": 249.77676937117252,
+        "height": 286.1763990785293
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Send email requests for recommendations</p>",
+        "style": {
+            "fillColor": "dark_blue",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639557",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:01:49.758Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477315220"
+        ],
+        "x": 780.423957928811,
+        "y": 1914.0329116887283,
+        "width": 249.77676937117252,
+        "height": 286.1763990785293
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Food</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476639913",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:21.629Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045491"
+        ],
+        "x": 4079.2208351116265,
+        "y": 2439.2942316108865,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Hotels</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476920295",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:29.118Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045442"
+        ],
+        "x": 4111.912546668445,
+        "y": 2053.842093722533,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Flight</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476920375",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:33.943Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045470",
+            "3458764659477045518",
+            "3458764659477045678"
+        ],
+        "x": 3685.739553647451,
+        "y": 2480.506303205818,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Gifts</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476920474",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:38.038Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045334"
+        ],
+        "x": 4185.293092389797,
+        "y": 1767.6656946440025,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Low cost</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659476920793",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:52.331Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045518"
+        ],
+        "x": 3487.0483569754565,
+        "y": 3088.448615197187,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "sticky_note",
+        "shape": "square",
+        "content": "<p>Frequent Flyer Miles</p>",
+        "style": {
+            "fillColor": "pink",
+            "textAlign": "center",
+            "textAlignVertical": "middle"
+        },
+        "tagIds": [],
+        "id": "3458764659477044936",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:02:59.129Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "connectorIds": [
+            "3458764659477045678"
+        ],
+        "x": 4054.926689613629,
+        "y": 2824.470630689417,
+        "width": 249.7767693711734,
+        "height": 286.1763990785303
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751074",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659476639375",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045124",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:16.316Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 256.71418969298793,
+        "height": 225.08846668412252
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751074",
+            "position": {
+                "x": 0.5,
+                "y": 1
+            },
+            "snapTo": "bottom"
+        },
+        "end": {
+            "item": "3458764659476639159",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045141",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:19.182Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 59.18661531441376,
+        "height": 163.83469625278872
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751074",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659476639324",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045269",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:22.000Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 152.17917593319726,
+        "height": 353.988199539265
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751074",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659476920474",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045334",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:25.217Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 579.8715047855121,
+        "height": 7.433864041927791
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476639324",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659476920295",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045442",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:31.903Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 104.53501375978976,
+        "height": 60.37793641880694
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476639324",
+            "position": {
+                "x": 0.5,
+                "y": 1
+            },
+            "snapTo": "bottom"
+        },
+        "end": {
+            "item": "3458764659476920375",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045470",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:33.885Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 71.8612098900303,
+        "height": 80.10987398594762
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476639324",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659476639913",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045491",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:36.804Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 196.73168688855822,
+        "height": 181.98600193028142
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476920375",
+            "position": {
+                "x": 0.5,
+                "y": 1
+            },
+            "snapTo": "bottom"
+        },
+        "end": {
+            "item": "3458764659476920793",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045518",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:40.205Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 198.69119667199448,
+        "height": 321.76591291283876
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476920375",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659477044936",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045678",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:49.468Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 119.41036659500423,
+        "height": 343.96432748359894
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475597502",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659475751074",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045717",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:53.166Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 447.1103992816743,
+        "height": 551.6389791287788
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475597502",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "end": {
+            "item": "3458764659475751705",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045740",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:55.382Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 406.86930109538116,
+        "height": 421.8000000000002
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475597502",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659475751432",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045798",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:03:58.066Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 373.1120169329615,
+        "height": 520.3980948343115
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751432",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476371125",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045820",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:00.332Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 212.9418789064366,
+        "height": 0
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751432",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476371180",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477045858",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:03.917Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 263.12731152434026,
+        "height": 309.49809483431136
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751432",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476371629",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315029",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:06.353Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 775.4368287752513,
+        "height": 310.39065817337814
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475597502",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659475751248",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315076",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:08.985Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 455.7302246889667,
+        "height": 579.8500744600979
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751248",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476371771",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315131",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:10.735Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 248.69690177925895,
+        "height": 20.77723128939124
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476371771",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476639392",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315189",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:12.749Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 69.45656518322903,
+        "height": 139.8091820338036
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476371771",
+            "position": {
+                "x": 0,
+                "y": 0.5
+            },
+            "snapTo": "left"
+        },
+        "end": {
+            "item": "3458764659476639557",
+            "position": {
+                "x": 1,
+                "y": 0.5
+            },
+            "snapTo": "right"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315220",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:15.771Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 69.45656518322903,
+        "height": 146.36721704472575
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659476371771",
+            "snapTo": "auto"
+        },
+        "end": {
+            "item": "3458764659476371848",
+            "snapTo": "auto"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315244",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:18.333Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 81.69772325345002,
+        "height": 88.5890317501271
+    },
+    {
+        "type": "connector",
+        "shape": "curved",
+        "start": {
+            "item": "3458764659475751248",
+            "position": {
+                "x": 0.5,
+                "y": 1
+            },
+            "snapTo": "bottom"
+        },
+        "end": {
+            "item": "3458764659476639024",
+            "position": {
+                "x": 0.5,
+                "y": 0
+            },
+            "snapTo": "top"
+        },
+        "style": {
+            "startStrokeCap": "none",
+            "endStrokeCap": "rounded_stealth",
+            "strokeStyle": "normal",
+            "strokeWidth": 2,
+            "strokeColor": "#333333",
+            "color": "#1a1a1a",
+            "textOrientation": "horizontal"
+        },
+        "captions": [],
+        "id": "3458764659477315297",
+        "parentId": "3458764659472239320",
+        "origin": "center",
+        "relativeTo": "parent_top_left",
+        "createdAt": "2026-02-12T15:04:22.410Z",
+        "createdBy": "3458764656879181187",
+        "modifiedAt": "2026-02-12T15:04:34.124Z",
+        "modifiedBy": "3458764656879181187",
+        "width": 59.18661531441376,
+        "height": 168.50043798455886
+    },
+    {
+        "type": "tag",
+        "title": "Green",
+        "color": "light_green",
+        "id": "3458764658378199112"
+    },
+    {
+        "type": "tag",
+        "title": "Red",
+        "color": "red",
+        "id": "3458764658378199130"
+    },
+    {
+        "type": "tag",
+        "title": "Blue",
+        "color": "cyan",
+        "id": "3458764658378199141"
+    },
+    {
+        "type": "tag",
+        "title": "Yellow",
+        "color": "yellow",
+        "id": "3458764658378199191"
+    },
+    {
+        "type": "tag",
+        "title": "Pink",
+        "color": "magenta",
+        "id": "3458764658378199202"
+    },
+    {
+        "type": "tag",
+        "title": "Apple",
+        "color": "green",
+        "id": "3458764658378199264"
+    },
+    {
+        "type": "tag",
+        "title": "Cloud",
+        "color": "blue",
+        "id": "3458764658378199298"
+    },
+    {
+        "type": "tag",
+        "title": "Gray",
+        "color": "gray",
+        "id": "3458764658378199304"
+    },
+    {
+        "type": "tag",
+        "title": "Purple",
+        "color": "violet",
+        "id": "3458764658378199436"
+    },
+    {
+        "type": "tag",
+        "title": "DarkGreen",
+        "color": "dark_green",
+        "id": "3458764658378199486"
+    },
+    {
+        "type": "tag",
+        "title": "Navy",
+        "color": "dark_blue",
+        "id": "3458764658378199516"
+    },
+    {
+        "type": "tag",
+        "title": "DarkGray",
+        "color": "dark_gray",
+        "id": "3458764658378199562"
+    },
+    {
+        "type": "tag",
+        "title": "Black",
+        "color": "black",
+        "id": "3458764658378199608"
+    }
+]

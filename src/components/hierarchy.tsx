@@ -3,34 +3,34 @@ import { HierarchyItem } from '@models/item';
 import Tags from './tags';
 
 export interface HierarchyProps {
-  item: HierarchyItem<Item>;
+  hierarchyItem: HierarchyItem<Item>;
 }
 
-export interface BoardItemProps<T> {
-  item: HierarchyItem<T>;
+export interface BoardItemProps<T extends Item = Item> {
+  hierarchyItem: HierarchyItem<T>;
   children?: React.ReactNode;
 }
 
 export interface TextTypeBoardItemProps {
-  item: HierarchyItem<Text>;
+  hierarchyItem: HierarchyItem<Text>;
 }
 
 export interface StickyNoteTypeBoardItemProps {
-  item: HierarchyItem<StickyNote>;
+  hierarchyItem: HierarchyItem<StickyNote>;
 }
 
 export interface FrameTypeBoardItemProps {
-  item: HierarchyItem<Frame>;
+  hierarchyItem: HierarchyItem<Frame>;
 }
 
 export interface ClusterTypeBoardItemProps {
-  item: HierarchyItem<Frame>;
+  hierarchyItem: HierarchyItem<Frame>;
 }
 
 export interface HierarchyBoardProps {
   type: string;
   label: string;
-  children?: HierarchyItem<Item>[];
+  children?: HierarchyItem[];
 }
 
 
@@ -53,7 +53,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
-                  <Hierarchy item={listItem} />
+                  <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
           </ol>
@@ -64,11 +64,11 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   );
 };
 
-const BoardItem: React.FC<BoardItemProps<Item>> = ({ item, children }) => {
+const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
   return (
-    <div className={`a11ywb-board-item a11ywb-board-item--type-${item.type}`}>
+    <div className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
       <p>
-        {item.type}: {item.label ?? 'empty'}
+        {hierarchyItem.type}: {hierarchyItem.label ?? 'empty'}
       </p>
 
       {children}
@@ -76,41 +76,48 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ item, children }) => {
   );
 }
 
-const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ item }) => {
+const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem }) => {
   return (
-    <BoardItem item={item} />
+    <BoardItem hierarchyItem={hierarchyItem} />
   );
 };
 
-const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ item }) => {
+const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) => {
   return (
-    <BoardItem item={item} />
+    <BoardItem hierarchyItem={hierarchyItem} />
   );
 };
 
 const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
-  item,
+  hierarchyItem,
 }) => {
-  const color = item.data?.style.fillColor;
+  const color = hierarchyItem.item?.style.fillColor;
+
+  const hierarchyChildren = hierarchyItem.children ?? [];
 
   return (
-    <BoardItem item={item}>
+    <BoardItem hierarchyItem={hierarchyItem}>
       <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
 
-      <Tags tags={item.tags} />
+      <Tags tags={hierarchyItem.tags} />
+
+      <ul>
+        {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
+        {hierarchyChildren.length === 0 && (<li>No connected children</li>)}
+      </ul>
     </BoardItem>
   );
 };
 
 const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
-  item,
+  hierarchyItem,
 }) => {
-  const listItems = item.children ?? [];
+  const listItems = hierarchyItem.children ?? [];
 
   return (
     <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-cluster">
       <summary className="a11ywb-accordion-header">
-        <h2>cluster: {item.label}</h2>
+        <h2>cluster: {hierarchyItem.label}</h2>
       </summary>
 
       <div className="a11ywb-accordion__contents">
@@ -119,7 +126,7 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
-                  <Hierarchy item={listItem} />
+                  <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
           </ol>
@@ -130,14 +137,14 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
   );
 };
 
-const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ item }) => {
-  const listItems = item.children ?? [];
+const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
+  const listItems = hierarchyItem.children ?? [];
 
   return (
     <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-frame">
       <summary className="a11ywb-accordion-header">
         <h2>
-          {item.type}: {item.label}
+          {hierarchyItem.type}: {hierarchyItem.label}
         </h2>
       </summary>
 
@@ -147,7 +154,7 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ item }) => {
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
-                  <Hierarchy item={listItem} />
+                  <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
           </ol>
@@ -158,27 +165,27 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ item }) => {
   );
 };
 
-const Hierarchy: React.FC<HierarchyProps> = ({ item }) => {
-  const { type } = item;
+const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
+  const { type } = hierarchyItem;
 
   if (type === 'frame') {
-    if (item.label.startsWith('Cluster')) {
-      return <ClusterTypeBoardItem item={item as HierarchyItem<Frame>} />;
+    if (hierarchyItem.label.startsWith('Cluster')) {
+      return <ClusterTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<Frame>} />;
     } else {
-      return <FrameTypeBoardItem item={item as HierarchyItem<Frame>} />;
+      return <FrameTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<Frame>} />;
     }
   }
 
   if (type === 'text') {
-    return <TextTypeBoardItem item={item as HierarchyItem<Text>} />;
+    return <TextTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<Text>} />;
   }
 
   if (type === 'sticky_note') {
-    return <StickyNoteTypeBoardItem item={item as HierarchyItem<StickyNote>} />;
+    return <StickyNoteTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<StickyNote>} />;
   }
 
   return (
-    <UnsupportedTypeBoardItem item={item} />
+    <UnsupportedTypeBoardItem hierarchyItem={hierarchyItem} />
   );
 };
 

@@ -1,17 +1,23 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Tag, type Item } from '@mirohq/websdk-types';
-import SampleItems from '@data/sample-items.json';
+import { type Item } from '@mirohq/websdk-types';
+import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import { HierarchyBoard } from '@components/hierarchy';
-import { buildHierarchy } from '@utils/hierarchy-builder';
-import { TopLevelItem } from '@models/item';
+import { buildConnectorHierarchy } from '@utils/record-builder';
 
 async function listBoardItems(): Promise<Item[]> {
-  return miro.board.get();
-  // return SampleItems as Item[];
+  let items: Item[];
+
+  try {
+    items = await window.miro.board.get();
+  } catch (err) {
+    items = SampleItemsConceptMap as Item[];
+  }
+
+  return items;
 }
 
-const navigableItemTypes = ['sticky_note', 'frame', 'text'];
+const navigableItemTypes = ['sticky_note', 'frame', 'text', 'connector'];
 
 const App: React.FC = () => {
 
@@ -26,50 +32,21 @@ const App: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    if (!window.miro) {
+      return;
+    }
+
     miro.board.ui.on('items:create', async event => {
       setItems([...items, ...event.items]);
     });
   }, [items]);
 
-  const hierarchyItems = React.useMemo(() => {
+  const navigableItems: Item[] = React.useMemo(() => {
     return items.filter(item => navigableItemTypes.includes(item.type));
   }, [items]);
 
-  const tagRecord = React.useMemo(() => {
-    return items
-      .filter(item => item.type === 'tag')
-      .reduce(
-        (acc, item) => {
-          if (item.type === 'tag') {
-            acc[item.id] = item as Tag;
-          }
-
-          return acc;
-        },
-        {} as Record<Tag['id'], Tag>
-      );
-  }, [items]);
-
-  const itemRecord = React.useMemo(() => {
-    return items.reduce(
-      (acc, item) => {
-        acc[item.id] = item;
-
-        return acc;
-      },
-      {} as Record<Item['id'], Item>
-    );
-  }, [items]);
-
   const hierarchyBoard = React.useMemo(() => {
-
-    const topLevelItems = hierarchyItems.filter(item => {
-      return !(item as TopLevelItem).parentId;
-    });
-
-    const children = topLevelItems.map(item =>
-      buildHierarchy(item, { tagRecord, itemRecord })
-    );
+    const children = buildConnectorHierarchy(navigableItems);
 
     const hierarchyRoot = {
       id: 'board',
@@ -79,13 +56,12 @@ const App: React.FC = () => {
     };
 
     return hierarchyRoot;
-  }, [tagRecord, itemRecord]);
-
+  }, [navigableItems]);
 
   return (
     <div className="a11ywb-app-container">
       <h1 className="a11ywb-app-title">
-        List of Navigable Items (count: {hierarchyItems.length})
+        List of Navigable Items (count: {navigableItems.length})
       </h1>
 
       <HierarchyBoard
