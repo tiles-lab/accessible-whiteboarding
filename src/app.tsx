@@ -46,7 +46,7 @@ const App: React.FC = () => {
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
-    const children = buildConnectorHierarchy(navigableItems);
+    const children = buildConnectorHierarchy(items);
 
     const hierarchyRoot = {
       id: 'board',
