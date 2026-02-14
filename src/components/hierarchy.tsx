@@ -66,12 +66,12 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
-          <ol>
+          <ul>
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <HierarchyListItem key={listItem.id} item={listItem} />
               ))}
-          </ol>
+          </ul>
         )}
         {listItems.length === 0 && <p>This board has no items.</p>}
       </div>
@@ -122,12 +122,12 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
-          <ol>
+          <ul>
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <HierarchyListItem key={listItem.id} item={listItem} />
               ))}
-          </ol>
+          </ul>
         )}
         {listItems.length === 0 && <p>There are no child items.</p>}
       </div>
