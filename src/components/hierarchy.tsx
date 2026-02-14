@@ -49,14 +49,14 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
-          <ol>
+          <ul>
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
                   <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
-          </ol>
+          </ul>
         )}
         {listItems.length === 0 && <p>This board has no items.</p>}
       </div>
@@ -123,14 +123,14 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
-          <ol>
+          <ul>
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
                   <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
-          </ol>
+          </ul>
         )}
         {listItems.length === 0 && <p>This frame has no items.</p>}
       </div>
@@ -151,14 +151,14 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
-          <ol>
+          <ul>
             {listItems.length > 0 &&
               listItems.map(listItem => (
                 <li key={listItem.id}>
                   <Hierarchy hierarchyItem={listItem} />
                 </li>
               ))}
-          </ol>
+          </ul>
         )}
         {listItems.length === 0 && <p>This frame has no items.</p>}
       </div>
