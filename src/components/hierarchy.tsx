@@ -84,10 +84,11 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
 
   return (
     <div className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
-      <p>
-        {itemTypeLabel}: {hierarchyItem.label ?? 'empty'}
-      </p>
-
+      <p>{itemTypeLabel}:</p>
+        {hierarchyItem?.label?.startsWith('<p>')
+          ? <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
+          : <p>{hierarchyItem.label ?? 'empty'}</p>
+        }
       {children}
     </div>
   );
