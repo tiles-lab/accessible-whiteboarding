@@ -101,10 +101,11 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 
       <Tags tags={hierarchyItem.tags} />
 
+     {hierarchyChildren?.length ?
       <ul>
         {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
-        {hierarchyChildren.length === 0 && (<li>No connected children</li>)}
       </ul>
+     : null}
     </BoardItem>
   );
 };
