@@ -60,7 +60,7 @@ const App: React.FC = () => {
   }, [navigableItems]);
 
   return (
-    <div className="a11ywb-app-container">
+    <main className="a11ywb-app-container">
       <h1 className="a11ywb-app-title">
         List of Navigable Items (count: {navigableItems.length})
       </h1>
@@ -70,7 +70,7 @@ const App: React.FC = () => {
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
       />
-    </div>
+    </main>
   );
 };
 

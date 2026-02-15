@@ -65,15 +65,27 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 };
 
 const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
+  const getHeading = () => {
+    if (hierarchyItem?.item) {
+      if ('parentId' in hierarchyItem.item) {
+        if (hierarchyItem.item?.parentId && Boolean(hierarchyItem.item?.parentId)) {
+          return <h3>{hierarchyItem.type}</h3>
+        }
+      }
+    }
+
+    return <h2>{hierarchyItem.type}</h2>
+  }
+
   return (
-    <div className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
-      <p>{hierarchyItem.type}:</p>
+    <article className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
+      {getHeading()}
         {hierarchyItem?.label?.startsWith('<p>')
           ? <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
           : <p>{hierarchyItem.label ?? 'Empty'}</p>
         }
       {children}
-    </div>
+    </article>
   );
 }
 
