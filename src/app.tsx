@@ -34,6 +34,21 @@ const App: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    window.addEventListener('storage', () => {
+      const updatedItem = window.sessionStorage.getItem('updated_miro_item')
+      if (updatedItem) {
+        try {
+          const parsedItem: Item = JSON.parse(updatedItem)
+
+          if (parsedItem) {
+            setItems([...items.filter(item => item.id !== parsedItem.id), parsedItem])
+          }
+        } catch (e) {
+          console.error('Error parsing updated item: ', e)
+        }
+      }
+    })
+
     miro.board.ui.on('items:create', async event => {
       setItems([...items, ...event.items]);
     });

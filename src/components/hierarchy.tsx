@@ -4,6 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
+import { editData } from '@utils/edit-data';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -157,6 +158,19 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
+      <button type="button" onClick={() => editData({
+        item: hierarchyItem.item,
+        title: "Edit Text",
+        fields: [
+          {
+            fieldName: 'content',
+            currentValue: hierarchyItem.label,
+            fieldType: 'text',
+            required: true
+          }
+        ]
+      })}>Edit Text</button>
+
       {hierarchyChildren?.length ?
       <ul>
         {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
@@ -176,6 +190,25 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
     <TreeBoardItem hierarchyItem={hierarchyItem}>
         <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>color: {colorLabel}</span>
         <Tags tags={hierarchyItem.tags} />
+        
+        <button type="button" onClick={() => editData({
+          item: hierarchyItem.item,
+          title: "Edit Sticky Note",
+          fields: [
+            {
+              fieldName: 'content',
+              currentValue: hierarchyItem.label,
+              fieldType: 'text',
+              required: true
+            },
+            {
+              fieldName: 'style.fillColor',
+              currentValue: hierarchyItem.item.style.fillColor,
+              fieldType: 'color',
+              required: false
+            }
+          ]
+        })}>Edit Sticky Note</button>
     </TreeBoardItem>
   );
 };
@@ -187,7 +220,20 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
 };
 
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
-  return <TreeBoardItem hierarchyItem={hierarchyItem} />
+  return <TreeBoardItem hierarchyItem={hierarchyItem}>
+    <button type="button" onClick={() => editData({
+      item: hierarchyItem.item,
+      title: "Edit Frame",
+      fields: [
+        {
+          fieldName: 'title',
+          currentValue: hierarchyItem.label,
+          fieldType: 'text',
+          required: true
+        }
+      ]
+    })}>Edit Frame</button>
+  </TreeBoardItem>
 };
 
 const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
