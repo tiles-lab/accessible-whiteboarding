@@ -2,6 +2,7 @@ import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { HierarchyItem, ItemNames, ItemType } from '@models/item';
 import Tags from './tags';
 import { editData } from '@utils/edit-data';
+import { deleteData } from '@utils/delete-data';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -113,6 +114,10 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
           }
         ]
       })}>Edit Text</button>
+      <button type="button" onClick={() => deleteData({
+        id: hierarchyItem.id,
+        title: 'Delete Text'
+      })}>Delete Text</button>
 
       {hierarchyChildren?.length ?
       <ul>
@@ -155,6 +160,10 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
           }
         ]
       })}>Edit Sticky Note</button>
+      <button type="button" onClick={() => deleteData({
+        id: hierarchyItem.id,
+        title: 'Delete Sticky Note'
+      })}>Delete Sticky Note</button>
 
      {hierarchyChildren?.length ?
       <ul>
@@ -216,6 +225,10 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
           }
         ]
       })}>Edit Frame</button>
+      <button type="button" onClick={() => deleteData({
+        id: hierarchyItem.id,
+        title: 'Delete Frame'
+      })}>Delete Frame</button>
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
