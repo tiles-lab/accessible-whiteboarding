@@ -52,6 +52,10 @@ const App: React.FC = () => {
     miro.board.ui.on('items:create', async event => {
       setItems([...items, ...event.items]);
     });
+
+    miro.board.ui.on('items:delete', async event => {
+      setItems(items.filter(item => item.id !== event.items?.[0]?.id))
+    })
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
