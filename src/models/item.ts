@@ -13,17 +13,20 @@ import type {
   Connector,
 } from '@mirohq/websdk-types';
 
+export enum ItemNames {
+  frame = 'frame',
+  stickyNote = 'sticky_note',
+  text = 'text',
+  stamp = 'stamp',
+  connector = 'connector',
+  tag = 'tag',
+  embed = 'embed',
+  shape = 'shape',
+  group = 'group'
+}
+
 // Miro does not provide a type for Item types so we're defining it
-export type ItemType =
-  | 'frame'
-  | 'sticky_note'
-  | 'text'
-  | 'stamp'
-  | 'connector'
-  | 'tag'
-  | 'embed'
-  | 'shape'
-  | 'group';
+export type ItemType = `${ItemNames}`;
 
 export interface ItemTypeConfig {
   displayLabel: string;

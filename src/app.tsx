@@ -4,6 +4,7 @@ import { type Item } from '@mirohq/websdk-types';
 import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { buildConnectorHierarchy } from '@utils/record-builder';
+import { ItemNames } from '@models/item';
 
 async function listBoardItems(): Promise<Item[]> {
   let items: Item[];
@@ -17,7 +18,7 @@ async function listBoardItems(): Promise<Item[]> {
   return items;
 }
 
-const navigableItemTypes = ['sticky_note', 'frame', 'text', 'connector'];
+const navigableItemTypes = [ItemNames.stickyNote, ItemNames.frame, ItemNames.text, ItemNames.connector];
 
 const App: React.FC = () => {
 
@@ -42,7 +43,7 @@ const App: React.FC = () => {
   }, [items]);
 
   const navigableItems: Item[] = React.useMemo(() => {
-    return items.filter(item => navigableItemTypes.includes(item.type));
+    return items.filter(item => navigableItemTypes.includes(item.type as ItemNames));
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
@@ -65,7 +66,7 @@ const App: React.FC = () => {
       </h1>
 
       <HierarchyBoard
-        type={hierarchyBoard.type}
+        type={hierarchyBoard.type as ItemNames}
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
       />

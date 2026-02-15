@@ -1,5 +1,5 @@
 import { Connector, Item, StickyNote, Tag } from "@mirohq/websdk-types";
-import { HierarchyItem } from "@models/item";
+import { HierarchyItem, ItemNames } from "@models/item";
 import { ItemRecord, HierarchyItemRecord, ConnectorRecord, TagRecord } from "@models/record";
 import { getLabel } from "./items";
 import { getTags } from "./tags";
@@ -68,8 +68,8 @@ function buildConnectorChild(
 
       if (endId && !visited.has(endId)) {
         const childItem = itemRecord[endId];
-        if (childItem?.type === 'sticky_note') {
-          children.push(buildConnectorChild(childItem as StickyNote, buildOptions));
+        if (childItem?.type === ItemNames.stickyNote) {
+          children.push(buildConnectorChild(childItem as StickyNote, buildOptions))
         }
       }
     });
