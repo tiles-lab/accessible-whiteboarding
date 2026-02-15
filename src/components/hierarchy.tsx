@@ -31,7 +31,7 @@ export interface ClusterTypeBoardItemProps {
 }
 
 export interface HierarchyBoardProps {
-  type: string;
+  type: ItemType;
   label: string;
   children?: HierarchyItem[];
 }
