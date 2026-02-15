@@ -1,8 +1,14 @@
-import { Connector, Item, StickyNote, Tag } from "@mirohq/websdk-types";
+import { Connector, Frame, Item, StickyNote, Tag, Text } from "@mirohq/websdk-types";
 import { HierarchyItem, ItemNames } from "@models/item";
 import { ItemRecord, HierarchyItemRecord, ConnectorRecord, TagRecord } from "@models/record";
 import { getLabel } from "./items";
 import { getTags } from "./tags";
+
+type BuildOptions = {
+  connectorRecord: ConnectorRecord,
+  itemRecord: ItemRecord,
+  tagRecord: TagRecord,
+}
 
 export function buildTagRecord(items: Item[]) {
     return items
@@ -48,19 +54,15 @@ export function buildConnectorRecord(items: Item[]): ConnectorRecord {
 }
 
 function buildConnectorChild(
-    item: StickyNote, 
-    buildOptions: {
-        connectorRecord: ConnectorRecord, 
-        itemRecord: ItemRecord,
-        tagRecord: TagRecord,
-    },
-    visited = new Set<StickyNote['id']>(), 
-): HierarchyItem<StickyNote> {
+    item: StickyNote | Text,
+    buildOptions: BuildOptions,
+    visited = new Set<StickyNote['id'] | Text['id']>(),
+): HierarchyItem<StickyNote | Text> {
     const { connectorRecord, itemRecord, tagRecord } = buildOptions;
 
     visited.add(item.id);
 
-    const children: HierarchyItem<StickyNote>[] = [];
+    const children: HierarchyItem<StickyNote | Text>[] = [];
 
     (item.connectorIds ?? []).forEach(connectorId => {
       const connector = connectorRecord[connectorId];
@@ -71,25 +73,73 @@ function buildConnectorChild(
         if (childItem?.type === ItemNames.stickyNote) {
           children.push(buildConnectorChild(childItem as StickyNote, buildOptions))
         }
+
+        if (childItem?.type === ItemNames.text) {
+          children.push(buildConnectorChild(childItem as Text, buildOptions))
+        }
       }
     });
 
+    const tags = item.type === ItemNames.stickyNote ? {
+      tags: getTags(item, tagRecord)
+    } : {}
+
     return {
       id: item.id,
-      type: 'sticky_note',
+      type: item.type,
       item,
       label: getLabel(item),
-      tags: getTags(item, tagRecord),
+      ...tags,
       children: children.length ? children : undefined,
     };
   }
 
+function buildTopLevelHierarchy (
+  items: Item[],
+  hierarchyItems: HierarchyItem<StickyNote | Text>[]
+): HierarchyItem[] {
+  const filteredItems = items.filter((item) => {
+    if (item.type === ItemNames.frame
+      || item.type === ItemNames.text
+      || item.type === ItemNames.stickyNote
+    ) {
+      if (item.type === ItemNames.frame) {
+        return true
+      }
+
+      if ('parentId' in item && hierarchyItems.find(hierarchyItem => hierarchyItem.id === item.id)) {
+        return !item.parentId
+      }
+    }
+
+    return false
+  })
+
+  return filteredItems.map((item) => {
+    if ('childrenIds' in item) {
+      return {
+        ...item,
+        label: getLabel(item),
+        children: hierarchyItems.filter(child => {
+          return item.childrenIds.includes(child.id)
+        })
+      }
+    } else {
+      return {
+        ...item,
+        label: getLabel(item)
+      }
+    }
+  })
+}
+
 export function buildConnectorHierarchy(
   items: Item[]
-): HierarchyItem<StickyNote>[] {
-  const stickyNotes = items.filter(
-    (item): item is StickyNote => item.type === 'sticky_note'
-  );
+): HierarchyItem<StickyNote | Frame | Text>[] {
+  // Sticky notes, text, items that can connect to other items
+  const connectingItemTypes = items.filter(
+    item => item.type === ItemNames.stickyNote || item.type === ItemNames.text
+  ) as (StickyNote | Text)[];
   const connectorRecord = buildConnectorRecord(items);
   const itemRecord = buildItemRecord(items);
   const tagRecord = buildTagRecord(items);
@@ -102,10 +152,22 @@ export function buildConnectorHierarchy(
     }
   });
 
-  // Roots = sticky notes with no incoming edges
-  const roots = stickyNotes.filter(note => !hasIncomingConnector.has(note.id));
+  // Roots = sticky notes or text with no incoming edges
+  const roots = connectingItemTypes.filter(connectingItem => !hasIncomingConnector.has(connectingItem.id));
 
   const hierarchyItems = roots.map(root => buildConnectorChild(root, { connectorRecord, itemRecord, tagRecord }));
 
-  return hierarchyItems;
+  const topLevelItems = buildTopLevelHierarchy(items, hierarchyItems);
+
+  return topLevelItems.map((item: Item | HierarchyItem) => {
+    if (item.type === ItemNames.stickyNote) {
+      return buildConnectorChild(item as StickyNote, { connectorRecord, itemRecord, tagRecord })
+    }
+
+    if (item.type === ItemNames.text) {
+      return buildConnectorChild(item as Text, { connectorRecord, itemRecord, tagRecord })
+    }
+
+    return item as HierarchyItem<Frame>
+  })
 }
