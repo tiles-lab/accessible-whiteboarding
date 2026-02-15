@@ -84,8 +84,16 @@ const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyIte
 };
 
 const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) => {
+  const hierarchyChildren = hierarchyItem.children ?? []
+
   return (
-    <BoardItem hierarchyItem={hierarchyItem} />
+    <BoardItem hierarchyItem={hierarchyItem}>
+      {hierarchyChildren?.length ?
+      <ul>
+        {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
+      </ul>
+     : null}
+    </BoardItem>
   );
 };
 
