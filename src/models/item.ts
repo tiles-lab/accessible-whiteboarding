@@ -54,7 +54,7 @@ export interface Connection {
 export interface HierarchyItem<T extends Item = Item> {
   id: BaseItem['id'];
   type: BaseItem['type'];
-  item?: T;
+  item: T;
   label: string;
   tags?: Tag[];
   children?: HierarchyItem[];

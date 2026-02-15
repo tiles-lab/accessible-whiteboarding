@@ -120,6 +120,7 @@ function buildTopLevelHierarchy (
       return {
         ...item,
         label: getLabel(item),
+        item: item,
         children: hierarchyItems.filter(child => {
           return item.childrenIds.includes(child.id)
         })
@@ -127,6 +128,7 @@ function buildTopLevelHierarchy (
     } else {
       return {
         ...item,
+        item: item,
         label: getLabel(item)
       }
     }

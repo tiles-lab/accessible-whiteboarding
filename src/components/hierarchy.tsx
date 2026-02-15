@@ -1,6 +1,7 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { HierarchyItem, ItemNames, ItemType } from '@models/item';
 import Tags from './tags';
+import { editData } from '@utils/edit-data';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -100,6 +101,19 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
+      <button type="button" onClick={() => editData({
+        item: hierarchyItem.item,
+        title: "Edit Text",
+        fields: [
+          {
+            fieldName: 'content',
+            currentValue: hierarchyItem.label,
+            fieldType: 'text',
+            required: true
+          }
+        ]
+      })}>Edit Text</button>
+
       {hierarchyChildren?.length ?
       <ul>
         {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
@@ -118,9 +132,29 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
+
       <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
 
       <Tags tags={hierarchyItem.tags} />
+
+      <button type="button" onClick={() => editData({
+        item: hierarchyItem.item,
+        title: "Edit Sticky Note",
+        fields: [
+          {
+            fieldName: 'content',
+            currentValue: hierarchyItem.label,
+            fieldType: 'text',
+            required: true
+          },
+          {
+            fieldName: 'style.fillColor',
+            currentValue: hierarchyItem.item.style.fillColor,
+            fieldType: 'color',
+            required: false
+          }
+        ]
+      })}>Edit Sticky Note</button>
 
      {hierarchyChildren?.length ?
       <ul>
@@ -169,6 +203,19 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
           {hierarchyItem.type}: {hierarchyItem.label}
         </h2>
       </summary>
+
+      <button type="button" onClick={() => editData({
+        item: hierarchyItem.item,
+        title: "Edit Frame",
+        fields: [
+          {
+            fieldName: 'title',
+            currentValue: hierarchyItem.label,
+            fieldType: 'text',
+            required: true
+          }
+        ]
+      })}>Edit Frame</button>
 
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
