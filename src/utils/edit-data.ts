@@ -2,7 +2,7 @@ import { Item } from "@mirohq/websdk-types"
 import { ItemsProps } from "@mirohq/websdk-types/core/builder/types"
 
 // Gives us access to nested properties, like style.fillColor
-type NestedKeyOf<T> = {
+export type NestedKeyOf<T> = {
   [K in keyof T & string]:
     NonNullable<T[K]> extends object
       ? K | `${K}.${NestedKeyOf<NonNullable<T[K]>>}`
@@ -11,10 +11,10 @@ type NestedKeyOf<T> = {
 
 type FormField<T extends Item> = {
     fieldName: NestedKeyOf<ItemsProps<T>>
-    currentValue?: string
-    fieldType: 'text' | 'color'
+    currentValue?: string | number | boolean
+    fieldType: 'text' | 'color' | 'color_map' | 'number'
     required?: boolean
-    inputProps?: any
+    inputProps?: Record<string, string | number | boolean>
 }
 
 type EditData<T extends Item> = {

@@ -5,6 +5,7 @@ import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { buildConnectorHierarchy } from '@utils/record-builder';
 import { ItemNames } from '@models/item';
+import { addData } from '@utils/add-data';
 
 async function listBoardItems(): Promise<Item[]> {
   let items: Item[];
@@ -89,6 +90,64 @@ const App: React.FC = () => {
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
       />
+
+      <h2>Add Item to Board</h2>
+      <button type="button" onClick={() => addData({
+        title: "Add Frame",
+        frameFields: [
+          {
+            fieldName: 'title',
+            fieldType: 'text',
+            required: true
+          },
+          {
+            fieldName: 'style.fillColor',
+            fieldType: 'color'
+          },
+          {
+            fieldName: 'width',
+            fieldType: 'number',
+            required: true,
+            inputProps: {
+              value: 700
+            }
+          },
+          {
+            fieldName: 'height',
+            fieldType: 'number',
+            required: true,
+            inputProps: {
+              value: 500
+            }
+          }
+        ]
+      })}>Add Frame</button>
+
+      <button type="button" onClick={() => addData({
+        title: "Add Sticky Note",
+        stickyNoteFields: [
+          {
+            fieldName: 'content',
+            fieldType: 'text',
+            required: true
+          },
+          {
+            fieldName: 'style.fillColor',
+            fieldType: 'color_map'
+          }
+        ]
+      })}>Add Sticky Note</button>
+
+      <button type="button" onClick={() => addData({
+        title: "Add Text",
+        textFields: [
+          {
+            fieldName: 'content',
+            fieldType: 'text',
+            required: true
+          }
+        ]
+      })}>Add Text</button>
     </main>
   );
 };

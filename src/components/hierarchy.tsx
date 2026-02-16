@@ -155,7 +155,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
           {
             fieldName: 'style.fillColor',
             currentValue: hierarchyItem.item.style.fillColor,
-            fieldType: 'color',
+            fieldType: 'color_map',
             required: false
           }
         ]

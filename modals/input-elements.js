@@ -7,9 +7,23 @@ const getReadableFieldName = (fieldName) => {
     return spacedValue
 }
 
+const getAdditionalInputProps = (inputProps) => {
+    let properties = ``
+
+    if (inputProps) {
+        for (const [key, value] of Object.entries(inputProps)) {
+            properties += `${key}="${value}"`
+        }
+    }
+
+    return properties
+}
+
 export const getInputElement = (field) => {
+    const required = field.required ? 'required="true"' : ''
+
     switch (field.fieldType) {
-        case 'color':
+        case 'color_map':
             return (
                 `<label class="ally-wb-edit-form-label">
                     <span class="ally-wb-edit-form-label-text">${getReadableFieldName(field.fieldName)}</span> 
@@ -17,22 +31,25 @@ export const getInputElement = (field) => {
                     <select
                         name="${field.fieldName}"
                         id="${field.fieldName}"
-                        required="${field.required ? true : ''}"
+                        ${required}
                     >
-                    ${getColorMap(field.currentValue).join()}
+                    ${getColorMap(field.currentValue ?? '').join()}
                     </select>
                 </label>`
             )
         default:
+            const value = field.currentValue ? `value="${field.currentValue}"` : ''
+
             return (
                 `<label class="ally-wb-edit-form-label">
                     <span class="ally-wb-edit-form-label-text">${field.fieldName}</span>
                     <input
                         type="${field.fieldType}"
-                        required="${field.required ? true : ''}"
+                        ${required}
                         name="${field.fieldName}"
                         id="${field.fieldName}"
-                        value="${field.currentValue}"
+                        ${value}
+                        ${getAdditionalInputProps(field.inputProps)}
                     />
                 </label>`
         )
