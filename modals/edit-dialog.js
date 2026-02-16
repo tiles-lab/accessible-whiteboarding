@@ -1,4 +1,5 @@
 import { getInputElement } from './input-elements'
+import { onToggleColorInput } from './toggle-color-input'
 
 const title = document.querySelector('#dialog-title')
 
@@ -16,6 +17,7 @@ const modalData = fetchModalData().then((data) => {
 }).finally(() => {
     if (formInputs.length) {
         formFields.innerHTML = formInputs.join('')
+        onToggleColorInput()
     } else {
         console.error('Error getting form fields')
         formErrors.textContent = 'Error loading form'

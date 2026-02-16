@@ -48,3 +48,7 @@
     color: red;
     font-weight: bold;
 }
+
+.ally-wb-hidden {
+    display: none;
+}
