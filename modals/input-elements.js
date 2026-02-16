@@ -21,12 +21,14 @@ const getAdditionalInputProps = (inputProps) => {
 
 export const getInputElement = (field) => {
     const required = field.required ? 'required="true"' : ''
+    const readableFieldName = getReadableFieldName(field.fieldName)
+    const value = field.currentValue ? `value="${field.currentValue}"` : ''
 
     switch (field.fieldType) {
         case 'color_map':
             return (
                 `<label class="ally-wb-edit-form-label">
-                    <span class="ally-wb-edit-form-label-text">${getReadableFieldName(field.fieldName)}</span> 
+                    <span class="ally-wb-edit-form-label-text">${readableFieldName}</span>
   
                     <select
                         name="${field.fieldName}"
@@ -37,12 +39,34 @@ export const getInputElement = (field) => {
                     </select>
                 </label>`
             )
-        default:
-            const value = field.currentValue ? `value="${field.currentValue}"` : ''
+        case 'color':
+            if (!Object.hasOwn(field, 'required')) {
+                return (
+                    `<div>
+                        <label class="toggle-color-input">
+                            <input type="checkbox" ${Boolean(field.currentValue) ? 'checked' : ''}" />
+                            Add ${readableFieldName}
+                        </label>
 
+                        <label class="ally-wb-edit-form-label ${Boolean(field.currentValue) ? '' : 'ally-wb-hidden'} color-input-label">
+                            <span class="ally-wb-edit-form-label-text">${field.fieldName}</span>
+                            <input
+                                ${Boolean(field.currentValue) ? '' : 'disabled'}
+                                type="${field.fieldType}"
+                                name="${field.fieldName}"
+                                id="${field.fieldName}"
+                                ${value}
+                                ${getAdditionalInputProps(field.inputProps)}
+                            />
+                        </label>
+                    </div>
+                    `
+                )
+            }
+        default:
             return (
                 `<label class="ally-wb-edit-form-label">
-                    <span class="ally-wb-edit-form-label-text">${field.fieldName}</span>
+                    <span class="ally-wb-edit-form-label-text">${readableFieldName}</span>
                     <input
                         type="${field.fieldType}"
                         ${required}
