@@ -1,5 +1,5 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
-import { HierarchyItem, ItemType } from '@models/item';
+import { ConnectableItem, HierarchyItem, ItemType } from '@models/item';
 import Tags from './tags';
 
 export interface HierarchyProps {
@@ -33,6 +33,13 @@ export interface HierarchyBoardProps {
   children?: HierarchyItem[];
 }
 
+export type TreeBoardItem = ConnectableItem;
+
+export interface TreeBoardItemProps {
+  hierarchyItem: HierarchyItem<TreeBoardItem>;
+  subtype?: string; // temp workaround for cluster
+  children?: React.ReactNode; // custom data to display in the <summary>
+}
 
 export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   type,
@@ -76,6 +83,36 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
   );
 }
 
+const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
+  const listItems = hierarchyItem.children ?? [];
+
+  return (
+    <details className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`} data-subtype={subtype}>
+      <summary className="a11ywb-accordion-header">
+        <h2>
+          {hierarchyItem.type}: {hierarchyItem.label}
+        </h2>
+
+        {children}
+      </summary>
+
+      <div className="a11ywb-accordion__contents">
+        {listItems.length > 0 && (
+          <ol>
+            {listItems.length > 0 &&
+              listItems.map(listItem => (
+                <li key={listItem.id}>
+                  <Hierarchy hierarchyItem={listItem} />
+                </li>
+              ))}
+          </ol>
+        )}
+        {listItems.length === 0 && <p>There are no child items.</p>}
+      </div>
+    </details>
+  );
+};
+
 const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem }) => {
   return (
     <BoardItem hierarchyItem={hierarchyItem} />
@@ -93,76 +130,26 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 }) => {
   const color = hierarchyItem.item?.style.fillColor;
 
-  const hierarchyChildren = hierarchyItem.children ?? [];
-
   return (
-    <BoardItem hierarchyItem={hierarchyItem}>
-      <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
+    <TreeBoardItem hierarchyItem={hierarchyItem}>
+
+      <div className="a11ywb-board-item__metadata">
+        <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
+      </div>
 
       <Tags tags={hierarchyItem.tags} />
-
-      <ul>
-        {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
-        {hierarchyChildren.length === 0 && (<li>No connected children</li>)}
-      </ul>
-    </BoardItem>
+    </TreeBoardItem>
   );
 };
 
 const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
   hierarchyItem,
 }) => {
-  const listItems = hierarchyItem.children ?? [];
-
-  return (
-    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-cluster">
-      <summary className="a11ywb-accordion-header">
-        <h2>cluster: {hierarchyItem.label}</h2>
-      </summary>
-
-      <div className="a11ywb-accordion__contents">
-        {listItems.length > 0 && (
-          <ol>
-            {listItems.length > 0 &&
-              listItems.map(listItem => (
-                <li key={listItem.id}>
-                  <Hierarchy hierarchyItem={listItem} />
-                </li>
-              ))}
-          </ol>
-        )}
-        {listItems.length === 0 && <p>This frame has no items.</p>}
-      </div>
-    </details>
-  );
+  return <TreeBoardItem hierarchyItem={hierarchyItem} subtype="cluster" />
 };
 
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
-  const listItems = hierarchyItem.children ?? [];
-
-  return (
-    <details className="a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-frame">
-      <summary className="a11ywb-accordion-header">
-        <h2>
-          {hierarchyItem.type}: {hierarchyItem.label}
-        </h2>
-      </summary>
-
-      <div className="a11ywb-accordion__contents">
-        {listItems.length > 0 && (
-          <ol>
-            {listItems.length > 0 &&
-              listItems.map(listItem => (
-                <li key={listItem.id}>
-                  <Hierarchy hierarchyItem={listItem} />
-                </li>
-              ))}
-          </ol>
-        )}
-        {listItems.length === 0 && <p>This frame has no items.</p>}
-      </div>
-    </details>
-  );
+  return <TreeBoardItem hierarchyItem={hierarchyItem} />
 };
 
 const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
