@@ -1,9 +1,48 @@
-import type { Item, Frame, StickyNote, Text } from '@mirohq/websdk-types';
+import type { Item, Frame, StickyNote } from '@mirohq/websdk-types';
 import { ConnectionRecord, getLabel, isConnectableItem } from '@utils/items';
-import { ConnectableItem, ItemType, type HierarchyItem } from '@models/item';
+import { ConnectableItem, HierarchyItemMetadata, ItemType, type HierarchyItem } from '@models/item';
 import { ConnectorRecord, ItemRecord, TagRecord } from '@models/record';
 import { getTags } from './tags';
 import { buildConnectorRecord, buildItemRecord, buildTagRecord } from './record-builder';
+
+function computeHierarchyItemMetadata(children: HierarchyItem[]): HierarchyItemMetadata {
+  const treeChildCount = children.length + children.reduce((acc, child) => {
+    return acc + (child.metadata?.treeChildCount ?? 0);
+  }, 0);
+
+  const treeConnectionHeight = children.length === 0
+    ? 0
+    : 1 + children.reduce((acc, child) =>
+        Math.max(child.metadata?.treeConnectionHeight ?? 0, acc), 0
+      );
+
+  return { 
+    treeChildCount, 
+    treeConnectionHeight,
+  };
+}
+
+export function buildHierarchyItem<T extends Item>(
+  item: T,
+  children: HierarchyItem[],
+  buildOptions: {
+    level: number,
+    tagRecord: TagRecord,
+  }
+): HierarchyItem<T> {
+  const { level, tagRecord } = buildOptions;
+
+  return {
+    id: item.id,
+    type: item.type,
+    item,
+    label: getLabel(item),
+    level,
+    tags: getTags(item, tagRecord),
+    children,
+    metadata: computeHierarchyItemMetadata(children),
+  };
+}
 
 export function buildHierarchy(
   item: Item,
@@ -30,42 +69,18 @@ export function buildHierarchy(
     );
   }
 
-  const treeChildCount = children.length + children.reduce((acc, child) => {
-    acc += (child.metadata?.treeChildCount ?? 0);
-    return acc;
-  }, 0);
-
-  const treeConnectionHeight = children.length === 0
-      ? 0
-      : 1 + children.reduce((acc, child) =>
-          Math.max(child.metadata?.treeConnectionHeight ?? 0, acc), 0
-        );
-
-  const hierarchyItem: HierarchyItem<Item> = {
-    id: item.id,
-    type: item.type,
-    item,
-    label: getLabel(item),
-    level,
-    tags: getTags(item, tagRecord),
-    children,
-    metadata: {
-      treeChildCount,
-      treeConnectionHeight,
-    }
-  };
+  const hierarchyItem = buildHierarchyItem(item, children, { level, tagRecord });
   
-
   return hierarchyItem;
 }
 
 function buildConnectorChild(
     item: ConnectableItem, 
     buildOptions: {
-        level: number,
-        connectorRecord: ConnectorRecord, 
-        itemRecord: ItemRecord,
-        tagRecord: TagRecord,
+      level: number,
+      connectorRecord: ConnectorRecord, 
+      itemRecord: ItemRecord,
+      tagRecord: TagRecord,
     },
     visited = new Set<StickyNote['id']>(), 
 ): HierarchyItem<ConnectableItem> {
@@ -92,30 +107,11 @@ function buildConnectorChild(
       }
     });
 
-    const treeChildCount = children.length + children.reduce((acc, child) => {
-        acc += (child.metadata?.treeChildCount ?? 0);
-        return acc;
-      }, 0);
+    const hierarchyItem = buildHierarchyItem(item, children, { 
+      level, tagRecord
+    });
 
-    const treeConnectionHeight = children.length === 0
-      ? 0
-      : 1 + children.reduce((acc, child) =>
-          Math.max(child.metadata?.treeConnectionHeight ?? 0, acc), 0
-        );
-
-    return {
-      id: item.id,
-      type: item.type,
-      item,
-      label: getLabel(item),
-      level,
-      tags: getTags(item, tagRecord),
-      children: children.length ? children : undefined,
-      metadata: {
-        treeChildCount,
-        treeConnectionHeight,
-      }
-    };
+    return hierarchyItem;
   }
 
 export function buildConnectorHierarchy(items: Item[]): HierarchyItem<ConnectableItem>[] {
@@ -158,30 +154,11 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
         .map(child => hierarchyRecord[child.id])
         .filter(Boolean);
 
-      const treeChildCount = children.length + children.reduce((acc, child) => {
-        acc += (child.metadata?.treeChildCount ?? 0);
-        return acc;
-      }, 0);
-
-      const treeConnectionHeight = children.length === 0
-      ? 0
-      : 1 + children.reduce((acc, child) =>
-          Math.max(child.metadata?.treeConnectionHeight ?? 0, acc), 0
-        );
-      
-
-      return {
-        id: item.id,
-        type: item.type,
-        item,
-        label: getLabel(item),
+      const hierarchyItem = buildHierarchyItem<Frame>(item as Frame, children, {
         level: 0,
-        tags: getTags(item, tagRecord),
-        children,
-        metadata: {
-          treeChildCount,
-          treeConnectionHeight,
-        }
-      } as HierarchyItem<Frame>;
+        tagRecord,
+      });
+
+      return hierarchyItem;
     });
 }

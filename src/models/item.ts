@@ -54,19 +54,21 @@ export interface Connection {
   endItem?: Item;
 }
 
+export interface HierarchyItemMetadata {
+  treeChildCount: number; // total number of children this HierarchyItem contains
+  treeConnectionHeight: number; // number of connections from this HierarchyItem down to its deepest child
+}
+
 export interface HierarchyItem<T extends Item = Item> {
   id: BaseItem['id'];
   type: BaseItem['type'];
   item?: T;
   label: string;
   tags?: Tag[];
-  children?: HierarchyItem[];
+  children: HierarchyItem[];
   connections?: Connection[];
   level: number; // absolute level from top-level root
-  metadata?: {
-    treeChildCount: number; // total number of children this HierarchyItem contains
-    treeConnectionHeight: number; // number of connections from this HierarchyItem down to its deepest child
-  }
+  metadata?: HierarchyItemMetadata; 
 }
 
 export type TopLevelItem =
