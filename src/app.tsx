@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { type Item } from '@mirohq/websdk-types';
 import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import { HierarchyBoard } from '@components/hierarchy';
-import { buildConnectorHierarchy } from '@utils/record-builder';
 import { ItemType } from '@models/item';
+import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
 
 const fallbackData = SampleItemsConceptMap as Item[];
 
