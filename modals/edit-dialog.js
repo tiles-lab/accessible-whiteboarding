@@ -51,7 +51,7 @@ form.addEventListener('submit', async (event) => {
             }
 
             await item.sync()
-            window.sessionStorage.setItem('updated_miro_item', JSON.stringify(item))
+            window.sessionStorage.setItem('updated_miro_items', JSON.stringify([item]))
             await miro.board.ui.closeModal()
         } else {
             console.error('Error loading item')
