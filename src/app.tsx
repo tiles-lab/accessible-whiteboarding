@@ -39,13 +39,14 @@ const App: React.FC = () => {
     }
 
     window.addEventListener('storage', () => {
-      const updatedItem = window.sessionStorage.getItem('updated_miro_item')
-      if (updatedItem) {
+      const updatedItems = window.sessionStorage.getItem('updated_miro_items')
+      if (updatedItems) {
         try {
-          const parsedItem: Item = JSON.parse(updatedItem)
+          const parsedItems: Item[] = JSON.parse(updatedItems)
+          const parsedIds: Item['id'][] = parsedItems.map(item => item.id)
 
-          if (parsedItem) {
-            setItems([...items.filter(item => item.id !== parsedItem.id), parsedItem])
+          if (parsedItems) {
+            setItems([...items.filter(item => !parsedIds.includes(item.id)), ...parsedItems])
           }
         } catch (e) {
           console.error('Error parsing updated item: ', e)

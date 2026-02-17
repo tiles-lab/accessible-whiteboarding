@@ -30,11 +30,38 @@ const moveToFrame = async (itemId, frameId) => {
     await frame.add(item)
 
     // Sync with panel
-    window.sessionStorage.setItem('updated_miro_item', JSON.stringify(frame))
-    window.sessionStorage.setItem('updated_miro_item', JSON.stringify({
-        ...item,
-        parentId: frame.id
-    }))
+    window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
+        {
+            ...frame,
+            childrenIds: [...frame.childrenIds, item.id]
+        },
+        {
+            ...item,
+            parentId: frame.id
+        }
+    ]))
+
+    await miro.board.ui.closeModal()
+}
+
+const removeFromFrame = async (itemId) => {
+    const item = await miro.board.getById(itemId)
+    const frame = await miro.board.getById(item.parentId)
+
+    // Add to frame
+    await frame.remove(item)
+
+    // Sync with panel
+    window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
+        {
+            ...frame,
+            childrenIds: frame.childrenIds.filter(child => child !== item.id)
+        },
+        {
+            ...item,
+            parentId: null
+        }
+    ]))
 
     await miro.board.ui.closeModal()
 }
@@ -63,6 +90,7 @@ const getFrameListItem = (item, frame) => {
 }
 
 const title = document.querySelector('#dialog-title')
+const moveToBoardContainer = document.querySelector('#move-form-move-to-board-container')
 
 fetchModalData().then(data => {
     title.textContent = data.title
@@ -70,6 +98,15 @@ fetchModalData().then(data => {
     framesList.innerHTML = frames.map(
         (frame) => getFrameListItem(data.item, frame)
     ).join()
+
+    if (data.item?.parentId) {
+        const moveToBoardButton = document.createElement('button')
+        moveToBoardButton.textContent = 'Move to Board'
+        moveToBoardContainer.appendChild(moveToBoardButton)
+        moveToBoardButton.addEventListener('click', () => {
+            removeFromFrame(data.item.id)
+        })
+    }
 }).finally(() => {
     const moveFrameButtons = document.querySelectorAll('.move-form-frame-button')
 
