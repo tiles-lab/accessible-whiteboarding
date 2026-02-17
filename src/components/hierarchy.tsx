@@ -85,6 +85,7 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
 
 const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
   const listItems = hierarchyItem.children ?? [];
+  const metadata = hierarchyItem.metadata;
 
   return (
     <details className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`} data-subtype={subtype}>
@@ -93,7 +94,15 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
           {hierarchyItem.type}: {hierarchyItem.label}
         </h2>
 
-        {children}
+        <div className="a11ywb-board-item__metadata">
+          
+          {metadata && (<>
+            <p>{hierarchyItem.metadata?.treeChildCount} total sub-topics</p>
+            <p>{hierarchyItem.metadata?.treeConnectionHeight} levels deep</p>
+          </>
+          )}
+          {children}
+        </div>
       </summary>
 
       <div className="a11ywb-accordion__contents">
@@ -132,12 +141,8 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
-
-      <div className="a11ywb-board-item__metadata">
         <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
-      </div>
-
-      <Tags tags={hierarchyItem.tags} />
+        <Tags tags={hierarchyItem.tags} />
     </TreeBoardItem>
   );
 };

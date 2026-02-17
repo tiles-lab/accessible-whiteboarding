@@ -1,6 +1,5 @@
 import type { Connector, Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
-import { Connection, ItemType } from '@models/item';
-import { ItemRecord } from '@models/record';
+import { CONNECTABLE_ITEM_TYPES, ConnectableItem, Connection, ItemType } from '@models/item';
 
 export function getLabel(item?: Item): string {
   let label: string | undefined = undefined;
@@ -29,29 +28,6 @@ export function getLabel(item?: Item): string {
 
 export type ConnectionRecord = Record<Connector["id"], Connection>;
 
-export function buildConnectionRecord(items: ItemRecord): ConnectionRecord {
-  const connectors: Connector[] = Object.values(items)
-    .filter((item): item is Connector => item.type === ItemType.Connector);
-
-  const connectionMap: ConnectionRecord = connectors.reduce((acc, connector) => {
-
-    const startId = connector.start?.item; 
-    const endId = connector.end?.item; 
-
-    const startItem = startId ? items[startId] : undefined;
-    const endItem = endId ? items[endId] : undefined;
-
-    console.log("connector", connector);
-
-    acc[connector.id] = {
-      id: connector.id,
-      connector,
-      startItem,
-      endItem,
-    };
-
-    return acc;
-  }, {} as ConnectionRecord);
-
-  return connectionMap;
+export function isConnectableItem(item: Item): item is ConnectableItem {
+  return CONNECTABLE_ITEM_TYPES.includes(item.type as ItemType);
 }

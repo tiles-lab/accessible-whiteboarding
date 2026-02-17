@@ -45,6 +45,8 @@ export const ItemTypeConfigMap: Record<ItemType, ItemTypeConfig> = {
 
 export type ConnectableItem = StickyNote | Text | Frame;
 
+export const CONNECTABLE_ITEM_TYPES: ItemType[] = [ItemType.StickyNote, ItemType.Frame, ItemType.Text];
+
 export interface Connection {
   id: Connector["id"];
   connector: Connector;
@@ -59,7 +61,12 @@ export interface HierarchyItem<T extends Item = Item> {
   label: string;
   tags?: Tag[];
   children?: HierarchyItem[];
-  connections?: Connection[]
+  connections?: Connection[];
+  level: number; // absolute level from top-level root
+  metadata?: {
+    treeChildCount: number; // total number of children this HierarchyItem contains
+    treeConnectionHeight: number; // number of connections from this HierarchyItem down to its deepest child
+  }
 }
 
 export type TopLevelItem =
