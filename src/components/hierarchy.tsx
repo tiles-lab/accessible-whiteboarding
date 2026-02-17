@@ -1,5 +1,5 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
-import { HierarchyItem } from '@models/item';
+import { HierarchyItem, ItemType } from '@models/item';
 import Tags from './tags';
 
 export interface HierarchyProps {
@@ -168,7 +168,7 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
 const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
   const { type } = hierarchyItem;
 
-  if (type === 'frame') {
+  if (type === ItemType.Frame) {
     if (hierarchyItem.label.startsWith('Cluster')) {
       return <ClusterTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<Frame>} />;
     } else {
@@ -176,11 +176,11 @@ const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
     }
   }
 
-  if (type === 'text') {
+  if (type === ItemType.Text) {
     return <TextTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<Text>} />;
   }
 
-  if (type === 'sticky_note') {
+  if (type === ItemType.StickyNote) {
     return <StickyNoteTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<StickyNote>} />;
   }
 

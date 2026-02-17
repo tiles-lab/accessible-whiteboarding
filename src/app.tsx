@@ -4,20 +4,21 @@ import { type Item } from '@mirohq/websdk-types';
 import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { buildConnectorHierarchy } from '@utils/record-builder';
+import { ItemType } from '@models/item';
+
+const fallbackData = SampleItemsConceptMap as Item[];
 
 async function listBoardItems(): Promise<Item[]> {
-  let items: Item[];
-
-  try {
-    items = await window.miro.board.get();
-  } catch (err) {
-    items = SampleItemsConceptMap as Item[];
-  }
-
-  return items;
+  return new Promise((resolve) => {
+    miro.board.get()
+      .then(items => resolve(items))
+      .catch(() => resolve(fallbackData));
+    
+    setTimeout(() => resolve(fallbackData), 50);
+  });
 }
 
-const navigableItemTypes = ['sticky_note', 'frame', 'text', 'connector'];
+const navigableItemTypes = [ItemType.StickyNote, ItemType.Frame, ItemType.Text, ItemType.Connector];
 
 const App: React.FC = () => {
 
@@ -32,17 +33,13 @@ const App: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!window.miro) {
-      return;
-    }
-
     miro.board.ui.on('items:create', async event => {
       setItems([...items, ...event.items]);
     });
   }, [items]);
 
   const navigableItems: Item[] = React.useMemo(() => {
-    return items.filter(item => navigableItemTypes.includes(item.type));
+    return items.filter(item => navigableItemTypes.includes(item.type as ItemType));
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
@@ -65,7 +62,7 @@ const App: React.FC = () => {
       </h1>
 
       <HierarchyBoard
-        type={hierarchyBoard.type}
+        type={hierarchyBoard.type as ItemType}
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
       />
