@@ -4,6 +4,7 @@ import Tags from './tags';
 import { editData } from '@utils/edit-data';
 import { deleteData } from '@utils/delete-data';
 import { moveData } from '@utils/move-data';
+import { connectData } from '@utils/connect-data';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -119,6 +120,10 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
         item: hierarchyItem.item,
         title: "Move Text",
       })}>Move Text</button>
+      <button type="button" onClick={() => connectData({
+        item: hierarchyItem.item,
+        title: "Text Connections"
+      })}>Text Connections</button>
       <button type="button" onClick={() => deleteData({
         id: hierarchyItem.id,
         title: 'Delete Text'
@@ -169,6 +174,10 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
         item: hierarchyItem.item,
         title: "Move Sticky Note",
       })}>Move Sticky Note</button>
+      <button type="button" onClick={() => connectData({
+        item: hierarchyItem.item,
+        title: "Sticky Note Connections"
+      })}>Sticky Note Connections</button>
       <button type="button" onClick={() => deleteData({
         id: hierarchyItem.id,
         title: 'Delete Sticky Note'
