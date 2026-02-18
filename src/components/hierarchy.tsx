@@ -2,6 +2,8 @@ import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { ConnectableItem, HierarchyItem, ItemType } from '@models/item';
 import Tags from './tags';
 import React from 'react';
+import { getItemTypeConfig } from '@utils/items';
+import { getColorConfig } from '@utils/colors';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -78,10 +80,12 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 };
 
 const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
+  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
+
   return (
     <div className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
       <p>
-        {hierarchyItem.type}: {hierarchyItem.label ?? 'empty'}
+        {itemTypeLabel}: {hierarchyItem.label ?? 'empty'}
       </p>
 
       {children}
@@ -92,6 +96,8 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
 const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
   const listItems = hierarchyItem.children ?? [];
   const metadata = hierarchyItem.metadata;
+  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
+
 
   return (
     <details 
@@ -100,7 +106,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
       data-subtype={subtype}>
       <summary className="a11ywb-accordion-header">
         <h2>
-          {hierarchyItem.type}: {hierarchyItem.label}
+          {itemTypeLabel}: {hierarchyItem.label}
         </h2>
 
         <div className="a11ywb-board-item__metadata">
@@ -144,11 +150,12 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
   hierarchyItem,
 }) => {
-  const color = hierarchyItem.item?.style.fillColor;
+  const colorKey = hierarchyItem.item?.style.fillColor;
+  const colorLabel = getColorConfig(hierarchyItem.item)?.displayLabel;
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
-        <span className="a11ywb-board-item__metadata-color" data-color={color}>color: {color}</span>
+        <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>color: {colorLabel}</span>
         <Tags tags={hierarchyItem.tags} />
     </TreeBoardItem>
   );

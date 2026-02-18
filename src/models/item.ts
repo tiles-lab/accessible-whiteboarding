@@ -62,7 +62,7 @@ export interface HierarchyItemMetadata {
 
 export interface HierarchyItem<T extends Item = Item> {
   id: BaseItem['id'];
-  type: BaseItem['type'];
+  type: ItemType;
   item?: T;
   label: string;
   tags?: Tag[];

@@ -4,6 +4,7 @@ import { ConnectableItem, HierarchyItemMetadata, ItemType, type HierarchyItem } 
 import { ConnectorRecord, ItemRecord, TagRecord } from '@models/record';
 import { getTags } from './tags';
 import { buildConnectorRecord, buildItemRecord, buildTagRecord } from './record-builder';
+import { getColorConfig } from './colors';
 
 function computeHierarchyItemMetadata(children: HierarchyItem[]): HierarchyItemMetadata {
   const treeChildCount = children.length + children.reduce((acc, child) => {
@@ -34,7 +35,7 @@ export function buildHierarchyItem<T extends Item>(
 
   return {
     id: item.id,
-    type: item.type,
+    type: item.type as ItemType,
     item,
     label: getLabel(item),
     level,
