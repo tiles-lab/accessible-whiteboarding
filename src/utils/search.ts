@@ -1,3 +1,4 @@
+import { TagColorConfigMap } from "@models/colors";
 import { HierarchyItem, HierarchyItemMetadata } from "@models/item";
 
 export function normalizeQuery(text: string): string {
@@ -10,7 +11,9 @@ export function getSearchableText(hierarchyItem: HierarchyItem): string {
     let query = `${hierarchyItem.label}`;
 
     const tags = hierarchyItem.tags ? hierarchyItem.tags
-        .map(tag => tag.title).join(' ') : '';
+        .map(tag => TagColorConfigMap[tag.color]?.displayLabel)
+        .filter(Boolean)
+        .join(' ') : '';
 
     query += tags;
 
