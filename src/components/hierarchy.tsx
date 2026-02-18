@@ -102,7 +102,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
   return (
     <details 
       className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}
-      open={!!metadata.searchMatch}
+      open={!!metadata.searchMatch && metadata.searchMatch !== 'default'}
       data-subtype={subtype}>
       <summary className="a11ywb-accordion-header">
         <h2>
