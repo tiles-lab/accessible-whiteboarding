@@ -5,12 +5,10 @@ import { ConnectionRecord } from "./items";
 
 export function buildTagRecord(items: Item[]) {
     return items
-      .filter(item => item.type === 'tag')
+      .filter((item): item is Tag => item.type === ItemType.Tag) 
       .reduce(
         (acc, item) => {
-          if (item.type === 'tag') {
-            acc[item.id] = item as Tag;
-          }
+          acc[item.id] = item as Tag;
 
           return acc;
         },

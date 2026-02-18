@@ -126,10 +126,11 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
       hasIncomingConnector.add(connector.end.item);
     }
   });
+  
 
   const hierarchyRecord = Object.fromEntries(
     items
-      .filter(item => [ItemType.StickyNote, ItemType.Text].includes(item.type as ItemType))
+      .filter(item => isConnectableItem(item))
       .map(item => [item.id, buildConnectorChild(item as ConnectableItem, buildOptions)])
   );
 

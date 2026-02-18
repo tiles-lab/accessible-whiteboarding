@@ -1,6 +1,7 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { ConnectableItem, HierarchyItem, ItemType } from '@models/item';
 import Tags from './tags';
+import React from 'react';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -41,6 +42,13 @@ export interface TreeBoardItemProps {
   children?: React.ReactNode; // custom data to display in the <summary>
 }
 
+const HierarchyListItem: React.FC<{ item: HierarchyItem }> = ({ item }) => {
+  return (
+  <li className="a11ywb-navigation-list__item" data-search-match={item.metadata.searchMatch}>
+    <Hierarchy hierarchyItem={item} />
+  </li>);
+};
+
 export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   type,
   label,
@@ -59,9 +67,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
           <ol>
             {listItems.length > 0 &&
               listItems.map(listItem => (
-                <li key={listItem.id}>
-                  <Hierarchy hierarchyItem={listItem} />
-                </li>
+                <HierarchyListItem key={listItem.id} item={listItem} />
               ))}
           </ol>
         )}
@@ -88,7 +94,10 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
   const metadata = hierarchyItem.metadata;
 
   return (
-    <details className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`} data-subtype={subtype}>
+    <details 
+      className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}
+      open={!!metadata.searchMatch}
+      data-subtype={subtype}>
       <summary className="a11ywb-accordion-header">
         <h2>
           {hierarchyItem.type}: {hierarchyItem.label}
@@ -110,9 +119,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
           <ol>
             {listItems.length > 0 &&
               listItems.map(listItem => (
-                <li key={listItem.id}>
-                  <Hierarchy hierarchyItem={listItem} />
-                </li>
+                <HierarchyListItem key={listItem.id} item={listItem} />
               ))}
           </ol>
         )}

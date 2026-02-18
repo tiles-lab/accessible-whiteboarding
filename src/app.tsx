@@ -6,6 +6,7 @@ import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
+import { applyHierarchicalSearch, normalizeQuery } from '@utils/search';
 
 const fallbackData = SampleItems as Item[];
 // const fallbackData = SampleItemsConceptMap as Item[];
@@ -19,8 +20,6 @@ async function listBoardItems(): Promise<Item[]> {
     setTimeout(() => resolve(fallbackData), 50);
   });
 }
-
-const navigableItemTypes = [ItemType.StickyNote, ItemType.Frame, ItemType.Text, ItemType.Connector];
 
 const App: React.FC = () => {
 
@@ -40,12 +39,8 @@ const App: React.FC = () => {
     });
   }, [items]);
 
-  const navigableItems: Item[] = React.useMemo(() => {
-    return items.filter(item => navigableItemTypes.includes(item.type as ItemType));
-  }, [items]);
-
   const hierarchyBoard = React.useMemo(() => {
-    const children = buildConnectorHierarchy(navigableItems);
+    const children = buildConnectorHierarchy(items);
 
     const hierarchyRoot = {
       id: 'board',
@@ -55,13 +50,33 @@ const App: React.FC = () => {
     };
 
     return hierarchyRoot;
-  }, [navigableItems]);
+  }, [items]);
+
+  const navigableItemCount = hierarchyBoard.children.reduce((acc, child) => {
+    acc += child.metadata.treeChildCount + 1;
+    return acc;
+  }, 0);
+  
+  const [query, setQuery] = React.useState('');
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const normalizedQuery = normalizeQuery(e.target.value);
+    
+    setQuery(normalizedQuery);
+    applyHierarchicalSearch(hierarchyBoard.children, normalizedQuery);
+  };
 
   return (
     <div className="a11ywb-app-container">
       <h1 className="a11ywb-app-title">
-        List of Navigable Items (count: {navigableItems.length})
+        List of Navigable Items (count: {navigableItemCount})
       </h1>
+
+      <input 
+        type="text" 
+        value={query} 
+        onChange={handleSearch} 
+        placeholder="Search by label, tag, color" />
 
       <HierarchyBoard
         type={hierarchyBoard.type as ItemType}

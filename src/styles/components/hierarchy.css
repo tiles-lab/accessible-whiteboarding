@@ -15,8 +15,6 @@
   }
 }
 
-
-
 .a11ywb-board,
 .a11ywb-board-item--type-frame {
   &:open > summary {
@@ -30,4 +28,22 @@
   border: 1px solid black;
   border-radius: 4px;
   padding: 8px;
+}
+
+.a11ywb-navigation-list__item {
+  &[data-search-match="match-parent"] {
+    > details > summary {
+      background-color: rgb(209, 217, 219);
+    }
+  }
+
+  &[data-search-match="match-self"] {
+    > details > summary {
+      background-color: rgb(218, 173, 127);
+    }
+  }
+
+  &[data-search-match="false"] {
+    display: none;
+  }
 }
