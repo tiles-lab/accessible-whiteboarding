@@ -30,7 +30,7 @@
     "src",
     "pages",
     "*.ts"
-  ],
+, "modals/edit-dialog.js"  ],
   "exclude": [
     "node_modules"
   ]

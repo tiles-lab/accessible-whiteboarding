@@ -7,6 +7,7 @@ import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
 import { applyHierarchicalSearch, normalizeQuery } from '@utils/search';
+import { addData } from '@utils/add-data';
 
 const fallbackData = SampleItems as Item[];
 // const fallbackData = SampleItemsConceptMap as Item[];
@@ -34,9 +35,29 @@ const App: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    window.addEventListener('storage', () => {
+      const updatedItems = window.sessionStorage.getItem('updated_miro_items')
+      if (updatedItems) {
+        try {
+          const parsedItems: Item[] = JSON.parse(updatedItems)
+          const parsedIds: Item['id'][] = parsedItems.map(item => item.id)
+
+          if (parsedItems) {
+            setItems([...items.filter(item => !parsedIds.includes(item.id)), ...parsedItems])
+          }
+        } catch (e) {
+          console.error('Error parsing updated item: ', e)
+        }
+      }
+    })
+
     miro.board.ui.on('items:create', async event => {
       setItems([...items, ...event.items]);
     });
+
+    miro.board.ui.on('items:delete', async event => {
+      setItems(items.filter(item => item.id !== event.items?.[0]?.id))
+    })
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
@@ -67,7 +88,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="a11ywb-app-container">
+    <main className="a11ywb-app-container">
       <h1 className="a11ywb-app-title">
         List of Navigable Items (count: {navigableItemCount})
       </h1>
@@ -83,7 +104,65 @@ const App: React.FC = () => {
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
       />
-    </div>
+
+      <h2>Add Item to Board</h2>
+      <button type="button" onClick={() => addData({
+        title: "Add Frame",
+        frameFields: [
+          {
+            fieldName: 'title',
+            fieldType: 'text',
+            required: true
+          },
+          {
+            fieldName: 'style.fillColor',
+            fieldType: 'color'
+          },
+          {
+            fieldName: 'width',
+            fieldType: 'number',
+            required: true,
+            inputProps: {
+              value: 700
+            }
+          },
+          {
+            fieldName: 'height',
+            fieldType: 'number',
+            required: true,
+            inputProps: {
+              value: 500
+            }
+          }
+        ]
+      })}>Add Frame</button>
+
+      <button type="button" onClick={() => addData({
+        title: "Add Sticky Note",
+        stickyNoteFields: [
+          {
+            fieldName: 'content',
+            fieldType: 'text',
+            required: true
+          },
+          {
+            fieldName: 'style.fillColor',
+            fieldType: 'color_map'
+          }
+        ]
+      })}>Add Sticky Note</button>
+
+      <button type="button" onClick={() => addData({
+        title: "Add Text",
+        textFields: [
+          {
+            fieldName: 'content',
+            fieldType: 'text',
+            required: true
+          }
+        ]
+      })}>Add Text</button>
+    </main>
   );
 };
 
