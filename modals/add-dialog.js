@@ -1,3 +1,4 @@
+import { handleError } from './handle-error'
 import { handleToast } from './handle-toast'
 import { getInputElement } from './input-elements'
 import { onToggleColorInput } from './toggle-color-input'
@@ -49,31 +50,36 @@ form.addEventListener('submit', async (event) => {
     const formData = new FormData(form)
     const dataType = formFields.getAttribute(ITEM_TYPE_KEY)
 
-    if (dataType === 'frame') {
-        await miro.board.createFrame({
-            title: formData.get('title'),
-            style: {
-                fillColor: formData.get('style.fillColor') ?? 'transparent'
-            },
-            width: +formData.get('width'),
-            height: +formData.get('height')
-        })
-    }
+    try {
+        if (dataType === 'frame') {
+            await miro.board.createFrame({
+                title: formData.get('title'),
+                style: {
+                    fillColor: formData.get('style.fillColor') ?? 'transparent'
+                },
+                width: +formData.get('width'),
+                height: +formData.get('height')
+            })
+        }
 
-    if (dataType === 'sticky_note') {
-        await miro.board.createStickyNote({
-            content: formData.get('content'),
-            style: {
-                fillColor: formData.get('style.fillColor')
-            },
-        })
-    }
+        if (dataType === 'sticky_note') {
+            await miro.board.createStickyNote({
+                content: formData.get('content'),
+                style: {
+                    fillColor: formData.get('style.fillColor')
+                },
+            })
+        }
 
-    if (dataType === 'text') {
-        await miro.board.createText({
-            content: formData.get('content'),
-        })
-    }
+        if (dataType === 'text') {
+            await miro.board.createText({
+                content: formData.get('content'),
+            })
+        }
 
-    handleToast('Item added')
+        handleToast('Item added')
+    } catch (error) {
+        console.error('Error adding item: ', error.message)
+        handleError('Error adding item')
+    }
 })
