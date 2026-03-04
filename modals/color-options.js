@@ -1,21 +1,20 @@
 // Copied from Miro's StickyNoteColor enum
 const stickyNoteColors = {
-    Transparent: "",
-    Gray: "gray",
     LightYellow: "light_yellow",
     Yellow: "yellow",
     Orange: "orange",
-    LightGreen: "light_green",
-    Green: "green",
-    DarkGreen: "dark_green",
-    Cyan: "cyan",
+    Red: "red",
     LightPink: "light_pink",
     Pink: "pink",
-    Violet: "violet",
-    Red: "red",
-    LightBlue: "light_blue",
     Blue: "blue",
+    Violet: "violet",
+    LightBlue: "light_blue",
     DarkBlue: "dark_blue",
+    Cyan: "cyan",
+    DarkGreen: "dark_green",
+    LightGreen: "light_green",
+    Green: "green",
+    Gray: "gray",
     Black: "black"
 }
 
