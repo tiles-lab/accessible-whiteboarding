@@ -83,26 +83,44 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
   );
 };
 
-const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
-  const getHeading = () => {
-    if (hierarchyItem?.item) {
-      if ('parentId' in hierarchyItem.item) {
-        if (hierarchyItem.item?.parentId && Boolean(hierarchyItem.item?.parentId)) {
-          return <h3>{hierarchyItem.type}</h3>
-        }
-      }
-    }
+const getItemLabel = (hierarchyItem: HierarchyItem) => {
+  const usesRichText = hierarchyItem?.label?.startsWith('<p>')
+  const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId)
+  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel
 
-    return <h2>{hierarchyItem.type}</h2>
+  if (usesRichText && hasParent) {
+    return (
+      <>
+        <h3>{itemTypeLabel}</h3>
+        <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} /> 
+      </>
+    )
   }
 
+  if (!usesRichText && hasParent) {
+    return (
+      <>
+        <h3>{itemTypeLabel}: {hierarchyItem.label}</h3>
+      </>
+    )
+  }
+
+  if (usesRichText && !hasParent) {
+    return (
+      <>
+        <h2>{itemTypeLabel}</h2>
+        <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
+      </>
+    )
+  }
+
+  return <h2>{itemTypeLabel}: {hierarchyItem.label}</h2>
+}
+
+const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
   return (
     <article className={`a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}>
-      {getHeading()}
-        {hierarchyItem?.label?.startsWith('<p>')
-          ? <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
-          : <p>{hierarchyItem.label ?? 'empty'}</p>
-        }
+      {getItemLabel(hierarchyItem)}
       {children}
     </article>
   );
@@ -111,8 +129,6 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
 const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
   const listItems = hierarchyItem.children ?? [];
   const metadata = hierarchyItem.metadata;
-  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
-
 
   return (
     <details 
@@ -120,9 +136,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
       open={!!metadata.searchMatch && metadata.searchMatch !== 'default'}
       data-subtype={subtype}>
       <summary className="a11ywb-accordion-header">
-        <h2>
-          {itemTypeLabel}: {hierarchyItem.label}
-        </h2>
+        {getItemLabel(hierarchyItem)}
 
         <div className="a11ywb-board-item__metadata">
           
