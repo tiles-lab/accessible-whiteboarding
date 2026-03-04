@@ -49,6 +49,11 @@
     font-weight: bold;
 }
 
+.ally-wb-edit-form-success {
+    color: green;
+    font-weight: bold;
+}
+
 .ally-wb-hidden {
     display: none;
 }

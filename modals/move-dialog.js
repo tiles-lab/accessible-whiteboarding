@@ -1,3 +1,5 @@
+import { handleToast } from "./handle-toast"
+
 const frames = []
 
 const fetchModalData = async () => await miro.board.ui.getModalData()
@@ -41,7 +43,7 @@ const moveToFrame = async (itemId, frameId) => {
         }
     ]))
 
-    await miro.board.ui.closeModal()
+    handleToast('Item moved')
 }
 
 const removeFromFrame = async (itemId) => {
