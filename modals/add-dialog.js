@@ -1,3 +1,4 @@
+import { handleToast } from './handle-toast'
 import { getInputElement } from './input-elements'
 import { onToggleColorInput } from './toggle-color-input'
 
@@ -74,5 +75,5 @@ form.addEventListener('submit', async (event) => {
         })
     }
 
-    await miro.board.ui.closeModal()
+    handleToast('Item added')
 })

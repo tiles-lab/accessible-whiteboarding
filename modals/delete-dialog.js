@@ -1,3 +1,5 @@
+import { handleToast } from "./handle-toast"
+
 const title = document.querySelector('#dialog-title')
 
 const deleteButton = document.querySelector('#delete-dialog-delete-button')
@@ -15,7 +17,7 @@ deleteButton.addEventListener('click', async () => {
     const itemId = deleteButton.getAttribute(ITEM_ID_KEY)
     const item = await miro.board.getById(itemId)
     await miro.board.remove(item)
-    await miro.board.ui.closeModal()
+    handleToast('Item deleted')
 })
 
 cancelButton.addEventListener('click', async () => {

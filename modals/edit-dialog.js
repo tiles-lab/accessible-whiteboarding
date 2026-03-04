@@ -1,5 +1,6 @@
 import { getInputElement } from './input-elements'
 import { onToggleColorInput } from './toggle-color-input'
+import { handleToast } from './handle-toast'
 
 const title = document.querySelector('#dialog-title')
 
@@ -52,7 +53,7 @@ form.addEventListener('submit', async (event) => {
 
             await item.sync()
             window.sessionStorage.setItem('updated_miro_items', JSON.stringify([item]))
-            await miro.board.ui.closeModal()
+            handleToast('Item edited')
         } else {
             console.error('Error loading item')
         }
