@@ -1,3 +1,4 @@
+import { handleError } from "./handle-error"
 import { handleToast } from "./handle-toast"
 
 const frames = []
@@ -20,52 +21,62 @@ fetchFrames()
 const framesList = document.querySelector('#move-form-available-frames-list')
 
 const moveToFrame = async (itemId, frameId) => {
-    const frame = await miro.board.getById(frameId)
-    const item = await miro.board.getById(itemId)
+    try {
+        const frame = await miro.board.getById(frameId)
+        const item = await miro.board.getById(itemId)
 
-    // Move the item inside of the frame
-    item.x = frame.x + 1
-    item.y = frame.y + 1
-    await item.sync()
+        // Move the item inside of the frame
+        item.x = frame.x + 1
+        item.y = frame.y + 1
+        await item.sync()
 
-    // Add to frame
-    await frame.add(item)
+        // Add to frame
+        await frame.add(item)
 
-    // Sync with panel
-    window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
-        {
-            ...frame,
-            childrenIds: [...frame.childrenIds, item.id]
-        },
-        {
-            ...item,
-            parentId: frame.id
-        }
-    ]))
+        // Sync with panel
+        window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
+            {
+                ...frame,
+                childrenIds: [...frame.childrenIds, item.id]
+            },
+            {
+                ...item,
+                parentId: frame.id
+            }
+        ]))
 
-    handleToast('Item moved')
+        handleToast('Item moved')
+    } catch (error) {
+        console.error('Error moving item: ', error)
+        handleError('Error moving item')
+    }
 }
 
 const removeFromFrame = async (itemId) => {
-    const item = await miro.board.getById(itemId)
-    const frame = await miro.board.getById(item.parentId)
+    try {
+        const item = await miro.board.getById(itemId)
+        const frame = await miro.board.getById(item.parentId)
 
-    // Add to frame
-    await frame.remove(item)
+        // Add to frame
+        await frame.remove(item)
 
-    // Sync with panel
-    window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
-        {
-            ...frame,
-            childrenIds: frame.childrenIds.filter(child => child !== item.id)
-        },
-        {
-            ...item,
-            parentId: null
-        }
-    ]))
+        // Sync with panel
+        window.sessionStorage.setItem('updated_miro_items', JSON.stringify([
+            {
+                ...frame,
+                childrenIds: frame.childrenIds.filter(child => child !== item.id)
+            },
+            {
+                ...item,
+                parentId: null
+            }
+        ]))
 
-    await miro.board.ui.closeModal()
+        handleToast('Item moved')
+    } catch (error) {
+        console.error('Error moving item: ', error)
+        handleError('Error moving item')
+    }
 }
 
 const getFrameListItem = (item, frame) => {
