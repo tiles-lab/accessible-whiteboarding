@@ -1,5 +1,6 @@
-import { TagColorConfigMap } from "@models/colors";
 import { HierarchyItem, HierarchyItemMetadata } from "@models/item";
+import { isStickyNote } from "./items";
+import { getColorConfig } from "./colors";
 
 export function normalizeQuery(text: string): string {
     // https://www.codecademy.com/resources/docs/javascript/strings/normalize
@@ -8,16 +9,36 @@ export function normalizeQuery(text: string): string {
 }
 
 export function getSearchableText(hierarchyItem: HierarchyItem): string {
-    let query = `${hierarchyItem.label}`;
+    const queryBuilder: string[] = [];
 
-    const tags = hierarchyItem.tags ? hierarchyItem.tags
-        .map(tag => TagColorConfigMap[tag.color]?.displayLabel)
-        .filter(Boolean)
-        .join(' ') : '';
+    queryBuilder.push(hierarchyItem.label);
 
-    query += tags;
+    if (isStickyNote(hierarchyItem.item)) {
+        const tagsQuery = hierarchyItem.tags ? hierarchyItem.tags
+            .map(tag => tag.title)
+            .filter(Boolean)
+            .join(' ') : '';
+
+        queryBuilder.push(tagsQuery);
+
+        const color = getColorConfig(hierarchyItem.item);
+
+        if (color) {
+            queryBuilder.push(color.displayLabel);
+        }
+    }
+
+    const query = queryBuilder.join(' ');
 
     return normalizeQuery(query);
+}
+
+export function isMatch(hierarchyItem: HierarchyItem, query: string): boolean {
+    const searchableText = getSearchableText(hierarchyItem);
+
+    const queryTerms = query.split(/\s+/).filter(Boolean);
+
+    return queryTerms.every(queryTerm => searchableText.includes(queryTerm));
 }
 
 export function applyHierarchicalSearch(
@@ -29,7 +50,7 @@ export function applyHierarchicalSearch(
 
     for (const item of items) {
         const isParentOfMatch = applyHierarchicalSearch(item.children, normalizedQuery);
-        const isSelfMatch = getSearchableText(item).includes(normalizedQuery);
+        const isSelfMatch = isMatch(item, normalizedQuery);
 
         let searchMatch: HierarchyItemMetadata['searchMatch'];
 
