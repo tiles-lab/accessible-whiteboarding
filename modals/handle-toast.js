@@ -4,8 +4,8 @@ export const handleToast = (message) => {
     if (successMessage) {
         successMessage.textContent = message
     
-        // setTimeout(async () => {
-        //     await miro.board.ui.closeModal()
-        // }, 3000)
+        setTimeout(async () => {
+            await miro.board.ui.closeModal()
+        }, 3000)
     }
 }
