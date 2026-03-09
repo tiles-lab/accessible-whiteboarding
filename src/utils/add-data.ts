@@ -4,7 +4,7 @@ import { NestedKeyOf } from "./edit-data"
 
 type FormField<T extends Frame | StickyNote | Text> = {
     fieldName: NestedKeyOf<ItemsProps<T>>
-    fieldType: 'text' | 'color' | 'color_map' | 'number'
+    fieldType: 'text' | 'color' | 'color_map' | 'number' | 'parent'
     required?: boolean
     inputProps?: Record<string, string | number | boolean>
 }
