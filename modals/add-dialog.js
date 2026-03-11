@@ -5,6 +5,10 @@ import { onToggleColorInput } from './toggle-color-input'
 
 const title = document.querySelector('#dialog-title')
 
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
+
 const formFields = document.querySelector('#add-form-fields')
 const formInputs = []
 const formErrors = document.querySelector('#add-form-errors')

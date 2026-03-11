@@ -103,6 +103,11 @@ const getFrameListItem = (item, frame) => {
 }
 
 const title = document.querySelector('#dialog-title')
+
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
+
 const moveToBoardContainer = document.querySelector('#move-form-move-to-board-container')
 
 fetchModalData().then(data => {

@@ -5,6 +5,10 @@ import { handleError } from './handle-error'
 
 const title = document.querySelector('#dialog-title')
 
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
+
 const formFields = document.querySelector('#edit-form-fields')
 const formInputs = []
 const formErrors = document.querySelector('#edit-form-errors')

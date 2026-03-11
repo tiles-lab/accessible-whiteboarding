@@ -3,6 +3,10 @@ import { handleToast } from "./handle-toast"
 
 const title = document.querySelector('#dialog-title')
 
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
+
 const deleteButton = document.querySelector('#delete-dialog-delete-button')
 const cancelButton = document.querySelector('#delete-dialog-cancel-button')
 
