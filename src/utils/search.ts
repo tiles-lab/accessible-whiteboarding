@@ -1,6 +1,7 @@
-import { HierarchyItem, HierarchyItemMetadata } from "@models/item";
+import { HierarchyItem, HierarchyItemMetadata, ItemType } from "@models/item";
 import { isStickyNote } from "./items";
 import { getColorConfig } from "./colors";
+import { ALL_ITEM_TYPES, ALL_ITEM_TYPES_FILTER_OPTION } from '@config/search';
 
 export function normalizeQuery(text: string): string {
     // https://www.codecademy.com/resources/docs/javascript/strings/normalize
@@ -33,7 +34,11 @@ export function getSearchableText(hierarchyItem: HierarchyItem): string {
     return normalizeQuery(query);
 }
 
-export function isMatch(hierarchyItem: HierarchyItem, query: string): boolean {
+export function isMatch(hierarchyItem: HierarchyItem, query: string = ''): boolean {
+    if (!query) {
+        return true;
+    }
+
     const searchableText = getSearchableText(hierarchyItem);
 
     const queryTerms = query.split(/\s+/).filter(Boolean);
@@ -43,20 +48,27 @@ export function isMatch(hierarchyItem: HierarchyItem, query: string): boolean {
 
 export function applyHierarchicalSearch(
   items: HierarchyItem[],
-  normalizedQuery: string, // assumes query is normalized already
+  searchOptions: {
+    normalizedQuery: string, // assumes query is normalized already, so normalize outside,
+    filterByType: typeof ALL_ITEM_TYPES_FILTER_OPTION['type'] | ItemType
+  }, 
   isChildOfMatch = false
 ): boolean {
+    const { normalizedQuery, filterByType } = searchOptions;
+
     const isQueryEmpty = /^\s*$/.test(normalizedQuery); 
 
     for (const item of items) {
-        const isParentOfMatch = applyHierarchicalSearch(item.children, normalizedQuery);
+        const isParentOfMatch = applyHierarchicalSearch(item.children, searchOptions);
         const isSelfMatch = isMatch(item, normalizedQuery);
 
         let searchMatch: HierarchyItemMetadata['searchMatch'];
 
-        if (isQueryEmpty) {
+        const isTypeMatch = filterByType === ALL_ITEM_TYPES || item.type === filterByType;
+
+        if (isQueryEmpty && isTypeMatch) {
             searchMatch = 'default';
-        } else if (isSelfMatch) {
+        } else if ((isSelfMatch || isQueryEmpty) && isTypeMatch) {
             searchMatch = 'match-self';
         } else if (isParentOfMatch || isChildOfMatch) {
             searchMatch = 'match-parent';
@@ -69,10 +81,23 @@ export function applyHierarchicalSearch(
         // second time for handling non-matching children but whose parents are a search match
         applyHierarchicalSearch(
             item.children,
-            normalizedQuery,
+            searchOptions,
             searchMatch === 'match-self',
         );
     }
 
     return items.some(item => !!item.metadata.searchMatch);
+}
+
+export function getSearchResultTotal(items: HierarchyItem[]): number {
+    let total = 0;
+
+    items.forEach(item => {
+        if (item.metadata.searchMatch === undefined || item.metadata.searchMatch) {
+            total++;
+        }
+
+        total += getSearchResultTotal(item.children);
+    })
+    return total;
 }
