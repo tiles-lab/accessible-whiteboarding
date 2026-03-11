@@ -2,7 +2,7 @@
 <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
 
 <header class="ally-wb-delete-dialog-header">
-    <h2 id="dialog-title">Delete</h2>
+    <h2 id="dialog-title" tabindex="-1">Delete</h2>
 </header>
 
 <main>
@@ -18,6 +18,10 @@
             Cancel
         </button>
     </div>
+
+    <p role="status" id="form-failure-message" class="ally-wb-edit-form-errors"></p>
+
+    <p role="alert" id="form-success-message" class="ally-wb-edit-form-success"></p>
 </main>
 
 <script type="module" src="delete-dialog.js"></script>

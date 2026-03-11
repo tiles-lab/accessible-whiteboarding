@@ -1,4 +1,11 @@
+import { handleError } from "./handle-error"
+import { handleToast } from "./handle-toast"
+
 const title = document.querySelector('#dialog-title')
+
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
 
 const deleteButton = document.querySelector('#delete-dialog-delete-button')
 const cancelButton = document.querySelector('#delete-dialog-cancel-button')
@@ -13,9 +20,16 @@ const modalData = fetchModalData().then((data) => {
 
 deleteButton.addEventListener('click', async () => {
     const itemId = deleteButton.getAttribute(ITEM_ID_KEY)
-    const item = await miro.board.getById(itemId)
-    await miro.board.remove(item)
-    await miro.board.ui.closeModal()
+
+    try {
+        const item = await miro.board.getById(itemId)
+        await miro.board.remove(item)
+        handleToast('Item deleted')
+    } catch (error) {
+        console.error('Error deleting item: ', error)
+        handleError('Error deleting item')
+    }
+
 })
 
 cancelButton.addEventListener('click', async () => {

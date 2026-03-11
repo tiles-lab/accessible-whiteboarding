@@ -1,7 +1,13 @@
 import { getInputElement } from './input-elements'
 import { onToggleColorInput } from './toggle-color-input'
+import { handleToast } from './handle-toast'
+import { handleError } from './handle-error'
 
 const title = document.querySelector('#dialog-title')
+
+window.addEventListener('DOMContentLoaded', () => {
+  title?.focus()
+})
 
 const formFields = document.querySelector('#edit-form-fields')
 const formInputs = []
@@ -30,33 +36,30 @@ form.addEventListener('submit', async (event) => {
     const formData = new FormData(form)
     const itemId = formFields.getAttribute(ITEM_ID_KEY)
 
-    if (itemId) {
+    try {
         const item = await miro.board.getById(itemId)
+        const formFieldNames = formData.keys()
 
-        if (item) {
-            const formFieldNames = formData.keys()
-            for (const formFieldName of formFieldNames) {
-                // Handle nested field names, like style.fillColor
-                const formFieldNameChildren = formFieldName.split('.')
-                const lastFieldName = formFieldNameChildren.pop()
-                let currentFieldName = item
+        for (const formFieldName of formFieldNames) {
+            // Handle nested field names, like style.fillColor
+            const formFieldNameChildren = formFieldName.split('.')
+            const lastFieldName = formFieldNameChildren.pop()
+            let currentFieldName = item
 
-                for (const fieldNameChild of formFieldNameChildren) {
-                    if (!currentFieldName[fieldNameChild]) {
-                        currentFieldName[fieldNameChild] = {}
-                    }
-                    currentFieldName = currentFieldName[fieldNameChild]
+            for (const fieldNameChild of formFieldNameChildren) {
+                if (!currentFieldName[fieldNameChild]) {
+                    currentFieldName[fieldNameChild] = {}
                 }
-                currentFieldName[lastFieldName] = formData.get(formFieldName)
+                currentFieldName = currentFieldName[fieldNameChild]
             }
-
-            await item.sync()
-            window.sessionStorage.setItem('updated_miro_items', JSON.stringify([item]))
-            await miro.board.ui.closeModal()
-        } else {
-            console.error('Error loading item')
+            currentFieldName[lastFieldName] = formData.get(formFieldName)
         }
-    } else {
-        console.error('Missing item ID')
+
+        await item.sync()
+        window.sessionStorage.setItem('updated_miro_items', JSON.stringify([item]))
+        handleToast('Item edited')
+    } catch (error) {
+        console.error('Error editing item: ', error)
+        handleError('Error editing item')
     }
 })
