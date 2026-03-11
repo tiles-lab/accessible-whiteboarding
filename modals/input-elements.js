@@ -63,6 +63,15 @@ export const getInputElement = (field) => {
                     `
                 )
             }
+        case 'parent':
+            return (
+                `<label class="ally-wb-edit-form-label" class="ally-wb-parent-input">
+                <span class="ally-wb-edit-form-label-text">${readableFieldName}</span>
+                    <select name="${field.fieldName}" id="${field.fieldName}" ${required}>
+                        <option value="">Board</option>
+                    </select>
+                </label>`
+            )
         default:
             return (
                 `<label class="ally-wb-edit-form-label">

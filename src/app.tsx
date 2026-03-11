@@ -148,6 +148,10 @@ const App: React.FC = () => {
           {
             fieldName: 'style.fillColor',
             fieldType: 'color_map'
+          },
+          {
+            fieldName: 'parentId',
+            fieldType: 'parent'
           }
         ]
       })}>Add Sticky Note</button>
@@ -159,6 +163,10 @@ const App: React.FC = () => {
             fieldName: 'content',
             fieldType: 'text',
             required: true
+          },
+          {
+            fieldName: 'parentId',
+            fieldType: 'parent'
           }
         ]
       })}>Add Text</button>
