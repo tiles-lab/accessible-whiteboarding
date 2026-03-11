@@ -6,8 +6,9 @@ import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
-import { applyHierarchicalSearch, normalizeQuery } from '@utils/search';
+import { applyHierarchicalSearch, getSearchResultTotal, normalizeQuery } from '@utils/search';
 import { addData } from '@utils/add-data';
+import { ALL_ITEM_TYPES, ALL_ITEM_TYPES_FILTER_OPTION, ITEM_TYPE_FILTER_OPTIONS } from '@config/search';
 
 const fallbackData = SampleItems as Item[];
 // const fallbackData = SampleItemsConceptMap as Item[];
@@ -25,6 +26,8 @@ async function listBoardItems(): Promise<Item[]> {
 const App: React.FC = () => {
 
   const [items, setItems] = React.useState<Item[]>([]);
+  const [query, setQuery] = React.useState('');
+  const [itemTypeFilter, setItemTypeFilter] = React.useState(ALL_ITEM_TYPES);
 
   React.useEffect(() => {
     console.log('Listing board items...');
@@ -78,13 +81,20 @@ const App: React.FC = () => {
     return acc;
   }, 0);
   
-  const [query, setQuery] = React.useState('');
+  const searchResultTotal = React.useMemo(() => {
+    const normalizedQuery = normalizeQuery(query);
+    applyHierarchicalSearch(hierarchyBoard.children, { normalizedQuery, filterByType: itemTypeFilter });
 
+    return getSearchResultTotal(hierarchyBoard.children);
+  }, [hierarchyBoard.children, query, itemTypeFilter]);
+
+  // Update the callback to only set query state
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const normalizedQuery = normalizeQuery(e.target.value);
-    
-    setQuery(normalizedQuery);
-    applyHierarchicalSearch(hierarchyBoard.children, normalizedQuery);
+    setQuery(e.target.value);
+  };
+  
+  const handleFilterByType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setItemTypeFilter(e.target.value);
   };
 
   return (
@@ -93,11 +103,45 @@ const App: React.FC = () => {
         List of Navigable Items (count: {navigableItemCount})
       </h1>
 
-      <input 
-        type="text" 
-        value={query} 
-        onChange={handleSearch} 
-        placeholder="Search by label, tag, color" />
+      <div role="search">
+        <label htmlFor="search-input">
+          Search:
+          <input
+            id="search-input"
+            type="search" 
+            value={query} 
+            onChange={handleSearch} 
+            placeholder="Search by label, tag, color"
+            aria-describedby="search-results-count" />
+        </label>
+
+        <label htmlFor="item-type-filter">
+          Filter by type:
+          <select
+            id="item-type-filter" 
+            aria-label="Filter items by type"
+            value={itemTypeFilter}
+            onChange={handleFilterByType}>
+              <option value={ALL_ITEM_TYPES_FILTER_OPTION.type}>
+                {ALL_ITEM_TYPES_FILTER_OPTION.displayLabel}
+              </option>
+
+              {ITEM_TYPE_FILTER_OPTIONS.map(option => (
+                <option 
+                  key={option.type}
+                  value={option.type}>{option.displayLabel}</option>
+                ))
+              }
+          </select>
+        </label>
+      </div>
+
+      <div 
+        id="search-results-count"
+        className="a11ywb-app-search-results-count" 
+        aria-live="polite" 
+        aria-atomic="true"
+        role="region">{searchResultTotal} {searchResultTotal === 1 ? 'result' : 'results'}</div>
 
       <HierarchyBoard
         type={hierarchyBoard.type as ItemType}

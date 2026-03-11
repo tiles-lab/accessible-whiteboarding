@@ -45,6 +45,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@data': path.resolve(__dirname, './data'),
+      '@config': path.resolve(__dirname, './src/config'),
       '@models': path.resolve(__dirname, './src/models'),
       '@components': path.resolve(__dirname, './src/components'),
       '@utils': path.resolve(__dirname, './src/utils'),
