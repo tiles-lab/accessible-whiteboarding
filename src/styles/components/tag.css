@@ -1,0 +1,103 @@
+:root {
+    /* Tag color palette - some colors are shared with sticky-note
+    so we may want to define a more global color palette */
+    --tag-color-light_green: #74ff8d;
+    --tag-color-red: #ff5c5c;
+    --tag-color-cyan: #1dd0e8;
+    --tag-color-yellow: #e6d329;
+    --tag-color-magenta: #e91e63;
+    --tag-color-green: #16ba3a;
+    --tag-color-blue: #1f4ecf;
+    --tag-color-gray: #a9a9a9;
+    --tag-color-violet: #3410a2;
+    --tag-color-dark_green: #004b02;
+    --tag-color-dark_blue: #00316e;
+    --tag-color-dark_gray: #4a4a4a;
+    --tag-color-black: #0d0d0d;
+}
+
+.a11ywb-tags-box {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.a11ywb-tags {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.a11ywb-tag {
+  display: inline-flex;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.a11ywb-tag {
+  &[data-color="light_green"] {
+      background-color: var(--tag-color-light_green);
+      color: black;
+  }
+
+  &[data-color="red"] {
+      background-color: var(--tag-color-red);
+      color: black;
+  }
+
+  &[data-color="cyan"] {
+      background-color: var(--tag-color-cyan);
+      color: black;
+  }
+
+  &[data-color="yellow"] {
+      background-color: var(--tag-color-yellow);
+      color: black;
+  }
+
+  &[data-color="magenta"] {
+      background-color: var(--tag-color-magenta);
+      color: white;
+  }
+
+  &[data-color="green"] {
+      background-color: var(--tag-color-green);
+      color: white;
+  }
+
+  &[data-color="blue"] {
+      background-color: var(--tag-color-blue);
+      color: white;
+  }
+
+  &[data-color="gray"] {
+      background-color: var(--tag-color-gray);
+      color: black;
+  }
+
+  &[data-color="violet"] {
+      background-color: var(--tag-color-violet);
+      color: white;
+  }
+
+  &[data-color="dark_green"] {
+      background-color: var(--tag-color-dark_green);
+      color: white;
+  }
+
+  &[data-color="dark_blue"] {
+      background-color: var(--tag-color-dark_blue);
+      color: white;
+  }
+
+  &[data-color="dark_gray"] {
+      background-color: var(--tag-color-dark_gray);
+      color: white;
+  }
+
+  &[data-color="black"] {
+      background-color: var(--tag-color-black);
+      color: white;
+  }
+}

@@ -1,0 +1,106 @@
+:root {
+    /* Sticky note color palette - some colors are shared with tags
+    so we may want to define a more global color palette */
+    --sticky-note-color-red: #ff5c5c;
+    --sticky-note-color-pink: #b9398e;
+    --sticky-note-color-light_pink: #ee9ed3;
+    --sticky-note-color-blue: #1f4ecf;
+    --sticky-note-color-light_blue: #9bd5ff;
+    --sticky-note-color-dark_blue: #00316e;
+    --sticky-note-color-cyan: #1dd0e8;
+    --sticky-note-color-green: #16ba3a;
+    --sticky-note-color-light_green: #74ff8d;
+    --sticky-note-color-dark_green: #004b02;
+    --sticky-note-color-yellow: #e6d329;
+    --sticky-note-color-light_yellow: #fbff80;
+    --sticky-note-color-orange: #d6951d;
+    --sticky-note-color-violet: #3410a2;
+    --sticky-note-color-gray: #a9a9a9;
+    --sticky-note-color-black: #0d0d0d;
+}
+
+.a11ywb-board-item__metadata-color {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+
+    &[data-color="red"] {
+        background-color: var(--sticky-note-color-red);
+        color: black;
+    }
+
+    &[data-color="pink"] {
+        background-color: var(--sticky-note-color-pink);
+        color: white;
+    }
+
+    &[data-color="light_pink"] {
+        background-color: var(--sticky-note-color-light_pink);
+        color: black;
+    }
+
+    &[data-color="blue"] {
+        background-color: var(--sticky-note-color-blue);
+        color: white;
+    }
+
+    &[data-color="light_blue"] {
+        background-color: var(--sticky-note-color-light_blue);
+        color: black;
+    }
+
+    &[data-color="dark_blue"] {
+        background-color: var(--sticky-note-color-dark_blue);
+        color: white;
+    }
+
+    &[data-color="cyan"] {
+        background-color: var(--sticky-note-color-cyan);
+        color: black;
+    }
+
+    &[data-color="green"] {
+        background-color: var(--sticky-note-color-green);
+        color: black;
+    }
+
+    &[data-color="light_green"] {
+        background-color: var(--sticky-note-color-light_green);
+        color: black;
+    }
+
+    &[data-color="dark_green"] {
+        background-color: var(--sticky-note-color-dark_green);
+        color: white;
+    }
+
+    &[data-color="yellow"] {
+        background-color: var(--sticky-note-color-yellow);
+        color: black;
+    }
+
+    &[data-color="light_yellow"] {
+        background-color: var(--sticky-note-color-light_yellow);
+        color: black;
+    }
+    
+    &[data-color="orange"] {
+        background-color: var(--sticky-note-color-orange);
+        color: black;
+    }
+
+    &[data-color="violet"] {
+        background-color: var(--sticky-note-color-violet);
+        color: white;
+    }
+
+    &[data-color="gray"] {
+        background-color: var(--sticky-note-color-gray);
+        color: black;
+    }
+
+    &[data-color="black"] {
+        background-color: var(--sticky-note-color-black);
+        color: white;
+    }
+}
