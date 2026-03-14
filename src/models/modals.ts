@@ -54,3 +54,10 @@ export type MoveModalProperties = {
   title: string;
   item: Item;
 };
+
+export type ModalProperties =
+  | AddModalProperties
+  | ConnectModalProperties
+  | DeleteModalProperties
+  | EditModalProperties
+  | MoveModalProperties;

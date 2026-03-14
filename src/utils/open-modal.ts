@@ -8,11 +8,13 @@ import {
   MoveModalProperties,
 } from '@models/modals';
 
+const MODAL_URL = 'modals/index.html';
+
 export const openAddModal = async (props: Omit<AddModalProperties, 'action'>) => {
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<AddModalProperties>({
       data: { ...props, action: 'add' },
-      url: 'modals/add-dialog.html',
+      url: MODAL_URL,
       width: 600,
       height: 400,
       fullscreen: false,

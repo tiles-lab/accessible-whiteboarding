@@ -5,7 +5,10 @@ export const handleToast = (message) => {
         successMessage.textContent = message
     
         setTimeout(async () => {
-            await miro.board.ui.closeModal()
-        }, 3000)
+            const modalIsClosed = await miro.board.ui.canOpenModal();
+                if (!modalIsClosed) {
+                    await miro.board.ui.closeModal();
+                }
+        }, 2000)
     }
 }
