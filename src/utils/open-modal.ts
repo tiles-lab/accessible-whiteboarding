@@ -52,7 +52,7 @@ export const openEditModal = async <T extends Item>(
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<EditModalProperties<T>>({
       data: { ...props, action: 'edit' },
-      url: 'modals/edit-dialog.html',
+      url: MODAL_URL,
       width: 600,
       height: 400,
       fullscreen: false,

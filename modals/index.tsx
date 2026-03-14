@@ -4,6 +4,7 @@ import { ModalProperties } from '../src/models/modals';
 import { AddModal } from './components/AddModal';
 import { ConnectModal } from './components/ConnectModal';
 import { DeleteModal } from './components/DeleteModal';
+import { EditModal } from './components/EditModal';
 
 const App: React.FC = () => {
   const title = React.useRef<HTMLHeadingElement | null>(null);
@@ -72,6 +73,10 @@ const App: React.FC = () => {
               handleToast={handleToast}
               modalData={modalData}
             />
+          );
+        case 'edit':
+          return (
+            <EditModal handleError={handleError} handleToast={handleToast} modalData={modalData} />
           );
         default:
           return <></>;
