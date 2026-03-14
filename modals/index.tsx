@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { ModalProperties } from '../src/models/modals';
 import { AddModal } from './components/AddModal';
+import { ConnectModal } from './components/ConnectModal';
 
 const App: React.FC = () => {
   const title = React.useRef<HTMLHeadingElement | null>(null);
@@ -54,6 +55,14 @@ const App: React.FC = () => {
         case 'add':
           return (
             <AddModal handleError={handleError} handleToast={handleToast} modalData={modalData} />
+          );
+        case 'connect':
+          return (
+            <ConnectModal
+              handleError={handleError}
+              handleToast={handleToast}
+              modalData={modalData}
+            />
           );
         default:
           return <></>;

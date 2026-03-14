@@ -26,7 +26,7 @@ export const openConnectModal = async (props: Omit<ConnectModalProperties, 'acti
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<ConnectModalProperties>({
       data: { ...props, action: 'connect' },
-      url: 'modals/connections-dialog.html',
+      url: MODAL_URL,
       width: 600,
       height: 400,
       fullscreen: false,
