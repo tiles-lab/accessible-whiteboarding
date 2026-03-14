@@ -38,7 +38,7 @@ export const openDeleteModal = async (props: Omit<DeleteModalProperties, 'action
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<DeleteModalProperties>({
       data: { ...props, action: 'delete' },
-      url: 'modals/delete-dialog.html',
+      url: MODAL_URL,
       width: 350,
       height: 150,
       fullscreen: false,

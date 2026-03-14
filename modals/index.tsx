@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ModalProperties } from '../src/models/modals';
 import { AddModal } from './components/AddModal';
 import { ConnectModal } from './components/ConnectModal';
+import { DeleteModal } from './components/DeleteModal';
 
 const App: React.FC = () => {
   const title = React.useRef<HTMLHeadingElement | null>(null);
@@ -59,6 +60,14 @@ const App: React.FC = () => {
         case 'connect':
           return (
             <ConnectModal
+              handleError={handleError}
+              handleToast={handleToast}
+              modalData={modalData}
+            />
+          );
+        case 'delete':
+          return (
+            <DeleteModal
               handleError={handleError}
               handleToast={handleToast}
               modalData={modalData}
