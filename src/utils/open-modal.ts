@@ -64,7 +64,7 @@ export const openMoveModal = async (props: Omit<MoveModalProperties, 'action'>) 
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<MoveModalProperties>({
       data: { ...props, action: 'move' },
-      url: 'modals/move-dialog.html',
+      url: MODAL_URL,
       width: 600,
       height: 400,
       fullscreen: false,
