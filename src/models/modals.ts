@@ -47,15 +47,8 @@ export type EditModalProperties<T extends EditableItems = EditableItems> = {
   fields: EditFormField<T>[];
 };
 
-export type MoveModalProperties = {
-  action: 'move';
-  title: string;
-  item: Item;
-};
-
 export type ModalProperties =
   | AddModalProperties
   | ConnectModalProperties
   | DeleteModalProperties
-  | EditModalProperties
-  | MoveModalProperties;
+  | EditModalProperties;

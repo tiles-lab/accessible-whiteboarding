@@ -4,7 +4,6 @@ import {
   DeleteModalProperties,
   EditableItems,
   EditModalProperties,
-  MoveModalProperties,
 } from '@models/modals';
 
 const MODAL_URL = 'modals/index.html';
@@ -51,18 +50,6 @@ export const openEditModal = async <T extends EditableItems>(
   if (await miro.board.ui.canOpenModal()) {
     await miro.board.ui.openModal<EditModalProperties<T>>({
       data: { ...props, action: 'edit' },
-      url: MODAL_URL,
-      width: 600,
-      height: 400,
-      fullscreen: false,
-    });
-  }
-};
-
-export const openMoveModal = async (props: Omit<MoveModalProperties, 'action'>) => {
-  if (await miro.board.ui.canOpenModal()) {
-    await miro.board.ui.openModal<MoveModalProperties>({
-      data: { ...props, action: 'move' },
       url: MODAL_URL,
       width: 600,
       height: 400,

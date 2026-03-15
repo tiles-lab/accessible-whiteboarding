@@ -4,7 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
-import { openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
+import { openConnectModal, openDeleteModal, openEditModal } from '@utils/open-modal';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -199,17 +199,6 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
       <button
         type="button"
         onClick={() =>
-          openMoveModal({
-            item: hierarchyItem.item,
-            title: 'Move Text',
-          })
-        }
-      >
-        Move Text
-      </button>
-      <button
-        type="button"
-        onClick={() =>
           openConnectModal({
             item: hierarchyItem.item,
             title: 'Text Connections',
@@ -286,18 +275,6 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
         }
       >
         Edit Sticky Note
-      </button>
-
-      <button
-        type="button"
-        onClick={() =>
-          openMoveModal({
-            item: hierarchyItem.item,
-            title: 'Move Sticky Note',
-          })
-        }
-      >
-        Move Sticky Note
       </button>
 
       <button
