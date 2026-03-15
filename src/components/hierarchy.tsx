@@ -4,10 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
-import { editData } from '@utils/edit-data';
-import { deleteData } from '@utils/delete-data';
-import { moveData } from '@utils/move-data';
-import { connectData } from '@utils/connect-data';
+import { openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -175,7 +172,7 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
-      <button type="button" onClick={() => editData({
+      <button type="button" onClick={() => openEditModal({
         item: hierarchyItem.item,
         title: "Edit Text",
         fields: [
@@ -187,15 +184,15 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
           }
         ]
       })}>Edit Text</button>
-      <button type="button" onClick={() => moveData({
+      <button type="button" onClick={() => openMoveModal({
         item: hierarchyItem.item,
         title: "Move Text",
       })}>Move Text</button>
-      <button type="button" onClick={() => connectData({
+      <button type="button" onClick={() => openConnectModal({
         item: hierarchyItem.item,
         title: "Text Connections"
       })}>Text Connections</button>
-      <button type="button" onClick={() => deleteData({
+      <button type="button" onClick={() => openDeleteModal({
         id: hierarchyItem.id,
         title: 'Delete Text'
       })}>Delete Text</button>
@@ -220,7 +217,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
         <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>color: {colorLabel}</span>
         <Tags tags={hierarchyItem.tags} />
         
-        <button type="button" onClick={() => editData({
+        <button type="button" onClick={() => openEditModal({
           item: hierarchyItem.item,
           title: "Edit Sticky Note",
           fields: [
@@ -239,17 +236,17 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
           ]
         })}>Edit Sticky Note</button>
         
-        <button type="button" onClick={() => moveData({
+        <button type="button" onClick={() => openMoveModal({
           item: hierarchyItem.item,
           title: "Move Sticky Note",
         })}>Move Sticky Note</button>
         
-        <button type="button" onClick={() => connectData({
+        <button type="button" onClick={() => openConnectModal({
           item: hierarchyItem.item,
           title: "Sticky Note Connections"
         })}>Sticky Note Connections</button>
 
-        <button type="button" onClick={() => deleteData({
+        <button type="button" onClick={() => openDeleteModal({
           id: hierarchyItem.id,
           title: 'Delete Sticky Note'
         })}>Delete Sticky Note</button>
@@ -265,7 +262,7 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
 
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
   return <TreeBoardItem hierarchyItem={hierarchyItem}>
-    <button type="button" onClick={() => editData({
+    <button type="button" onClick={() => openEditModal({
       item: hierarchyItem.item,
       title: "Edit Frame",
       fields: [
@@ -278,7 +275,7 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
       ]
     })}>Edit Frame</button>
 
-    <button type="button" onClick={() => deleteData({
+    <button type="button" onClick={() => openDeleteModal({
       id: hierarchyItem.id,
       title: 'Delete Frame'
     })}>Delete Frame</button>

@@ -7,7 +7,7 @@ import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
 import { applyHierarchicalSearch, normalizeQuery } from '@utils/search';
-import { addData } from '@utils/add-data';
+import { openAddModal } from '@utils/open-modal';
 
 const fallbackData = SampleItems as Item[];
 // const fallbackData = SampleItemsConceptMap as Item[];
@@ -106,7 +106,7 @@ const App: React.FC = () => {
       />
 
       <h2>Add Item to Board</h2>
-      <button type="button" onClick={() => addData({
+      <button type="button" onClick={() => openAddModal({
         title: "Add Frame",
         frameFields: [
           {
@@ -137,7 +137,7 @@ const App: React.FC = () => {
         ]
       })}>Add Frame</button>
 
-      <button type="button" onClick={() => addData({
+      <button type="button" onClick={() => openAddModal({
         title: "Add Sticky Note",
         stickyNoteFields: [
           {
@@ -156,7 +156,7 @@ const App: React.FC = () => {
         ]
       })}>Add Sticky Note</button>
 
-      <button type="button" onClick={() => addData({
+      <button type="button" onClick={() => openAddModal({
         title: "Add Text",
         textFields: [
           {
