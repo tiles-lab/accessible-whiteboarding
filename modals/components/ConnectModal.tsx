@@ -8,7 +8,7 @@ type ConnectModalProps = {
   modalData: ConnectModalProperties;
 };
 
-type ItemWithoutConnector = Exclude<Item, Connector | Group | Tag>;
+export type ItemWithoutConnector = Exclude<Item, Connector | Group | Tag>;
 
 type ConnectorWithConnectionData = {
   connector: Connector;

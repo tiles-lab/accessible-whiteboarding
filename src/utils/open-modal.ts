@@ -1,9 +1,8 @@
-import { Item } from '@mirohq/websdk-types';
-
 import {
   AddModalProperties,
   ConnectModalProperties,
   DeleteModalProperties,
+  EditableItems,
   EditModalProperties,
   MoveModalProperties,
 } from '@models/modals';
@@ -46,7 +45,7 @@ export const openDeleteModal = async (props: Omit<DeleteModalProperties, 'action
   }
 };
 
-export const openEditModal = async <T extends Item>(
+export const openEditModal = async <T extends EditableItems>(
   props: Omit<EditModalProperties<T>, 'action'>,
 ) => {
   if (await miro.board.ui.canOpenModal()) {
