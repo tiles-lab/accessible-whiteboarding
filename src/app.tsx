@@ -106,70 +106,91 @@ const App: React.FC = () => {
       />
 
       <h2>Add Item to Board</h2>
-      <button type="button" onClick={() => openAddModal({
-        title: "Add Frame",
-        frameFields: [
-          {
-            fieldName: 'title',
-            fieldType: 'text',
-            required: true
-          },
-          {
-            fieldName: 'style.fillColor',
-            fieldType: 'color'
-          },
-          {
-            fieldName: 'width',
-            fieldType: 'number',
-            required: true,
-            inputProps: {
-              value: 700
-            }
-          },
-          {
-            fieldName: 'height',
-            fieldType: 'number',
-            required: true,
-            inputProps: {
-              value: 500
-            }
-          }
-        ]
-      })}>Add Frame</button>
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Frame',
+            frameFields: [
+              {
+                fieldName: 'title',
+                fieldType: 'text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color',
+              },
+              {
+                fieldName: 'width',
+                fieldType: 'number',
+                required: true,
+                inputProps: {
+                  value: 700,
+                },
+              },
+              {
+                fieldName: 'height',
+                fieldType: 'number',
+                required: true,
+                inputProps: {
+                  value: 500,
+                },
+              },
+            ],
+          })
+        }
+      >
+        Add Frame
+      </button>
 
-      <button type="button" onClick={() => openAddModal({
-        title: "Add Sticky Note",
-        stickyNoteFields: [
-          {
-            fieldName: 'content',
-            fieldType: 'text',
-            required: true
-          },
-          {
-            fieldName: 'style.fillColor',
-            fieldType: 'color_map'
-          },
-          {
-            fieldName: 'parentId',
-            fieldType: 'parent'
-          }
-        ]
-      })}>Add Sticky Note</button>
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Sticky Note',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+              },
+              {
+                fieldName: 'parentId',
+                fieldType: 'parent',
+              },
+            ],
+          })
+        }
+      >
+        Add Sticky Note
+      </button>
 
-      <button type="button" onClick={() => openAddModal({
-        title: "Add Text",
-        textFields: [
-          {
-            fieldName: 'content',
-            fieldType: 'text',
-            required: true
-          },
-          {
-            fieldName: 'parentId',
-            fieldType: 'parent'
-          }
-        ]
-      })}>Add Text</button>
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Text',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'parentId',
+                fieldType: 'parent',
+              },
+            ],
+          })
+        }
+      >
+        Add Text
+      </button>
     </main>
   );
 };

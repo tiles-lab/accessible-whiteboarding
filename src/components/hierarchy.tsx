@@ -81,9 +81,12 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 };
 
 const getItemLabel = (hierarchyItem: HierarchyItem) => {
-  const usesRichText = hierarchyItem?.label?.startsWith('<p>')
-  const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId)
-  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel
+  const usesRichText =
+    hierarchyItem?.label?.startsWith('<p>') ||
+    hierarchyItem?.label?.startsWith('<ul>') ||
+    hierarchyItem?.label?.startsWith('<ol>');
+  const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId);
+  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
 
   if (usesRichText && hasParent) {
     return (
@@ -172,36 +175,68 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
-      <button type="button" onClick={() => openEditModal({
-        item: hierarchyItem.item,
-        title: "Edit Text",
-        fields: [
-          {
-            fieldName: 'content',
-            currentValue: hierarchyItem.label,
-            fieldType: 'text',
-            required: true
-          }
-        ]
-      })}>Edit Text</button>
-      <button type="button" onClick={() => openMoveModal({
-        item: hierarchyItem.item,
-        title: "Move Text",
-      })}>Move Text</button>
-      <button type="button" onClick={() => openConnectModal({
-        item: hierarchyItem.item,
-        title: "Text Connections"
-      })}>Text Connections</button>
-      <button type="button" onClick={() => openDeleteModal({
-        id: hierarchyItem.id,
-        title: 'Delete Text'
-      })}>Delete Text</button>
+      <button
+        type="button"
+        onClick={() =>
+          openEditModal({
+            item: hierarchyItem.item,
+            title: 'Edit Text',
+            fields: [
+              {
+                fieldName: 'content',
+                currentValue: hierarchyItem.label,
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+          })
+        }
+      >
+        Edit Text
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openMoveModal({
+            item: hierarchyItem.item,
+            title: 'Move Text',
+          })
+        }
+      >
+        Move Text
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openConnectModal({
+            item: hierarchyItem.item,
+            title: 'Text Connections',
+          })
+        }
+      >
+        Text Connections
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openDeleteModal({
+            id: hierarchyItem.id,
+            title: 'Delete Text',
+          })
+        }
+      >
+        Delete Text
+      </button>
 
-      {hierarchyChildren?.length ?
-      <ul>
-        {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
-      </ul>
-     : null}
+      {hierarchyChildren?.length ? (
+        <ul>
+          {hierarchyChildren.map((child) => (
+            <li key={child.id}>
+              <Hierarchy hierarchyItem={child} />
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </BoardItem>
   );
 };
@@ -214,42 +249,72 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
-        <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>color: {colorLabel}</span>
-        <Tags tags={hierarchyItem.tags} />
-        
-        <button type="button" onClick={() => openEditModal({
-          item: hierarchyItem.item,
-          title: "Edit Sticky Note",
-          fields: [
-            {
-              fieldName: 'content',
-              currentValue: hierarchyItem.label,
-              fieldType: 'text',
-              required: true
-            },
-            {
-              fieldName: 'style.fillColor',
-              currentValue: hierarchyItem.item.style.fillColor,
-              fieldType: 'color_map',
-              required: false
-            }
-          ]
-        })}>Edit Sticky Note</button>
-        
-        <button type="button" onClick={() => openMoveModal({
-          item: hierarchyItem.item,
-          title: "Move Sticky Note",
-        })}>Move Sticky Note</button>
-        
-        <button type="button" onClick={() => openConnectModal({
-          item: hierarchyItem.item,
-          title: "Sticky Note Connections"
-        })}>Sticky Note Connections</button>
+      <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>
+        color: {colorLabel}
+      </span>
+      <Tags tags={hierarchyItem.tags} />
 
-        <button type="button" onClick={() => openDeleteModal({
-          id: hierarchyItem.id,
-          title: 'Delete Sticky Note'
-        })}>Delete Sticky Note</button>
+      <button
+        type="button"
+        onClick={() =>
+          openEditModal({
+            item: hierarchyItem.item,
+            title: 'Edit Sticky Note',
+            fields: [
+              {
+                fieldName: 'content',
+                currentValue: hierarchyItem.label,
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                currentValue: hierarchyItem.item.style.fillColor,
+                fieldType: 'color_map',
+                required: false,
+              },
+            ],
+          })
+        }
+      >
+        Edit Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openMoveModal({
+            item: hierarchyItem.item,
+            title: 'Move Sticky Note',
+          })
+        }
+      >
+        Move Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openConnectModal({
+            item: hierarchyItem.item,
+            title: 'Sticky Note Connections',
+          })
+        }
+      >
+        Sticky Note Connections
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openDeleteModal({
+            id: hierarchyItem.id,
+            title: 'Delete Sticky Note',
+          })
+        }
+      >
+        Delete Sticky Note
+      </button>
     </TreeBoardItem>
   );
 };
