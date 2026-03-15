@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ColorOptions } from './ColorOptions';
+import { RichTextInput } from './RichTextInput';
 import type { AddModalProperties, EditModalProperties } from '../../src/models/modals';
 import { Frame } from '@mirohq/websdk-types';
 
@@ -86,6 +87,27 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
             ))}
           </select>
         </label>
+      );
+
+    case 'rich_text':
+      return (
+        <RichTextInput
+          fieldName={field.fieldName}
+          required={required}
+          currentValue={currentValue}
+          label={readableFieldName}
+        />
+      );
+
+    case 'extended_rich_text':
+      return (
+        <RichTextInput
+          fieldName={field.fieldName}
+          required={required}
+          currentValue={currentValue}
+          label={readableFieldName}
+          extended
+        />
       );
 
     default:

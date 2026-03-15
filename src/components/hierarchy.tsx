@@ -47,16 +47,13 @@ export interface TreeBoardItemProps {
 
 const HierarchyListItem: React.FC<{ item: HierarchyItem }> = ({ item }) => {
   return (
-  <li className="a11ywb-navigation-list__item" data-search-match={item.metadata.searchMatch}>
-    <Hierarchy hierarchyItem={item} />
-  </li>);
+    <li className="a11ywb-navigation-list__item" data-search-match={item.metadata.searchMatch}>
+      <Hierarchy hierarchyItem={item} />
+    </li>
+  );
 };
 
-export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
-  type,
-  label,
-  children,
-}) => {
+export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, children }) => {
   const listItems = children ?? [];
 
   return (
@@ -69,9 +66,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
         {listItems.length > 0 && (
           <ul>
             {listItems.length > 0 &&
-              listItems.map(listItem => (
-                <HierarchyListItem key={listItem.id} item={listItem} />
-              ))}
+              listItems.map((listItem) => <HierarchyListItem key={listItem.id} item={listItem} />)}
           </ul>
         )}
         {listItems.length === 0 && <p>This board has no items.</p>}
@@ -81,25 +76,30 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
 };
 
 const getItemLabel = (hierarchyItem: HierarchyItem) => {
-  const usesRichText = hierarchyItem?.label?.startsWith('<p>')
-  const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId)
-  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel
+  const usesRichText =
+    hierarchyItem?.label?.startsWith('<p>') ||
+    hierarchyItem?.label?.startsWith('<ul>') ||
+    hierarchyItem?.label?.startsWith('<ol>');
+  const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId);
+  const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
 
   if (usesRichText && hasParent) {
     return (
       <>
         <h3>{itemTypeLabel}</h3>
-        <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} /> 
+        <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
       </>
-    )
+    );
   }
 
   if (!usesRichText && hasParent) {
     return (
       <>
-        <h3>{itemTypeLabel}: {hierarchyItem.label}</h3>
+        <h3>
+          {itemTypeLabel}: {hierarchyItem.label}
+        </h3>
       </>
-    )
+    );
   }
 
   if (usesRichText && !hasParent) {
@@ -108,11 +108,15 @@ const getItemLabel = (hierarchyItem: HierarchyItem) => {
         <h2>{itemTypeLabel}</h2>
         <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
       </>
-    )
+    );
   }
 
-  return <h2>{itemTypeLabel}: {hierarchyItem.label}</h2>
-}
+  return (
+    <h2>
+      {itemTypeLabel}: {hierarchyItem.label}
+    </h2>
+  );
+};
 
 const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) => {
   return (
@@ -121,26 +125,27 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
       {children}
     </article>
   );
-}
+};
 
 const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
   const listItems = hierarchyItem.children ?? [];
   const metadata = hierarchyItem.metadata;
 
   return (
-    <details 
+    <details
       className={`a11ywb-accordion a11ywb-board-item a11ywb-board-item--type-${hierarchyItem.type}`}
       open={!!metadata.searchMatch && metadata.searchMatch !== 'default'}
-      data-subtype={subtype}>
+      data-subtype={subtype}
+    >
       <summary className="a11ywb-accordion-header">
         {getItemLabel(hierarchyItem)}
 
         <div className="a11ywb-board-item__metadata">
-          
-          {metadata && (<>
-            <p>{hierarchyItem.metadata?.treeChildCount} total sub-topics</p>
-            <p>{hierarchyItem.metadata?.treeConnectionHeight} levels deep</p>
-          </>
+          {metadata && (
+            <>
+              <p>{hierarchyItem.metadata?.treeChildCount} total sub-topics</p>
+              <p>{hierarchyItem.metadata?.treeConnectionHeight} levels deep</p>
+            </>
           )}
           {children}
         </div>
@@ -150,9 +155,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
         {listItems.length > 0 && (
           <ul>
             {listItems.length > 0 &&
-              listItems.map(listItem => (
-                <HierarchyListItem key={listItem.id} item={listItem} />
-              ))}
+              listItems.map((listItem) => <HierarchyListItem key={listItem.id} item={listItem} />)}
           </ul>
         )}
         {listItems.length === 0 && <p>There are no child items.</p>}
@@ -162,124 +165,196 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
 };
 
 const UnsupportedTypeBoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem }) => {
-  return (
-    <BoardItem hierarchyItem={hierarchyItem} />
-  );
+  return <BoardItem hierarchyItem={hierarchyItem} />;
 };
 
 const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) => {
-  const hierarchyChildren = hierarchyItem.children ?? []
+  const hierarchyChildren = hierarchyItem.children ?? [];
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
-      <button type="button" onClick={() => openEditModal({
-        item: hierarchyItem.item,
-        title: "Edit Text",
-        fields: [
-          {
-            fieldName: 'content',
-            currentValue: hierarchyItem.label,
-            fieldType: 'text',
-            required: true
-          }
-        ]
-      })}>Edit Text</button>
-      <button type="button" onClick={() => openMoveModal({
-        item: hierarchyItem.item,
-        title: "Move Text",
-      })}>Move Text</button>
-      <button type="button" onClick={() => openConnectModal({
-        item: hierarchyItem.item,
-        title: "Text Connections"
-      })}>Text Connections</button>
-      <button type="button" onClick={() => openDeleteModal({
-        id: hierarchyItem.id,
-        title: 'Delete Text'
-      })}>Delete Text</button>
+      <button
+        type="button"
+        onClick={() =>
+          openEditModal({
+            item: hierarchyItem.item,
+            title: 'Edit Text',
+            fields: [
+              {
+                fieldName: 'content',
+                currentValue: hierarchyItem.label,
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+          })
+        }
+      >
+        Edit Text
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openMoveModal({
+            item: hierarchyItem.item,
+            title: 'Move Text',
+          })
+        }
+      >
+        Move Text
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openConnectModal({
+            item: hierarchyItem.item,
+            title: 'Text Connections',
+          })
+        }
+      >
+        Text Connections
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openDeleteModal({
+            id: hierarchyItem.id,
+            title: 'Delete Text',
+          })
+        }
+      >
+        Delete Text
+      </button>
 
-      {hierarchyChildren?.length ?
-      <ul>
-        {hierarchyChildren.map(child => (<li key={child.id}><Hierarchy hierarchyItem={child}/></li>))}
-      </ul>
-     : null}
+      {hierarchyChildren?.length ? (
+        <ul>
+          {hierarchyChildren.map((child) => (
+            <li key={child.id}>
+              <Hierarchy hierarchyItem={child} />
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </BoardItem>
   );
 };
 
-const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({
-  hierarchyItem,
-}) => {
+const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hierarchyItem }) => {
   const colorKey = hierarchyItem.item?.style.fillColor;
   const colorLabel = getColorConfig(hierarchyItem.item)?.displayLabel;
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
-        <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>color: {colorLabel}</span>
-        <Tags tags={hierarchyItem.tags} />
-        
-        <button type="button" onClick={() => openEditModal({
-          item: hierarchyItem.item,
-          title: "Edit Sticky Note",
-          fields: [
-            {
-              fieldName: 'content',
-              currentValue: hierarchyItem.label,
-              fieldType: 'text',
-              required: true
-            },
-            {
-              fieldName: 'style.fillColor',
-              currentValue: hierarchyItem.item.style.fillColor,
-              fieldType: 'color_map',
-              required: false
-            }
-          ]
-        })}>Edit Sticky Note</button>
-        
-        <button type="button" onClick={() => openMoveModal({
-          item: hierarchyItem.item,
-          title: "Move Sticky Note",
-        })}>Move Sticky Note</button>
-        
-        <button type="button" onClick={() => openConnectModal({
-          item: hierarchyItem.item,
-          title: "Sticky Note Connections"
-        })}>Sticky Note Connections</button>
+      <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>
+        color: {colorLabel}
+      </span>
+      <Tags tags={hierarchyItem.tags} />
 
-        <button type="button" onClick={() => openDeleteModal({
-          id: hierarchyItem.id,
-          title: 'Delete Sticky Note'
-        })}>Delete Sticky Note</button>
+      <button
+        type="button"
+        onClick={() =>
+          openEditModal({
+            item: hierarchyItem.item,
+            title: 'Edit Sticky Note',
+            fields: [
+              {
+                fieldName: 'content',
+                currentValue: hierarchyItem.label,
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                currentValue: hierarchyItem.item.style.fillColor,
+                fieldType: 'color_map',
+                required: false,
+              },
+            ],
+          })
+        }
+      >
+        Edit Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openMoveModal({
+            item: hierarchyItem.item,
+            title: 'Move Sticky Note',
+          })
+        }
+      >
+        Move Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openConnectModal({
+            item: hierarchyItem.item,
+            title: 'Sticky Note Connections',
+          })
+        }
+      >
+        Sticky Note Connections
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openDeleteModal({
+            id: hierarchyItem.id,
+            title: 'Delete Sticky Note',
+          })
+        }
+      >
+        Delete Sticky Note
+      </button>
     </TreeBoardItem>
   );
 };
 
-const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({
-  hierarchyItem,
-}) => {
-  return <TreeBoardItem hierarchyItem={hierarchyItem} subtype="cluster" />
+const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({ hierarchyItem }) => {
+  return <TreeBoardItem hierarchyItem={hierarchyItem} subtype="cluster" />;
 };
 
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
-  return <TreeBoardItem hierarchyItem={hierarchyItem}>
-    <button type="button" onClick={() => openEditModal({
-      item: hierarchyItem.item,
-      title: "Edit Frame",
-      fields: [
-        {
-          fieldName: 'title',
-          currentValue: hierarchyItem.label,
-          fieldType: 'text',
-          required: true
+  return (
+    <TreeBoardItem hierarchyItem={hierarchyItem}>
+      <button
+        type="button"
+        onClick={() =>
+          openEditModal({
+            item: hierarchyItem.item,
+            title: 'Edit Frame',
+            fields: [
+              {
+                fieldName: 'title',
+                currentValue: hierarchyItem.label,
+                fieldType: 'text',
+                required: true,
+              },
+            ],
+          })
         }
-      ]
-    })}>Edit Frame</button>
+      >
+        Edit Frame
+      </button>
 
-    <button type="button" onClick={() => openDeleteModal({
-      id: hierarchyItem.id,
-      title: 'Delete Frame'
-    })}>Delete Frame</button>
-  </TreeBoardItem>
+      <button
+        type="button"
+        onClick={() =>
+          openDeleteModal({
+            id: hierarchyItem.id,
+            title: 'Delete Frame',
+          })
+        }
+      >
+        Delete Frame
+      </button>
+    </TreeBoardItem>
+  );
 };
 
 const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
@@ -301,9 +376,7 @@ const Hierarchy: React.FC<HierarchyProps> = ({ hierarchyItem }) => {
     return <StickyNoteTypeBoardItem hierarchyItem={hierarchyItem as HierarchyItem<StickyNote>} />;
   }
 
-  return (
-    <UnsupportedTypeBoardItem hierarchyItem={hierarchyItem} />
-  );
+  return <UnsupportedTypeBoardItem hierarchyItem={hierarchyItem} />;
 };
 
 export default Hierarchy;
