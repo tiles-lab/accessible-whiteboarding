@@ -9,7 +9,7 @@ type NestedKeyOf<T> = {
 
 type AddFormField<T extends Frame | StickyNote | Text> = {
   fieldName: NestedKeyOf<ItemsProps<T>>;
-  fieldType: 'text' | 'color' | 'color_map' | 'number' | 'parent';
+  fieldType: 'text' | 'color' | 'color_map' | 'number' | 'parent' | 'rich_text';
   required?: boolean;
   inputProps?: Record<string, string | number | boolean>;
 };
@@ -17,7 +17,7 @@ type AddFormField<T extends Frame | StickyNote | Text> = {
 type EditFormField<T extends Item> = {
   fieldName: NestedKeyOf<ItemsProps<T>>;
   currentValue?: string | number | boolean;
-  fieldType: 'text' | 'color' | 'color_map' | 'number';
+  fieldType: 'text' | 'color' | 'color_map' | 'number' | 'rich_text';
   required?: boolean;
   inputProps?: Record<string, string | number | boolean>;
 };

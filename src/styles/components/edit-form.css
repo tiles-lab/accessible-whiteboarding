@@ -57,3 +57,39 @@
 .ally-wb-hidden {
     display: none;
 }
+
+.ally-wb-rich-text-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.ally-wb-rich-text-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
+}
+
+.ally-wb-rich-text-btn {
+    padding: 0.2em 0.5em;
+    font-size: 0.85em;
+    cursor: pointer;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    background: transparent;
+    line-height: 1.4;
+}
+
+.ally-wb-rich-text-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.ally-wb-rich-text-editor {
+    min-height: 6em;
+    padding: 0.4em 0.5em;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
