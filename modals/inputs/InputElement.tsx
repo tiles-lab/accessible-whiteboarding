@@ -82,7 +82,9 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
           <select name={field.fieldName} id={field.fieldName} required={required}>
             <option value="">Board</option>
             {parentFrames?.map((parent) => (
-              <option value={parent.id}>{parent.title}</option>
+              <option value={parent.id} selected={currentValue === parent.id}>
+                {parent.title}
+              </option>
             ))}
           </select>
         </label>

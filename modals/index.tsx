@@ -5,7 +5,6 @@ import { AddModal } from './components/AddModal';
 import { ConnectModal } from './components/ConnectModal';
 import { DeleteModal } from './components/DeleteModal';
 import { EditModal } from './components/EditModal';
-import { MoveModal } from './components/MoveModal';
 
 const App: React.FC = () => {
   const title = React.useRef<HTMLHeadingElement | null>(null);
@@ -78,10 +77,6 @@ const App: React.FC = () => {
         case 'edit':
           return (
             <EditModal handleError={handleError} handleToast={handleToast} modalData={modalData} />
-          );
-        case 'move':
-          return (
-            <MoveModal handleError={handleError} handleToast={handleToast} modalData={modalData} />
           );
         default:
           return <></>;
