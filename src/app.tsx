@@ -14,21 +14,21 @@ const fallbackData = SampleItems as Item[];
 
 async function listBoardItems(): Promise<Item[]> {
   return new Promise((resolve) => {
-    miro.board.get()
-      .then(items => resolve(items))
+    miro.board
+      .get()
+      .then((items) => resolve(items))
       .catch(() => resolve(fallbackData));
-    
+
     setTimeout(() => resolve(fallbackData), 50);
   });
 }
 
 const App: React.FC = () => {
-
   const [items, setItems] = React.useState<Item[]>([]);
 
   React.useEffect(() => {
     console.log('Listing board items...');
-    listBoardItems().then(boardItems => {
+    listBoardItems().then((boardItems) => {
       setItems(boardItems);
       console.log(`Found ${boardItems.length}`);
     });
@@ -36,28 +36,28 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     window.addEventListener('storage', () => {
-      const updatedItems = window.sessionStorage.getItem('updated_miro_items')
+      const updatedItems = window.sessionStorage.getItem('updated_miro_items');
       if (updatedItems) {
         try {
-          const parsedItems: Item[] = JSON.parse(updatedItems)
-          const parsedIds: Item['id'][] = parsedItems.map(item => item.id)
+          const parsedItems: Item[] = JSON.parse(updatedItems);
+          const parsedIds: Item['id'][] = parsedItems.map((item) => item.id);
 
           if (parsedItems) {
-            setItems([...items.filter(item => !parsedIds.includes(item.id)), ...parsedItems])
+            setItems([...items.filter((item) => !parsedIds.includes(item.id)), ...parsedItems]);
           }
         } catch (e) {
-          console.error('Error parsing updated item: ', e)
+          console.error('Error parsing updated item: ', e);
         }
       }
-    })
+    });
 
-    miro.board.ui.on('items:create', async event => {
+    miro.board.ui.on('items:create', async (event) => {
       setItems([...items, ...event.items]);
     });
 
-    miro.board.ui.on('items:delete', async event => {
-      setItems(items.filter(item => item.id !== event.items?.[0]?.id))
-    })
+    miro.board.ui.on('items:delete', async (event) => {
+      setItems(items.filter((item) => item.id !== event.items?.[0]?.id));
+    });
   }, [items]);
 
   const hierarchyBoard = React.useMemo(() => {
@@ -77,27 +77,26 @@ const App: React.FC = () => {
     acc += child.metadata.treeChildCount + 1;
     return acc;
   }, 0);
-  
+
   const [query, setQuery] = React.useState('');
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const normalizedQuery = normalizeQuery(e.target.value);
-    
+
     setQuery(normalizedQuery);
     applyHierarchicalSearch(hierarchyBoard.children, normalizedQuery);
   };
 
   return (
     <main className="a11ywb-app-container">
-      <h1 className="a11ywb-app-title">
-        List of Navigable Items (count: {navigableItemCount})
-      </h1>
+      <h1 className="a11ywb-app-title">List of Navigable Items (count: {navigableItemCount})</h1>
 
-      <input 
-        type="text" 
-        value={query} 
-        onChange={handleSearch} 
-        placeholder="Search by label, tag, color" />
+      <input
+        type="text"
+        value={query}
+        onChange={handleSearch}
+        placeholder="Search by label, tag, color"
+      />
 
       <HierarchyBoard
         type={hierarchyBoard.type as ItemType}
