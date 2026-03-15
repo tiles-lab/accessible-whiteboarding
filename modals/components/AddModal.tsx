@@ -67,7 +67,6 @@ export const AddModal = (props: AddModalProps) => {
       if (dataType === 'text') {
         newItem = await miro.board.createText({
           content: formData.get('content') as string,
-          parentId: formData.get('parentId') as string,
         });
       }
 
