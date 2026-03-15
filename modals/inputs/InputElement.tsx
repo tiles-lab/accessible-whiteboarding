@@ -99,6 +99,17 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
         />
       );
 
+    case 'extended_rich_text':
+      return (
+        <RichTextInput
+          fieldName={field.fieldName}
+          required={required}
+          currentValue={currentValue}
+          label={readableFieldName}
+          extended
+        />
+      );
+
     default:
       return (
         <label className="ally-wb-edit-form-label">
