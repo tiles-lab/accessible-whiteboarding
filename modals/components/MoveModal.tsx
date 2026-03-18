@@ -1,6 +1,7 @@
 import { MoveModalProperties } from '../../src/models/modals';
 import { Connector, Frame, Group, Item, Tag } from '@mirohq/websdk-types';
 import { useEffect, useState } from 'react';
+import { notifyBoardUpdate } from '../../src/utils/board-sync';
 
 type MoveModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -42,14 +43,7 @@ export const MoveModal = (props: MoveModalProps) => {
       await item.sync();
       await frame.add(item);
 
-      window.sessionStorage.setItem(
-        'updated_miro_items',
-        JSON.stringify([
-          { ...frame, childrenIds: [...frame.childrenIds, item.id] },
-          { ...item, parentId: frame.id },
-        ]),
-      );
-
+      notifyBoardUpdate();
       handleToast('Item moved');
     } catch (error) {
       handleError('Error moving item', error);
@@ -63,14 +57,7 @@ export const MoveModal = (props: MoveModalProps) => {
 
       await frame.remove(item);
 
-      window.sessionStorage.setItem(
-        'updated_miro_items',
-        JSON.stringify([
-          { ...frame, childrenIds: frame.childrenIds.filter((id) => id !== item.id) },
-          { ...item, parentId: null },
-        ]),
-      );
-
+      notifyBoardUpdate();
       handleToast('Item moved');
     } catch (error) {
       handleError('Error moving item', error);

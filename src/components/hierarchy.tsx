@@ -174,6 +174,7 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
       <button
+        id={`edit-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openEditModal({
@@ -193,6 +194,7 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
         Edit Text
       </button>
       <button
+        id={`move-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openMoveModal({
@@ -204,6 +206,7 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
         Move Text
       </button>
       <button
+        id={`connect-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openConnectModal({
@@ -215,6 +218,7 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
         Text Connections
       </button>
       <button
+        id={`delete-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openDeleteModal({
@@ -251,6 +255,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       <Tags tags={hierarchyItem.tags} />
 
       <button
+        id={`edit-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openEditModal({
@@ -277,6 +282,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       </button>
 
       <button
+        id={`move-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openMoveModal({
@@ -289,6 +295,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       </button>
 
       <button
+        id={`connect-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openConnectModal({
@@ -301,6 +308,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       </button>
 
       <button
+        id={`delete-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openDeleteModal({
@@ -323,6 +331,7 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
       <button
+        id={`edit-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openEditModal({
@@ -343,6 +352,7 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
       </button>
 
       <button
+        id={`delete-${hierarchyItem.id}`}
         type="button"
         onClick={() =>
           openDeleteModal({

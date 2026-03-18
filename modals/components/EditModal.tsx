@@ -1,6 +1,7 @@
 import { EditModalProperties } from '../../src/models/modals';
 import { Item } from '@mirohq/websdk-types';
 import { FormEvent, useState } from 'react';
+import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
 
 type EditModalProps = {
@@ -41,7 +42,7 @@ export const EditModal = (props: EditModalProps) => {
       }
 
       await item.sync();
-      window.sessionStorage.setItem('updated_miro_items', JSON.stringify([item]));
+      notifyBoardUpdate();
       handleToast('Item edited');
     } catch (error) {
       handleError('Error editing item', error);
