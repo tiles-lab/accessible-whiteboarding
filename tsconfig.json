@@ -21,6 +21,7 @@
     "isolatedModules": true,
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@config/*": ["./src/config/*"],
       "@models/*": ["./src/models/*"],
       "@utils/*": ["./src/utils/*"],
       "@data/*": ["./data/*"]

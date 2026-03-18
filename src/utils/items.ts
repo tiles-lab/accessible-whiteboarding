@@ -1,25 +1,24 @@
-import type { Connector, Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
+import { Connector, Frame, Item, StickyNote, Tag, Text } from '@mirohq/websdk-types';
 import { CONNECTABLE_ITEM_TYPES, ConnectableItem, Connection, ItemType, ItemTypeConfig, ItemTypeConfigMap } from '@models/item';
 
 export function getLabel(item?: Item): string {
   let label: string | undefined = undefined;
 
   if (item) {
-    if (item.type === ItemType.StickyNote) {
-      label = (item as StickyNote).content || 'Empty';
+    if (isStickyNote(item)) {
+      label = item.content || 'Empty';
     }
 
-    if (item.type === ItemType.Frame) {
-      label = (item as Frame).title || 'No title';
+    if (isFrame(item)) {
+      label = item.title || 'No title';
     }
 
-    if (item.type === ItemType.Text) {
-      label = (item as Text).content || 'Empty';
+    if (isText(item)) {
+      label = item.content || 'Empty';
     }
 
-    if (item.type === ItemType.Connector) {
-      const connector = item as Connector;
-      label = `from ${connector.start?.item} to ${connector.end?.item}`;
+    if (isConnector(item)) {
+      label = `from ${item.start?.item} to ${item.end?.item}`;
     }
   }
 
@@ -36,4 +35,24 @@ export function getItemTypeConfig(itemType: ItemType): ItemTypeConfig | undefine
   const config = ItemTypeConfigMap[itemType];
 
   return config ?? itemType;
+}
+
+export function isStickyNote(item: Item): item is StickyNote {
+  return item.type === ItemType.StickyNote;
+}
+
+export function isFrame(item: Item): item is Frame {
+  return item.type === ItemType.Frame;
+}
+
+export function isText(item: Item): item is Text {
+  return item.type === ItemType.Frame;
+}
+
+export function isConnector(item: Item): item is Connector {
+  return item.type === ItemType.Connector;
+}
+
+export function isTag(item: Item): item is Tag {
+  return item.type === ItemType.Tag;
 }
