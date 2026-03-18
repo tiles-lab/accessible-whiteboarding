@@ -1,64 +1,18 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { type Item } from '@mirohq/websdk-types';
-import SampleItemsConceptMap from '@data/sample-items-concept-map.json';
 import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
 import { applyHierarchicalSearch, normalizeQuery } from '@utils/search';
 import { openAddModal } from '@utils/open-modal';
+import { useBoardItems } from './hooks/useBoardItems';
 
 const fallbackData = SampleItems as Item[];
-// const fallbackData = SampleItemsConceptMap as Item[];
-
-async function listBoardItems(): Promise<Item[]> {
-  return new Promise((resolve) => {
-    miro.board
-      .get()
-      .then((items) => resolve(items))
-      .catch(() => resolve(fallbackData));
-
-    setTimeout(() => resolve(fallbackData), 50);
-  });
-}
 
 const App: React.FC = () => {
-  const [items, setItems] = React.useState<Item[]>([]);
-
-  React.useEffect(() => {
-    console.log('Listing board items...');
-    listBoardItems().then((boardItems) => {
-      setItems(boardItems);
-      console.log(`Found ${boardItems.length}`);
-    });
-  }, []);
-
-  React.useEffect(() => {
-    window.addEventListener('storage', () => {
-      const updatedItems = window.sessionStorage.getItem('updated_miro_items');
-      if (updatedItems) {
-        try {
-          const parsedItems: Item[] = JSON.parse(updatedItems);
-          const parsedIds: Item['id'][] = parsedItems.map((item) => item.id);
-
-          if (parsedItems) {
-            setItems([...items.filter((item) => !parsedIds.includes(item.id)), ...parsedItems]);
-          }
-        } catch (e) {
-          console.error('Error parsing updated item: ', e);
-        }
-      }
-    });
-
-    miro.board.ui.on('items:create', async (event) => {
-      setItems([...items, ...event.items]);
-    });
-
-    miro.board.ui.on('items:delete', async (event) => {
-      setItems(items.filter((item) => item.id !== event.items?.[0]?.id));
-    });
-  }, [items]);
+  const items = useBoardItems(fallbackData);
 
   const hierarchyBoard = React.useMemo(() => {
     const children = buildConnectorHierarchy(items);

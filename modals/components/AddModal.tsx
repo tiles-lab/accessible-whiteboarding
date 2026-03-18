@@ -1,6 +1,7 @@
 import { AddModalProperties } from '../../src/models/modals';
 import { Frame, ItemType, StickyNoteColor } from '@mirohq/websdk-types';
 import { FormEvent, useEffect, useState } from 'react';
+import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
 
 type AddModalProps = {
@@ -79,19 +80,7 @@ export const AddModal = (props: AddModalProps) => {
         await newItem.sync();
         await parentFrame.add(newItem);
 
-        window.sessionStorage.setItem(
-          'updated_miro_items',
-          JSON.stringify([
-            {
-              ...parentFrame,
-              childrenIds: [...parentFrame.childrenIds, newItem.id],
-            },
-            {
-              ...newItem,
-              parentId: parentFrame.id,
-            },
-          ]),
-        );
+        notifyBoardUpdate();
       }
 
       handleToast('Item added');
