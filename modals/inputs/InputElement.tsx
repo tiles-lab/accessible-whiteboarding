@@ -27,6 +27,7 @@ const getReadableFieldName = (fieldName: string): string => {
 
 export const InputElement = (props: InputElementProps): React.ReactElement | null => {
   const { field, parentFrames } = props;
+  const defaultValue = 'defaultValue' in field ? (field.defaultValue as string | undefined) : undefined;
   const currentValue =
     'currentValue' in field ? (field.currentValue as string | undefined) : undefined;
   const [colorEnabled, setColorEnabled] = useState(Boolean(currentValue));
@@ -40,7 +41,7 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
         <label className="ally-wb-edit-form-label">
           <span className="ally-wb-edit-form-label-text">{readableFieldName}</span>
           <select name={field.fieldName} id={field.fieldName} required={required}>
-            <ColorOptions currentColor={currentValue ?? ''} />
+            <ColorOptions currentColor={currentValue ?? defaultValue ?? ''} />
           </select>
         </label>
       );

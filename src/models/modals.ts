@@ -19,10 +19,12 @@ type AddFormField<T extends Frame | StickyNote | Text> = {
     | 'extended_rich_text';
   required?: boolean;
   inputProps?: Record<string, string | number | boolean>;
+  defaultValue?: string | number | boolean;
 };
 
 type EditFormField<T extends Item> = {
   fieldName: NestedKeyOf<ItemsProps<T>>;
+  defaultValue?: string | number | boolean;
   currentValue?: string | number | boolean;
   fieldType: 'text' | 'color' | 'color_map' | 'number' | 'rich_text' | 'extended_rich_text';
   required?: boolean;
@@ -35,6 +37,7 @@ export type AddModalProperties = {
   frameFields?: AddFormField<Frame>[];
   stickyNoteFields?: AddFormField<StickyNote>[];
   textFields?: AddFormField<Text>[];
+  parentId?: string;
 };
 
 export type ConnectModalProperties = {

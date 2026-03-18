@@ -4,7 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
-import { openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
+import { openAddModal, openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -319,6 +319,49 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       >
         Delete Sticky Note
       </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Sticky Note',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+                defaultValue: hierarchyItem.item.style.fillColor,
+              },
+            ],
+            parentId: hierarchyItem.id,
+          })
+        }
+      >
+        Add child Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Text',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+            parentId: hierarchyItem.id,
+          })
+        }
+      >
+        Add child Text
+      </button>
     </TreeBoardItem>
   );
 };
@@ -362,6 +405,47 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
         }
       >
         Delete Frame
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Sticky Note in Frame',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+              },
+            ],
+            parentId: hierarchyItem.id,
+          })
+        }
+      >
+        Add Sticky Note in Frame
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Text in Frame',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+            parentId: hierarchyItem.id,
+          })
+        }
+      >
+        Add Text in Frame
       </button>
     </TreeBoardItem>
   );
