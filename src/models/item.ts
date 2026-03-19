@@ -45,6 +45,8 @@ export const ItemTypeConfigMap: Record<ItemType, ItemTypeConfig> = {
 
 export type ConnectableItem = StickyNote | Text | Frame;
 
+export type SupportedEndpoint = StickyNote | Text;
+
 export const CONNECTABLE_ITEM_TYPES: ItemType[] = [ItemType.StickyNote, ItemType.Text];
 
 export interface Connection {

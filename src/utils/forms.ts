@@ -1,5 +1,5 @@
 
-export function parseFloatFromForm(formData: FormDataEntryValue | null): number | null {
+export function parseFloatFromForm(formData: FormDataEntryValue | null): number | undefined {
     if (typeof formData === 'string') {
         const parsed = parseFloat(formData);
 
@@ -8,5 +8,5 @@ export function parseFloatFromForm(formData: FormDataEntryValue | null): number 
         }
     }
 
-    return null;
+    return undefined;
 }

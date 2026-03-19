@@ -1,12 +1,12 @@
 import { AddModalProperties } from '../../src/models/modals';
-import { Frame, Item, ItemType, StickyNote, StickyNoteColor } from '@mirohq/websdk-types';
+import { Frame, ItemType, StickyNoteColor } from '@mirohq/websdk-types';
 import { FormEvent, useEffect, useState } from 'react';
 import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
-import { findItemPlacement } from '@utils/item-placer';
 import { parseFloatFromForm } from '@utils/forms';
-import { ConnectableItem } from '@models/item';
-import { isFrame, isStickyNote } from '@utils/items';
+import { ConnectableItem, HierarchyItem } from '@models/item';
+import { isStickyNote } from '@utils/items';
+import { placeItem } from '@utils/item-placer';
 
 type AddModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -51,27 +51,17 @@ export const AddModal = (props: AddModalProps) => {
 
       await miro.board;
 
-      const parentId = props.modalData.parentId ?? formData.get('parentId');
+      const parentId = formData.get('parentId');
 
       const newItemDimensions = {
         width: parseFloatFromForm(formData.get('width')),
         height: parseFloatFromForm(formData.get('height')),
       };
 
-      let newItemPosition = {
-        x: 0,
-        y: 0,
-      };
-
       let parent: ConnectableItem | null = null;
-
-      if (parentId) {
-        parent = await miro.board.getById(parentId as string) as ConnectableItem;
-        newItemPosition = await findItemPlacement({
-          x: parent.x,
-          y: parent.y,
-          ...newItemDimensions,
-        });
+      
+      if (typeof parentId === 'string') {
+        parent = await miro.board.getById(parentId) as ConnectableItem;
       }
 
       if (dataType === 'frame') {
@@ -80,8 +70,7 @@ export const AddModal = (props: AddModalProps) => {
           style: {
             fillColor: (formData.get('style.fillColor') as string) ?? 'transparent',
           },
-          width: +(formData.get('width') as string),
-          height: +(formData.get('height') as string),
+          ...newItemDimensions,
           x: 0, // for frames we might want to add it relative to the last created frame
           y: 0,
         });
@@ -99,8 +88,8 @@ export const AddModal = (props: AddModalProps) => {
           style: {
             fillColor,
           },
+          ...newItemDimensions,
         });
-
       }
 
       if (dataType === 'text') {
@@ -109,32 +98,12 @@ export const AddModal = (props: AddModalProps) => {
         });
       }
 
-      if (parent && newItem) {
-        newItem.x = newItemPosition.x;
-        newItem.y = newItemPosition.y;
-        await newItem.sync();
-
-        if (isFrame(parent)) {
-          await parent.add(newItem);
-        } else {
-          const connector = await miro.board.createConnector({
-            shape: 'curved',
-            start: {
-              item: parent.id,
-              position: {
-                x: 1.0, // todo: calculate position relative to parent
-                y: 0.5
-              }
-            },
-            end: {
-              item: newItem.id,
-              snapTo: 'auto'  // todo: calculate type relative to parent
-            }
-          });
-        }
-
-        notifyBoardUpdate();
+      if (newItem) {
+        let hierarchyParent: HierarchyItem | undefined = props.modalData.hierarchyItem;
+        await placeItem(newItem, { parent: hierarchyParent });
       }
+
+      notifyBoardUpdate();
 
       handleToast('Item added');
     } catch (error) {

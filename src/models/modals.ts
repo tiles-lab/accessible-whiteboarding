@@ -1,5 +1,6 @@
 import { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { ItemsProps } from '@mirohq/websdk-types/core/builder/types';
+import { ConnectableItem, HierarchyItem } from './item';
 
 type NestedKeyOf<T> = {
   [K in keyof T & string]: NonNullable<T[K]> extends object
@@ -37,7 +38,8 @@ export type AddModalProperties = {
   frameFields?: AddFormField<Frame>[];
   stickyNoteFields?: AddFormField<StickyNote>[];
   textFields?: AddFormField<Text>[];
-  parentId?: string;
+  hierarchyItem?: HierarchyItem;
+  hierarchyParentId?: ConnectableItem['id'];
 };
 
 export type ConnectModalProperties = {
@@ -50,6 +52,7 @@ export type DeleteModalProperties = {
   action: 'delete';
   title: string;
   id: Item['id'];
+  hierarchyParentId?: ConnectableItem['id'];
 };
 
 export type EditModalProperties<T extends Item = Item> = {
@@ -57,12 +60,14 @@ export type EditModalProperties<T extends Item = Item> = {
   title: string;
   item: T;
   fields: EditFormField<T>[];
+  hierarchyParentId?: ConnectableItem['id'];
 };
 
 export type MoveModalProperties = {
   action: 'move';
   title: string;
   item: Item;
+  hierarchyParentId?: ConnectableItem['id'];
 };
 
 export type ModalProperties =
