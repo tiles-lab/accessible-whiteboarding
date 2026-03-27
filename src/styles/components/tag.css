@@ -1,19 +1,17 @@
 :root {
-    /* Tag color palette - some colors are shared with sticky-note
-    so we may want to define a more global color palette */
-    --tag-color-light_green: #74ff8d;
-    --tag-color-red: #ff5c5c;
-    --tag-color-cyan: #1dd0e8;
-    --tag-color-yellow: #e6d329;
-    --tag-color-magenta: #e91e63;
-    --tag-color-green: #16ba3a;
-    --tag-color-blue: #1f4ecf;
-    --tag-color-gray: #a9a9a9;
-    --tag-color-violet: #3410a2;
-    --tag-color-dark_green: #004b02;
-    --tag-color-dark_blue: #00316e;
-    --tag-color-dark_gray: #4a4a4a;
-    --tag-color-black: #0d0d0d;
+    --tag-color-red: rgb(255, 173, 173);
+    --tag-color-light_green: rgb(194, 235, 127);
+    --tag-color-cyan: rgb(168, 233, 255);
+    --tag-color-yellow: rgb(255, 237, 123);
+    --tag-color-magenta: rgb(255, 171, 236);
+    --tag-color-green: rgb(173, 240, 199);
+    --tag-color-blue: rgb(160, 196, 251);
+    --tag-color-gray: rgb(214, 214, 214);
+    --tag-color-violet: rgb(102, 49, 215);
+    --tag-color-dark_green: rgb(6, 116, 41);
+    --tag-color-dark_blue: rgb(48, 91, 171);
+    --tag-color-dark_gray: rgb(89, 89, 89);
+    --tag-color-black: rgb(26, 26, 26);
 }
 
 .a11ywb-tags-box {
@@ -36,13 +34,13 @@
 }
 
 .a11ywb-tag {
-  &[data-color="light_green"] {
-      background-color: var(--tag-color-light_green);
+  &[data-color="red"] {
+      background-color: var(--tag-color-red);
       color: black;
   }
 
-  &[data-color="red"] {
-      background-color: var(--tag-color-red);
+  &[data-color="light_green"] {
+      background-color: var(--tag-color-light_green);
       color: black;
   }
 
@@ -58,17 +56,17 @@
 
   &[data-color="magenta"] {
       background-color: var(--tag-color-magenta);
-      color: white;
+      color: black;
   }
 
   &[data-color="green"] {
       background-color: var(--tag-color-green);
-      color: white;
+      color: black;
   }
 
   &[data-color="blue"] {
       background-color: var(--tag-color-blue);
-      color: white;
+      color: black;
   }
 
   &[data-color="gray"] {
