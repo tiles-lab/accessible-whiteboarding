@@ -4,7 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
-import { openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
+import { openAddModal, openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -65,8 +65,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
           <ul>
-            {listItems.length > 0 &&
-              listItems.map((listItem) => <HierarchyListItem key={listItem.id} item={listItem} />)}
+            {listItems.map((listItem) => <HierarchyListItem key={`board-child-${listItem.id}`} item={listItem} />)}
           </ul>
         )}
         {listItems.length === 0 && <p>This board has no items.</p>}
@@ -155,7 +154,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
         {listItems.length > 0 && (
           <ul>
             {listItems.length > 0 &&
-              listItems.map((listItem) => <HierarchyListItem key={listItem.id} item={listItem} />)}
+              listItems.map((listItem) => <HierarchyListItem key={`${hierarchyItem.type}-${hierarchyItem.id}-child-${listItem.id}`} item={listItem} />)}
           </ul>
         )}
         {listItems.length === 0 && <p>There are no child items.</p>}
@@ -230,10 +229,55 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
         Delete Text
       </button>
 
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Sticky Note',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+                defaultValue: hierarchyItem.item.style.fillColor,
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add child Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Text',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add child Text
+      </button>
+
       {hierarchyChildren?.length ? (
         <ul>
           {hierarchyChildren.map((child) => (
-            <li key={child.id}>
+            <li key={`${hierarchyItem.type}-${hierarchyItem.id}-child-${child.id}`}>
               <Hierarchy hierarchyItem={child} />
             </li>
           ))}
@@ -319,6 +363,51 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       >
         Delete Sticky Note
       </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Sticky Note',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+                defaultValue: hierarchyItem.item.style.fillColor,
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add child Sticky Note
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add child Text',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add child Text
+      </button>
     </TreeBoardItem>
   );
 };
@@ -362,6 +451,49 @@ const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }
         }
       >
         Delete Frame
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Sticky Note in Frame',
+            stickyNoteFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'rich_text',
+                required: true,
+              },
+              {
+                fieldName: 'style.fillColor',
+                fieldType: 'color_map',
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add Sticky Note in Frame
+      </button>
+
+      <button
+        type="button"
+        onClick={() =>
+          openAddModal({
+            title: 'Add Text in Frame',
+            textFields: [
+              {
+                fieldName: 'content',
+                fieldType: 'extended_rich_text',
+                required: true,
+              },
+            ],
+            hierarchyParentId: hierarchyItem.id,
+            hierarchyItem,
+          })
+        }
+      >
+        Add Text in Frame
       </button>
     </TreeBoardItem>
   );

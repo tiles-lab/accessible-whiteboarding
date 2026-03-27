@@ -3,6 +3,10 @@ import { Frame, ItemType, StickyNoteColor } from '@mirohq/websdk-types';
 import { FormEvent, useEffect, useState } from 'react';
 import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
+import { parseFloatFromForm } from '@utils/forms';
+import { ConnectableItem, HierarchyItem } from '@models/item';
+import { isStickyNote } from '@utils/items';
+import { placeItem } from '@utils/item-placer';
 
 type AddModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -45,23 +49,46 @@ export const AddModal = (props: AddModalProps) => {
     try {
       let newItem;
 
+      await miro.board;
+
+      const parentId = formData.get('parentId');
+
+      const newItemDimensions = {
+        width: parseFloatFromForm(formData.get('width')),
+        height: parseFloatFromForm(formData.get('height')),
+      };
+
+      let parent: ConnectableItem | null = null;
+      
+      if (typeof parentId === 'string') {
+        parent = await miro.board.getById(parentId) as ConnectableItem;
+      }
+
       if (dataType === 'frame') {
         await miro.board.createFrame({
           title: formData.get('title') as string,
           style: {
             fillColor: (formData.get('style.fillColor') as string) ?? 'transparent',
           },
-          width: +(formData.get('width') as string),
-          height: +(formData.get('height') as string),
+          ...newItemDimensions,
+          x: 0, // for frames we might want to add it relative to the last created frame
+          y: 0,
         });
       }
 
       if (dataType === 'sticky_note') {
+        let fillColor = formData.get('style.fillColor') as StickyNoteColor;
+
+        if (!fillColor && isStickyNote(parent)) {
+          fillColor = parent.style.fillColor as StickyNoteColor;
+        }
+
         newItem = await miro.board.createStickyNote({
           content: formData.get('content') as string,
           style: {
-            fillColor: formData.get('style.fillColor') as StickyNoteColor,
+            fillColor,
           },
+          ...newItemDimensions,
         });
       }
 
@@ -71,17 +98,12 @@ export const AddModal = (props: AddModalProps) => {
         });
       }
 
-      const parentId = formData.get('parentId');
-
-      if (parentId && newItem) {
-        const parentFrame = (await miro.board.getById(parentId as string)) as Frame;
-        newItem.x = parentFrame.x + 1;
-        newItem.y = parentFrame.y + 1;
-        await newItem.sync();
-        await parentFrame.add(newItem);
-
-        notifyBoardUpdate();
+      if (newItem) {
+        let hierarchyParent: HierarchyItem | undefined = props.modalData.hierarchyItem;
+        await placeItem(newItem, { parent: hierarchyParent });
       }
+
+      notifyBoardUpdate();
 
       handleToast('Item added');
     } catch (error) {

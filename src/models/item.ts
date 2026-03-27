@@ -43,9 +43,13 @@ export const ItemTypeConfigMap: Record<ItemType, ItemTypeConfig> = {
   shape: { displayLabel: 'Shape' },
 };
 
-export type ConnectableItem = StickyNote | Text | Frame;
+export type HierarchyItemType = Frame | StickyNote | Text;
+
+export type ConnectableItem = StickyNote | Text;
 
 export const CONNECTABLE_ITEM_TYPES: ItemType[] = [ItemType.StickyNote, ItemType.Text];
+
+export const HIERARCHY_ITEM_TYPE: ItemType[] = [ItemType.Frame, ItemType.StickyNote, ItemType.Text];
 
 export interface Connection {
   id: Connector["id"];

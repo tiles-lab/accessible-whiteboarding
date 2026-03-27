@@ -1,5 +1,5 @@
 import { Connector, Frame, Item, StickyNote, Tag, Text } from '@mirohq/websdk-types';
-import { CONNECTABLE_ITEM_TYPES, ConnectableItem, Connection, ItemType, ItemTypeConfig, ItemTypeConfigMap } from '@models/item';
+import { CONNECTABLE_ITEM_TYPES, Connection, ItemType, ItemTypeConfig, ItemTypeConfigMap, HIERARCHY_ITEM_TYPE, HierarchyItemType, ConnectableItem } from '@models/item';
 
 export function getLabel(item?: Item): string {
   let label: string | undefined = undefined;
@@ -27,8 +27,12 @@ export function getLabel(item?: Item): string {
 
 export type ConnectionRecord = Record<Connector["id"], Connection>;
 
-export function isConnectableItem(item: Item): item is ConnectableItem {
-  return CONNECTABLE_ITEM_TYPES.includes(item.type as ItemType);
+export function isHierarchyItem(item?: Item): item is HierarchyItemType {
+  return HIERARCHY_ITEM_TYPE.includes(item?.type as ItemType);
+}
+
+export function isConnectableItem(item?: Item): item is ConnectableItem {
+  return CONNECTABLE_ITEM_TYPES.includes(item?.type as ItemType);
 }
 
 export function getItemTypeConfig(itemType: ItemType): ItemTypeConfig | undefined {
@@ -37,22 +41,22 @@ export function getItemTypeConfig(itemType: ItemType): ItemTypeConfig | undefine
   return config ?? itemType;
 }
 
-export function isStickyNote(item: Item): item is StickyNote {
-  return item.type === ItemType.StickyNote;
+export function isStickyNote(item?: Item | null): item is StickyNote {
+  return item?.type === ItemType.StickyNote;
 }
 
-export function isFrame(item: Item): item is Frame {
-  return item.type === ItemType.Frame;
+export function isFrame(item?: Item | null): item is Frame {
+  return item?.type === ItemType.Frame;
 }
 
-export function isText(item: Item): item is Text {
-  return item.type === ItemType.Frame;
+export function isText(item?: Item | null): item is Text {
+  return item?.type === ItemType.Text;
 }
 
-export function isConnector(item: Item): item is Connector {
-  return item.type === ItemType.Connector;
+export function isTag(item?: Item | null): item is Tag {
+  return item?.type === ItemType.Tag;
 }
 
-export function isTag(item: Item): item is Tag {
-  return item.type === ItemType.Tag;
+export function isConnector(item?: Item | null): item is Connector {
+  return item?.type === ItemType.Connector;
 }

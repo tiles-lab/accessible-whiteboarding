@@ -24,11 +24,12 @@
       "@config/*": ["./src/config/*"],
       "@models/*": ["./src/models/*"],
       "@utils/*": ["./src/utils/*"],
-      "@data/*": ["./data/*"]
+      "@data/*": ["./data/*"],
     }
   },
   "include": [
     "src",
+    "modals",
     "pages",
     "*.ts"
 , "modals/edit-dialog.js"  ],

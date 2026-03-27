@@ -1,9 +1,9 @@
 import type { Item, Frame, StickyNote } from '@mirohq/websdk-types';
-import { ConnectionRecord, getLabel, isConnectableItem } from '@utils/items';
-import { ConnectableItem, HierarchyItemMetadata, ItemType, type HierarchyItem } from '@models/item';
-import { ConnectorRecord, ItemRecord, TagRecord } from '@models/record';
+import { ConnectionRecord, getLabel, isConnectableItem, isFrame } from '@utils/items';
+import { ConnectableItem, HierarchyItemMetadata, HierarchyItemType, ItemType, type HierarchyItem } from '@models/item';
+import { ItemRecord, TagRecord } from '@models/record';
 import { getTags } from './tags';
-import { buildConnectorRecord, buildItemRecord, buildTagRecord } from './record-builder';
+import { buildConnectionRecord, buildItemRecord, buildTagRecord } from './record-builder';
 
 function computeHierarchyItemMetadata(children: HierarchyItem[]): HierarchyItemMetadata {
   const treeChildCount = children.length + children.reduce((acc, child) => {
@@ -28,9 +28,13 @@ export function buildHierarchyItem<T extends Item>(
   buildOptions: {
     level: number,
     tagRecord: TagRecord,
+    connectionRecord: ConnectionRecord,
   }
 ): HierarchyItem<T> {
-  const { level, tagRecord } = buildOptions;
+  const { level, tagRecord, connectionRecord } = buildOptions;
+
+  const connections = Object.values(connectionRecord)
+    .filter(connection => connection?.id === item.id ||connection.endItem?.id === item.id);
 
   return {
     id: item.id,
@@ -41,6 +45,7 @@ export function buildHierarchyItem<T extends Item>(
     tags: getTags(item, tagRecord),
     children,
     metadata: computeHierarchyItemMetadata(children),
+    connections,
   };
 }
 
@@ -53,7 +58,7 @@ export function buildHierarchy(
     connectionRecord: ConnectionRecord;
   }
 ): HierarchyItem<Item> {
-  const { level, tagRecord, itemRecord } = builderOptions;
+  const { level, tagRecord, itemRecord, connectionRecord } = builderOptions;
 
   let children: HierarchyItem[] = [];
   if (item.type === ItemType.Frame) {
@@ -69,7 +74,7 @@ export function buildHierarchy(
     );
   }
 
-  const hierarchyItem = buildHierarchyItem(item, children, { level, tagRecord });
+  const hierarchyItem = buildHierarchyItem(item, children, { level, tagRecord, connectionRecord });
   
   return hierarchyItem;
 }
@@ -78,52 +83,54 @@ function buildConnectorChild(
     item: ConnectableItem, 
     buildOptions: {
       level: number,
-      connectorRecord: ConnectorRecord, 
+      connectionRecord: ConnectionRecord, 
       itemRecord: ItemRecord,
       tagRecord: TagRecord,
     },
     visited = new Set<StickyNote['id']>(), 
-): HierarchyItem<ConnectableItem> {
-    const { level, connectorRecord, itemRecord, tagRecord } = buildOptions;
+): HierarchyItem<HierarchyItemType> {
+    const { level, connectionRecord, itemRecord, tagRecord } = buildOptions;
 
     visited.add(item.id);
 
-    const children: HierarchyItem<ConnectableItem>[] = [];
+    const children: HierarchyItem<HierarchyItemType>[] = [];
 
     (item.connectorIds ?? []).forEach(connectorId => {
-      const connector = connectorRecord[connectorId];
-      const endId = connector?.end?.item;
+      const connector = connectionRecord[connectorId];
+      const endId = connector?.endItem?.id;
 
       const childLevel = level + 1;
 
       if (endId && !visited.has(endId)) {
         const childItem = itemRecord[endId];
+
         if (isConnectableItem(childItem)) {
-          children.push(buildConnectorChild(childItem, {
+          const connectorChild = buildConnectorChild(childItem, {
             ...buildOptions,
             level: childLevel
-          }))
+          });
+          children.push(connectorChild);
         }
       }
     });
 
     const hierarchyItem = buildHierarchyItem(item, children, { 
-      level, tagRecord
+      level, tagRecord, connectionRecord
     });
 
     return hierarchyItem;
   }
 
-export function buildConnectorHierarchy(items: Item[]): HierarchyItem<ConnectableItem>[] {
-  const connectorRecord = buildConnectorRecord(items);
+export function buildConnectorHierarchy(items: Item[]): HierarchyItem<HierarchyItemType>[] {
   const itemRecord = buildItemRecord(items);
+  const connectionRecord = buildConnectionRecord(itemRecord);
   const tagRecord = buildTagRecord(items);
-  const buildOptions = { level: 0, connectorRecord, itemRecord, tagRecord };
+  const buildOptions = { level: 0, connectionRecord, itemRecord, tagRecord };
 
   const hasIncomingConnector = new Set<Item['id']>();
-  Object.values(connectorRecord).forEach(connector => {
-    if (connector.end?.item) {
-      hasIncomingConnector.add(connector.end.item);
+  Object.values(connectionRecord).forEach(connector => {
+    if (connector.endItem) {
+      hasIncomingConnector.add(connector.endItem?.id);
     }
   });
   
@@ -136,17 +143,17 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
 
   return items
     .filter(item => {
-      if (item.type === ItemType.Frame) {
+      if (isFrame(item)) {
         return true;
       }
 
-      if ([ItemType.StickyNote, ItemType.Text].includes(item.type as ItemType)) {
+      if (isConnectableItem(item)) {
         return !('parentId' in item && item.parentId)
       }
       return false;
     })
     .map(item => {
-      if (item.type !== ItemType.Frame) {
+      if (!isFrame(item)) {
         return hierarchyRecord[item.id];
       }
 
@@ -155,10 +162,15 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
         .map(child => hierarchyRecord[child.id])
         .filter(Boolean);
 
-      const hierarchyItem = buildHierarchyItem<Frame>(item as Frame, children, {
-        level: 0,
-        tagRecord,
-      });
+      const hierarchyItem = buildHierarchyItem<Frame>(
+        item as Frame, 
+        children, 
+        {
+          level: 0,
+          tagRecord,
+          connectionRecord,
+        }
+      );
 
       return hierarchyItem;
     });
