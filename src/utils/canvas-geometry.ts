@@ -1,12 +1,12 @@
 import { Frame, Rect } from "@mirohq/websdk-types";
-import { ConnectableItem, SupportedEndpoint } from "@models/item";
+import { ConnectableItem, HierarchyItemType } from "@models/item";
 
 export type Position = {
     x: number;
     y: number;
 };
 
-export type RelativeBounds = Required<Pick<SupportedEndpoint, 'relativeTo' | 'x'| 'y' | 'width' | 'height'>>;
+export type RelativeBounds = Required<Pick<ConnectableItem, 'relativeTo' | 'x'| 'y' | 'width' | 'height'>>;
 
 export interface Bounds {
     xMin: number;
@@ -52,7 +52,7 @@ export function canBeContainedIn(candidateItem: RelativeBounds, frame: Frame): b
 }
 
 
-export function getAbsolutePosition(item: RelativeBounds, relativeParent?: ConnectableItem): Position {
+export function getAbsolutePosition(item: RelativeBounds, relativeParent?: HierarchyItemType): Position {
     if (item.relativeTo === 'canvas_center') {
         return {
             x: item.x,

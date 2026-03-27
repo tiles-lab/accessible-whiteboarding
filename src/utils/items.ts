@@ -1,5 +1,5 @@
 import { Connector, Frame, Item, StickyNote, Tag, Text } from '@mirohq/websdk-types';
-import { CONNECTABLE_ITEM_TYPES, ConnectableItem, SupportedEndpoint, Connection, ItemType, ItemTypeConfig, ItemTypeConfigMap } from '@models/item';
+import { CONNECTABLE_ITEM_TYPES, Connection, ItemType, ItemTypeConfig, ItemTypeConfigMap, HIERARCHY_ITEM_TYPE, HierarchyItemType, ConnectableItem } from '@models/item';
 
 export function getLabel(item?: Item): string {
   let label: string | undefined = undefined;
@@ -27,12 +27,12 @@ export function getLabel(item?: Item): string {
 
 export type ConnectionRecord = Record<Connector["id"], Connection>;
 
-export function isConnectableItem(item?: Item): item is ConnectableItem {
-  return CONNECTABLE_ITEM_TYPES.includes(item?.type as ItemType);
+export function isHierarchyItem(item?: Item): item is HierarchyItemType {
+  return HIERARCHY_ITEM_TYPE.includes(item?.type as ItemType);
 }
 
-export function isSupportedEndpoint(item?: Item): item is SupportedEndpoint {
-  return isStickyNote(item) || isText(item);
+export function isConnectableItem(item?: Item): item is ConnectableItem {
+  return CONNECTABLE_ITEM_TYPES.includes(item?.type as ItemType);
 }
 
 export function getItemTypeConfig(itemType: ItemType): ItemTypeConfig | undefined {

@@ -1,6 +1,6 @@
 import type { Item, Frame, StickyNote } from '@mirohq/websdk-types';
-import { ConnectionRecord, getLabel, isConnectableItem } from '@utils/items';
-import { ConnectableItem, HierarchyItemMetadata, ItemType, type HierarchyItem } from '@models/item';
+import { ConnectionRecord, getLabel, isConnectableItem, isFrame } from '@utils/items';
+import { ConnectableItem, HierarchyItemMetadata, HierarchyItemType, ItemType, type HierarchyItem } from '@models/item';
 import { ItemRecord, TagRecord } from '@models/record';
 import { getTags } from './tags';
 import { buildConnectionRecord, buildItemRecord, buildTagRecord } from './record-builder';
@@ -88,12 +88,12 @@ function buildConnectorChild(
       tagRecord: TagRecord,
     },
     visited = new Set<StickyNote['id']>(), 
-): HierarchyItem<ConnectableItem> {
+): HierarchyItem<HierarchyItemType> {
     const { level, connectionRecord, itemRecord, tagRecord } = buildOptions;
 
     visited.add(item.id);
 
-    const children: HierarchyItem<ConnectableItem>[] = [];
+    const children: HierarchyItem<HierarchyItemType>[] = [];
 
     (item.connectorIds ?? []).forEach(connectorId => {
       const connector = connectionRecord[connectorId];
@@ -103,11 +103,13 @@ function buildConnectorChild(
 
       if (endId && !visited.has(endId)) {
         const childItem = itemRecord[endId];
+
         if (isConnectableItem(childItem)) {
-          children.push(buildConnectorChild(childItem, {
+          const connectorChild = buildConnectorChild(childItem, {
             ...buildOptions,
             level: childLevel
-          }))
+          });
+          children.push(connectorChild);
         }
       }
     });
@@ -119,7 +121,7 @@ function buildConnectorChild(
     return hierarchyItem;
   }
 
-export function buildConnectorHierarchy(items: Item[]): HierarchyItem<ConnectableItem>[] {
+export function buildConnectorHierarchy(items: Item[]): HierarchyItem<HierarchyItemType>[] {
   const itemRecord = buildItemRecord(items);
   const connectionRecord = buildConnectionRecord(itemRecord);
   const tagRecord = buildTagRecord(items);
@@ -141,17 +143,17 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
 
   return items
     .filter(item => {
-      if (item.type === ItemType.Frame) {
+      if (isFrame(item)) {
         return true;
       }
 
-      if ([ItemType.StickyNote, ItemType.Text].includes(item.type as ItemType)) {
+      if (isConnectableItem(item)) {
         return !('parentId' in item && item.parentId)
       }
       return false;
     })
     .map(item => {
-      if (item.type !== ItemType.Frame) {
+      if (!isFrame(item)) {
         return hierarchyRecord[item.id];
       }
 
@@ -160,11 +162,15 @@ export function buildConnectorHierarchy(items: Item[]): HierarchyItem<Connectabl
         .map(child => hierarchyRecord[child.id])
         .filter(Boolean);
 
-      const hierarchyItem = buildHierarchyItem<Frame>(item as Frame, children, {
-        level: 0,
-        tagRecord,
-        connectionRecord,
-      });
+      const hierarchyItem = buildHierarchyItem<Frame>(
+        item as Frame, 
+        children, 
+        {
+          level: 0,
+          tagRecord,
+          connectionRecord,
+        }
+      );
 
       return hierarchyItem;
     });

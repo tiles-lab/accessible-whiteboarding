@@ -1,7 +1,7 @@
 import { Connector, Frame, Rect } from "@mirohq/websdk-types";
 import { Endpoint } from "@mirohq/websdk-types/core/features/widgets/connector";
-import { ConnectableItem, HierarchyItem } from "@models/item";
-import { isConnectableItem, isConnector, isFrame, isSupportedEndpoint } from "./items";
+import { ConnectableItem, HierarchyItem, HierarchyItemType } from "@models/item";
+import { isConnectableItem, isConnector, isFrame, isHierarchyItem } from "./items";
 import { canBeContainedIn, getAbsolutePosition, getSpatialBounds, Position, RelativeBounds } from "./canvas-geometry";
 import { spiralSearch } from "./placement-strategy";
 import { expandFrameTowardsItem, getSnapOffset } from "./canvas-items";
@@ -19,7 +19,7 @@ export interface ItemPlacementOptions {
 export async function placeItem(item: ConnectableItem, options: ItemPlacementOptions = {}): Promise<void> {
     const { parent } = options;
 
-    if (isConnectableItem(parent?.item)) {
+    if (isHierarchyItem(parent?.item)) {
         let frame: Frame | undefined = undefined;
 
         let frameId = isFrame(parent.item) ? parent.id : parent.item.parentId;
@@ -30,11 +30,11 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
             const futurePlacement = await findFuturePlacement(item, { 
                 width: item.width, 
                 height: item.height,
-                parent: parent,
+                parent,
                 frame,
             });
 
-            if (futurePlacement && isSupportedEndpoint(item)) {
+            if (futurePlacement && isConnectableItem(item)) {
                 const parentAbsolutePos = getAbsolutePosition(parent.item, frame);
                 const parentRect = {
                     x: parentAbsolutePos.x,
@@ -42,19 +42,23 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
                     height: parent.item.height,
                     width: parent.item.width,
                 };
-                const connectorEndpoints = calculateConnectorEndpoints(parentRect, futurePlacement);
 
-                await miro.board.createConnector({
-                    shape: 'curved',
-                    start: {
-                        item: parent.item.id,
-                        snapTo: connectorEndpoints.start.snapTo,
-                    },
-                    end: {
-                        item: parent.id,
-                        snapTo: connectorEndpoints.end.snapTo,
-                    }
-                });
+                if (parent.id !== frameId) {
+                    // only add connectors if parent is not a frame
+                    const connectorEndpoints = calculateConnectorEndpoints(parentRect, futurePlacement);
+
+                    await miro.board.createConnector({
+                        shape: 'curved',
+                        start: {
+                            item: parent.item.id,
+                            snapTo: connectorEndpoints.start.snapTo,
+                        },
+                        end: {
+                            item: item.id,
+                            snapTo: connectorEndpoints.end.snapTo,
+                        }
+                    });
+                }
 
                 item.x = futurePlacement.x;
                 item.y = futurePlacement.y;
@@ -92,7 +96,7 @@ export async function findFuturePlacement(item: ConnectableItem, options?: ItemP
         const frameChildren = await frame.getChildren();
 
         const existingItems = frameChildren
-            .filter(child => isSupportedEndpoint(child) || isConnector(child))
+            .filter(child => isConnectableItem(child) || isConnector(child))
             .map(child => {
                 // fallback to frame center to fail gracefully
                 let absolutePosition = {
@@ -104,7 +108,7 @@ export async function findFuturePlacement(item: ConnectableItem, options?: ItemP
                     const startItem = frameChildren.find(frameChild => frameChild.id === child.start?.item);
                     const endItem = frameChildren.find(frameChild => frameChild.id === child.end?.item);
 
-                    if (isSupportedEndpoint(startItem) && isSupportedEndpoint(endItem)) {
+                    if (isConnectableItem(startItem) && isConnectableItem(endItem)) {
                         absolutePosition = getConnectorPosition(child, startItem, endItem, frame); 
                     }
                 } else {
@@ -121,7 +125,7 @@ export async function findFuturePlacement(item: ConnectableItem, options?: ItemP
 
         let spiralOrigin: RelativeBounds = frame;
 
-        if (isConnectableItem(options?.parent?.item)) {
+        if (isHierarchyItem(options?.parent?.item)) {
             const parentPos = getAbsolutePosition(options.parent.item, frame);
             spiralOrigin = {
                 relativeTo: 'canvas_center',
@@ -169,7 +173,7 @@ export async function findFramePlacement(options?: ItemPlacementOptions): Promis
 };
 
 // return position based on connector's origin
-export function getConnectorPosition(connector: Connector, startItem: ConnectableItem, endItem: ConnectableItem, relativeParent?: ConnectableItem): Position {
+export function getConnectorPosition(connector: Connector, startItem: ConnectableItem, endItem: ConnectableItem, relativeParent?: HierarchyItemType): Position {
     const startAbsPos = getAbsolutePosition(startItem, relativeParent);
     const endAbsPos = getAbsolutePosition(endItem, relativeParent);
 
