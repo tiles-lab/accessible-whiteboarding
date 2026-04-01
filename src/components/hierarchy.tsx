@@ -35,6 +35,7 @@ export interface HierarchyBoardProps {
   type: ItemType;
   label: string;
   children?: HierarchyItem[];
+  isFiltered?: boolean;
 }
 
 export type TreeBoardItem = HierarchyItemType;
@@ -53,7 +54,7 @@ const HierarchyListItem: React.FC<{ item: HierarchyItem }> = ({ item }) => {
   );
 };
 
-export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, children }) => {
+export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, children, isFiltered }) => {
   const listItems = children ?? [];
 
   return (
@@ -68,7 +69,9 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
             {listItems.map((listItem) => <HierarchyListItem key={`board-child-${listItem.id}`} item={listItem} />)}
           </ul>
         )}
-        {listItems.length === 0 && <p>This board has no items.</p>}
+        {isFiltered && listItems.length === 0 && <p>No items match search filters.</p>}
+
+        {!isFiltered && listItems.length === 0 && <p>This board has no items.</p>}
       </div>
     </details>
   );

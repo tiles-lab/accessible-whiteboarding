@@ -8,7 +8,8 @@ import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
 import { openAddModal } from '@utils/open-modal';
 import { useBoardItems } from './hooks/useBoardItems';
 
-import { applyHierarchicalSearch, getSearchResultTotal, normalizeQuery } from '@utils/search';
+
+import { filterHierarchy, getSearchResultTotal, isDefaultFilter, normalizeQuery, SearchFilters } from '@utils/search';
 import { ALL_ITEM_TYPES, ALL_ITEM_TYPES_FILTER_OPTION, ITEM_TYPE_FILTER_OPTIONS } from '@config/search';
 
 const fallbackData = SampleItems as Item[];
@@ -18,32 +19,41 @@ const App: React.FC = () => {
   const [query, setQuery] = React.useState('');
   const [itemTypeFilter, setItemTypeFilter] = React.useState(ALL_ITEM_TYPES);
 
+  const deferredQuery = React.useDeferredValue(query);
+
+  const searchFilters: SearchFilters = {
+    query: normalizeQuery(deferredQuery),
+    filterByType: itemTypeFilter
+  };
+
+  const isFiltered = isDefaultFilter(searchFilters);
+
+  const boardItems = React.useMemo(() => {
+    return buildConnectorHierarchy(items);
+  }, [items]);
+
   const hierarchyBoard = React.useMemo(() => {
-    const children = buildConnectorHierarchy(items);
+    const filteredBoardItems = filterHierarchy(boardItems, searchFilters);
 
     const hierarchyRoot = {
       id: 'board',
       label: 'Board',
       type: 'board',
-      children,
+      children: filteredBoardItems,
     };
 
     return hierarchyRoot;
-  }, [items]);
+  }, [items, searchFilters.query, searchFilters.filterByType]);
 
-  const navigableItemCount = hierarchyBoard.children.reduce((acc, child) => {
+  const navigableItemCount = boardItems.reduce((acc, child) => {
     acc += child.metadata.treeChildCount + 1;
     return acc;
   }, 0);
   
   const searchResultTotal = React.useMemo(() => {
-    const normalizedQuery = normalizeQuery(query);
-    applyHierarchicalSearch(hierarchyBoard.children, { normalizedQuery, filterByType: itemTypeFilter });
-
     return getSearchResultTotal(hierarchyBoard.children);
-  }, [hierarchyBoard.children, query, itemTypeFilter]);
+  }, [hierarchyBoard.children, searchFilters.filterByType, searchFilters.query]);
 
-  // Update the callback to only set query state
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
@@ -100,6 +110,7 @@ const App: React.FC = () => {
         type={hierarchyBoard.type as ItemType}
         label={hierarchyBoard.label}
         children={hierarchyBoard.children}
+        isFiltered={isFiltered}
       />
 
       <h2>Add Item to Board</h2>
