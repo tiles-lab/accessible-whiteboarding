@@ -1,5 +1,5 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
-import { ConnectableItem, HierarchyItem, ItemType } from '@models/item';
+import { HierarchyItem, HierarchyItemType, ItemType } from '@models/item';
 import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
@@ -37,7 +37,7 @@ export interface HierarchyBoardProps {
   children?: HierarchyItem[];
 }
 
-export type TreeBoardItem = ConnectableItem;
+export type TreeBoardItem = HierarchyItemType;
 
 export interface TreeBoardItemProps {
   hierarchyItem: HierarchyItem<TreeBoardItem>;
