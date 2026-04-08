@@ -9,7 +9,11 @@ import { openAddModal } from '@utils/open-modal';
 import { useBoardItems } from './hooks/useBoardItems';
 
 import { applyHierarchicalSearch, getSearchResultTotal, normalizeQuery } from '@utils/search';
-import { ALL_ITEM_TYPES, ALL_ITEM_TYPES_FILTER_OPTION, ITEM_TYPE_FILTER_OPTIONS } from '@config/search';
+import {
+  ALL_ITEM_TYPES,
+  ALL_ITEM_TYPES_FILTER_OPTION,
+  ITEM_TYPE_FILTER_OPTIONS,
+} from '@config/search';
 
 const fallbackData = SampleItems as Item[];
 
@@ -35,10 +39,13 @@ const App: React.FC = () => {
     acc += child.metadata.treeChildCount + 1;
     return acc;
   }, 0);
-  
+
   const searchResultTotal = React.useMemo(() => {
     const normalizedQuery = normalizeQuery(query);
-    applyHierarchicalSearch(hierarchyBoard.children, { normalizedQuery, filterByType: itemTypeFilter });
+    applyHierarchicalSearch(hierarchyBoard.children, {
+      normalizedQuery,
+      filterByType: itemTypeFilter,
+    });
 
     return getSearchResultTotal(hierarchyBoard.children);
   }, [hierarchyBoard.children, query, itemTypeFilter]);
@@ -47,7 +54,7 @@ const App: React.FC = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
-  
+
   const handleFilterByType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setItemTypeFilter(e.target.value);
   };
@@ -61,40 +68,44 @@ const App: React.FC = () => {
           Search:
           <input
             id="search-input"
-            type="search" 
-            value={query} 
-            onChange={handleSearch} 
+            type="search"
+            value={query}
+            onChange={handleSearch}
             placeholder="Search by label, tag, color"
-            aria-describedby="search-results-count" />
+            aria-describedby="search-results-count"
+          />
         </label>
 
         <label htmlFor="item-type-filter">
           Filter by type:
           <select
-            id="item-type-filter" 
+            id="item-type-filter"
             aria-label="Filter items by type"
             value={itemTypeFilter}
-            onChange={handleFilterByType}>
-              <option value={ALL_ITEM_TYPES_FILTER_OPTION.type}>
-                {ALL_ITEM_TYPES_FILTER_OPTION.displayLabel}
-              </option>
+            onChange={handleFilterByType}
+          >
+            <option value={ALL_ITEM_TYPES_FILTER_OPTION.type}>
+              {ALL_ITEM_TYPES_FILTER_OPTION.displayLabel}
+            </option>
 
-              {ITEM_TYPE_FILTER_OPTIONS.map(option => (
-                <option 
-                  key={option.type}
-                  value={option.type}>{option.displayLabel}</option>
-                ))
-              }
+            {ITEM_TYPE_FILTER_OPTIONS.map((option) => (
+              <option key={option.type} value={option.type}>
+                {option.displayLabel}
+              </option>
+            ))}
           </select>
         </label>
       </div>
 
-      <div 
+      <div
         id="search-results-count"
-        className="a11ywb-app-search-results-count" 
-        aria-live="polite" 
+        className="a11ywb-app-search-results-count"
+        aria-live="polite"
         aria-atomic="true"
-        role="region">{searchResultTotal} {searchResultTotal === 1 ? 'result' : 'results'}</div>
+        role="region"
+      >
+        {searchResultTotal} {searchResultTotal === 1 ? 'result' : 'results'}
+      </div>
 
       <HierarchyBoard
         type={hierarchyBoard.type as ItemType}
