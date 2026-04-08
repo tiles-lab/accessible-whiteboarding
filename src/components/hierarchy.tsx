@@ -63,6 +63,8 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
         {type}: {label}
       </summary>
 
+      <button type="button">Follow User</button>
+
       <section>
         <h2>Add Item to Board</h2>
         <button
