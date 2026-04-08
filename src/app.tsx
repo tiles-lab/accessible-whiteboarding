@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, Root } from 'react-dom/client';
 import { type Item } from '@mirohq/websdk-types';
 import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
@@ -203,11 +203,22 @@ const App: React.FC = () => {
   );
 };
 
+declare global {
+  interface Window {
+    __a11ywbRoot?: Root;
+  }
+}
+
 const container = document.getElementById('a11ywb-root');
-const root = container ? createRoot(container) : null;
+
+if (container) {
+  window.__a11ywbRoot ??= createRoot(container);
+}
 
 function render() {
-  root?.render(<App />);
+  if (window.__a11ywbRoot) {
+    window.__a11ywbRoot.render(<App />);
+}
 }
 
 render();
