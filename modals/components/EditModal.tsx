@@ -6,6 +6,7 @@ import { InputElement } from '../inputs/InputElement';
 import { findFramePlacement, placeItem } from '@utils/item-placer';
 import { isConnectableItem } from '@utils/items';
 import { HierarchyItem } from '@models/item';
+import { disconnectFromParent } from '@utils/connections';
 
 type EditModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -54,8 +55,12 @@ export const EditModal = (props: EditModalProps) => {
         const existingParentId: string = (modalData.item as ItemWithParent)?.parentId ?? '';
 
         if (existingParentId) {
-          const existingParent = (await miro.board.getById(existingParentId)) as Frame;
-          await existingParent.remove(item);
+          const existingParent = (await miro.board.getById(existingParentId));
+
+          if (isConnectableItem(item)) {
+            disconnectFromParent(item, existingParent);
+          }
+
           await item.sync();
         }
 
