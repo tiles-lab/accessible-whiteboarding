@@ -59,9 +59,9 @@ export const AddModal = (props: AddModalProps) => {
       };
 
       let parent: ConnectableItem | null = null;
-      
-      if (typeof parentId === 'string') {
-        parent = await miro.board.getById(parentId) as ConnectableItem;
+
+      if (Boolean(parentId) && typeof parentId === 'string') {
+        parent = (await miro.board.getById(parentId)) as ConnectableItem;
       }
 
       if (dataType === 'frame') {
