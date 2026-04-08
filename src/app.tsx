@@ -113,6 +113,10 @@ const App: React.FC = () => {
         {searchResultTotal} {searchResultTotal === 1 ? 'result' : 'results'}
       </div>
 
+      <div>
+        <button type="button">Help</button>
+      </div>
+
       <HierarchyBoard
         type={hierarchyBoard.type as ItemType}
         label={hierarchyBoard.label}
