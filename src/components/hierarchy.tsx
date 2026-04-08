@@ -1,5 +1,5 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
-import { ConnectableItem, HierarchyItem, ItemType } from '@models/item';
+import { HierarchyItem, HierarchyItemType, ItemType } from '@models/item';
 import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
@@ -35,9 +35,10 @@ export interface HierarchyBoardProps {
   type: ItemType;
   label: string;
   children?: HierarchyItem[];
+  isFiltered?: boolean;
 }
 
-export type TreeBoardItem = ConnectableItem;
+export type TreeBoardItem = HierarchyItemType;
 
 export interface TreeBoardItemProps {
   hierarchyItem: HierarchyItem<TreeBoardItem>;
@@ -53,7 +54,7 @@ const HierarchyListItem: React.FC<{ item: HierarchyItem }> = ({ item }) => {
   );
 };
 
-export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, children }) => {
+export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, children, isFiltered }) => {
   const listItems = children ?? [];
 
   return (
@@ -68,7 +69,9 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
             {listItems.map((listItem) => <HierarchyListItem key={`board-child-${listItem.id}`} item={listItem} />)}
           </ul>
         )}
-        {listItems.length === 0 && <p>This board has no items.</p>}
+        {isFiltered && listItems.length === 0 && <p>No items match search filters.</p>}
+
+        {!isFiltered && listItems.length === 0 && <p>This board has no items.</p>}
       </div>
     </details>
   );
