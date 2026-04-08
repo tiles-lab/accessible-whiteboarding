@@ -1,0 +1,19 @@
+.ally-wb-delete-dialog-header, .ally-wb-delete-dialog-message {
+    margin-block-end: 1em;
+}
+
+.ally-wb-delete-dialog-buttons > button {
+    width: 100%;
+    min-height: 2rem;
+    margin-block-end: 1em;
+}
+
+@media (min-width: 20rem) {
+    .ally-wb-delete-dialog-buttons {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        gap: 3em;
+    } 
+}

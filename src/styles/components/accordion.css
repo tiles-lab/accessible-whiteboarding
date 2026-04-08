@@ -1,0 +1,21 @@
+.a11ywb-accordion {
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.a11ywb-accordion-header {
+  padding: 4px 8px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    display: inline-block;
+  }
+}
+
+.a11ywb-accordion__contents {
+  padding: 8px;
+}

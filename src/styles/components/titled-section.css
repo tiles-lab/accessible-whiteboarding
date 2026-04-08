@@ -1,0 +1,8 @@
+.a11ywb-titled-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.a11ywb-titled-section__title {
+  flex: 0 0 auto;
+}
