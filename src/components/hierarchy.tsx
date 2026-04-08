@@ -4,7 +4,7 @@ import Tags from './tags';
 import React from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
-import { openAddModal, openConnectModal, openDeleteModal, openEditModal, openMoveModal } from '@utils/open-modal';
+import { openAddModal, openConnectModal, openDeleteModal, openEditModal } from '@utils/open-modal';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -63,10 +63,93 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
         {type}: {label}
       </summary>
 
+      <section>
+        <h2>Add Item to Board</h2>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Frame',
+              frameFields: [
+                {
+                  fieldName: 'title',
+                  fieldType: 'text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color',
+                },
+                {
+                  fieldName: 'width',
+                  fieldType: 'number',
+                  required: true,
+                  inputProps: {
+                    value: 700,
+                  },
+                },
+                {
+                  fieldName: 'height',
+                  fieldType: 'number',
+                  required: true,
+                  inputProps: {
+                    value: 500,
+                  },
+                },
+              ],
+            })
+          }
+        >
+          Add Frame
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Sticky Note',
+              stickyNoteFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color_map',
+                },
+              ],
+            })
+          }
+        >
+          Add Sticky Note
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Text',
+              textFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+              ],
+            })
+          }
+        >
+          Add Text
+        </button>
+      </section>
+
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
           <ul>
-            {listItems.map((listItem) => <HierarchyListItem key={`board-child-${listItem.id}`} item={listItem} />)}
+            {listItems.map((listItem) => (
+              <HierarchyListItem key={`board-child-${listItem.id}`} item={listItem} />
+            ))}
           </ul>
         )}
         {isFiltered && listItems.length === 0 && <p>No items match search filters.</p>}
@@ -157,7 +240,12 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
         {listItems.length > 0 && (
           <ul>
             {listItems.length > 0 &&
-              listItems.map((listItem) => <HierarchyListItem key={`${hierarchyItem.type}-${hierarchyItem.id}-child-${listItem.id}`} item={listItem} />)}
+              listItems.map((listItem) => (
+                <HierarchyListItem
+                  key={`${hierarchyItem.type}-${hierarchyItem.id}-child-${listItem.id}`}
+                  item={listItem}
+                />
+              ))}
           </ul>
         )}
         {listItems.length === 0 && <p>There are no child items.</p>}
@@ -189,23 +277,16 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
                 fieldType: 'extended_rich_text',
                 required: true,
               },
+              {
+                fieldName: 'parentId',
+                currentValue: hierarchyItem.item.parentId ?? '',
+                fieldType: 'parent',
+              },
             ],
           })
         }
       >
         Edit Text
-      </button>
-      <button
-        id={`move-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openMoveModal({
-            item: hierarchyItem.item,
-            title: 'Move Text',
-          })
-        }
-      >
-        Move Text
       </button>
       <button
         id={`connect-${hierarchyItem.id}`}
@@ -321,24 +402,16 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
                 fieldType: 'color_map',
                 required: false,
               },
+              {
+                fieldName: 'parentId',
+                currentValue: hierarchyItem.item.parentId ?? '',
+                fieldType: 'parent',
+              },
             ],
           })
         }
       >
         Edit Sticky Note
-      </button>
-
-      <button
-        id={`move-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openMoveModal({
-            item: hierarchyItem.item,
-            title: 'Move Sticky Note',
-          })
-        }
-      >
-        Move Sticky Note
       </button>
 
       <button

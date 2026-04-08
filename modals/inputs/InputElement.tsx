@@ -27,7 +27,8 @@ const getReadableFieldName = (fieldName: string): string => {
 
 export const InputElement = (props: InputElementProps): React.ReactElement | null => {
   const { field, parentFrames } = props;
-  const defaultValue = 'defaultValue' in field ? (field.defaultValue as string | undefined) : undefined;
+  const defaultValue =
+    'defaultValue' in field ? (field.defaultValue as string | undefined) : undefined;
   const currentValue =
     'currentValue' in field ? (field.currentValue as string | undefined) : undefined;
   const [colorEnabled, setColorEnabled] = useState(Boolean(currentValue));
@@ -80,11 +81,13 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
     case 'parent':
       return (
         <label className="ally-wb-edit-form-label ally-wb-parent-input">
-          <span className="ally-wb-edit-form-label-text">{readableFieldName}</span>
+          <span className="ally-wb-edit-form-label-text">Frame</span>
           <select name={field.fieldName} id={field.fieldName} required={required}>
             <option value="">Board</option>
             {parentFrames?.map((parent) => (
-              <option value={parent.id}>{parent.title}</option>
+              <option value={parent.id} selected={currentValue === parent.id}>
+                {parent.title}
+              </option>
             ))}
           </select>
         </label>
