@@ -16,13 +16,30 @@ export interface ItemPlacementOptions {
     siblings?: HierarchyItem[];
 }
 
+export async function getItemFrameId(
+    item: ConnectableItem, 
+    options: { parent?: HierarchyItem, frame?: Frame } = {}
+): Promise<Frame['id'] | null> {
+    const { frame, parent } = options;
+
+    if (frame?.id) {
+        return frame.id;
+    }
+
+    if (isHierarchyItem(parent?.item)) {
+        return isFrame(parent.item) ? parent.id : parent.item.parentId;
+    }
+
+    return item.parentId;
+}
+
 export async function placeItem(item: ConnectableItem, options: ItemPlacementOptions = {}): Promise<void> {
     const { parent } = options;
 
     if (isHierarchyItem(parent?.item)) {
         let frame: Frame | undefined = undefined;
 
-        let frameId = isFrame(parent.item) ? parent.id : parent.item.parentId;
+        const frameId = await getItemFrameId(item, { parent, frame: options.frame });
 
         if (frameId) {
             frame = await miro.board.getById(frameId) as Frame;
@@ -44,7 +61,7 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
                 };
 
                 if (parent.id !== frameId) {
-                    // only add connectors if parent is not a frame
+                    // only add connectors if parent exists and is not a frame
                     const connectorEndpoints = calculateConnectorEndpoints(parentRect, futurePlacement);
 
                     await miro.board.createConnector({
