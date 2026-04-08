@@ -27,7 +27,14 @@ type EditFormField<T extends Item> = {
   fieldName: NestedKeyOf<ItemsProps<T>>;
   defaultValue?: string | number | boolean;
   currentValue?: string | number | boolean;
-  fieldType: 'text' | 'color' | 'color_map' | 'number' | 'rich_text' | 'extended_rich_text';
+  fieldType:
+    | 'text'
+    | 'color'
+    | 'color_map'
+    | 'number'
+    | 'rich_text'
+    | 'extended_rich_text'
+    | 'parent';
   required?: boolean;
   inputProps?: Record<string, string | number | boolean>;
 };
@@ -63,16 +70,8 @@ export type EditModalProperties<T extends Item = Item> = {
   hierarchyParentId?: ConnectableItem['id'];
 };
 
-export type MoveModalProperties = {
-  action: 'move';
-  title: string;
-  item: Item;
-  hierarchyParentId?: ConnectableItem['id'];
-};
-
 export type ModalProperties =
   | AddModalProperties
   | ConnectModalProperties
   | DeleteModalProperties
-  | EditModalProperties
-  | MoveModalProperties;
+  | EditModalProperties;
