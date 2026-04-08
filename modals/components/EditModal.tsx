@@ -3,6 +3,10 @@ import { Connector, Frame, Group, Item, Tag } from '@mirohq/websdk-types';
 import { FormEvent, useEffect, useState } from 'react';
 import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
+import { findFramePlacement, placeItem } from '@utils/item-placer';
+import { isConnectableItem } from '@utils/items';
+import { HierarchyItem } from '@models/item';
+import { disconnectFromParent } from '@utils/connections';
 
 type EditModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -51,21 +55,42 @@ export const EditModal = (props: EditModalProps) => {
         const existingParentId: string = (modalData.item as ItemWithParent)?.parentId ?? '';
 
         if (existingParentId) {
-          const existingParent = (await miro.board.getById(existingParentId)) as Frame;
-          await existingParent.remove(item);
+          const existingParent = (await miro.board.getById(existingParentId));
+
+          if (isConnectableItem(item)) {
+            disconnectFromParent(item, existingParent);
+          }
+
           await item.sync();
         }
 
         if (parentId) {
           const parentFrame = (await miro.board.getById(parentId as string)) as Frame;
-          item.x = parentFrame.x + 1;
-          item.y = parentFrame.y + 1;
-          await item.sync();
-          await parentFrame.add(item);
+
+          if (isConnectableItem(item)) {
+            const hierarchyParent = { 
+              id: parentFrame.id,
+              label: parentFrame.title,
+              item: parentFrame,
+              level: 1,
+            } as HierarchyItem<Frame>; // bare minimum info for item placement algorithm
+            await placeItem(item, { parent: hierarchyParent, frame: parentFrame });
+          } else {
+            // for unsupported types
+            item.x = parentFrame.x + 1;
+            item.y = parentFrame.y + 1;
+            await item.sync();
+            await parentFrame.add(item);
+          }
         } else {
-          item.x = 0;
-          item.y = 0;
-          await item.sync();
+          // center items in board
+          const emptySpot = await findFramePlacement({ 
+            x: 0, 
+            y: 0,
+          });
+
+          item.x = emptySpot.x;
+          item.y = emptySpot.y;
         }
       }
 
