@@ -81,7 +81,7 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
     case 'parent':
       return (
         <label className="ally-wb-edit-form-label ally-wb-parent-input">
-          <span className="ally-wb-edit-form-label-text">{readableFieldName}</span>
+          <span className="ally-wb-edit-form-label-text">Frame</span>
           <select name={field.fieldName} id={field.fieldName} required={required}>
             <option value="">Board</option>
             {parentFrames?.map((parent) => (
