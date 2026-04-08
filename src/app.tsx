@@ -5,7 +5,6 @@ import SampleItems from '@data/sample-items.json';
 import { HierarchyBoard } from '@components/hierarchy';
 import { ItemType } from '@models/item';
 import { buildConnectorHierarchy } from '@utils/hierarchy-builder';
-import { openAddModal } from '@utils/open-modal';
 import { useBoardItems } from './hooks/useBoardItems';
 
 import { applyHierarchicalSearch, getSearchResultTotal, normalizeQuery } from '@utils/search';
