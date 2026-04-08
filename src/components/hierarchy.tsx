@@ -62,6 +62,87 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
         {type}: {label}
       </summary>
 
+      <section>
+        <h2>Add Item to Board</h2>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Frame',
+              frameFields: [
+                {
+                  fieldName: 'title',
+                  fieldType: 'text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color',
+                },
+                {
+                  fieldName: 'width',
+                  fieldType: 'number',
+                  required: true,
+                  inputProps: {
+                    value: 700,
+                  },
+                },
+                {
+                  fieldName: 'height',
+                  fieldType: 'number',
+                  required: true,
+                  inputProps: {
+                    value: 500,
+                  },
+                },
+              ],
+            })
+          }
+        >
+          Add Frame
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Sticky Note',
+              stickyNoteFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color_map',
+                },
+              ],
+            })
+          }
+        >
+          Add Sticky Note
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Text',
+              textFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+              ],
+            })
+          }
+        >
+          Add Text
+        </button>
+      </section>
+
       <div className="a11ywb-accordion__contents">
         {listItems.length > 0 && (
           <ul>
