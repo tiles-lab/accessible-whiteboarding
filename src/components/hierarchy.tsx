@@ -1,10 +1,11 @@
 import type { Frame, Item, StickyNote, Text } from '@mirohq/websdk-types';
 import { HierarchyItem, HierarchyItemType, ItemType } from '@models/item';
 import Tags from './tags';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { getItemTypeConfig } from '@utils/items';
 import { getColorConfig } from '@utils/colors';
 import { openAddModal, openConnectModal, openDeleteModal, openEditModal } from '@utils/open-modal';
+import { useEarcon } from '../hooks/useEarcon';
 
 export interface HierarchyProps {
   hierarchyItem: HierarchyItem<Item>;
@@ -44,6 +45,7 @@ export interface TreeBoardItemProps {
   hierarchyItem: HierarchyItem<TreeBoardItem>;
   subtype?: string; // temp workaround for cluster
   children?: React.ReactNode; // custom data to display in the <summary>
+  onFocus?: React.FocusEventHandler | undefined;
 }
 
 const HierarchyListItem: React.FC<{ item: HierarchyItem }> = ({ item }) => {
@@ -160,7 +162,11 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({ type, label, chi
   );
 };
 
-const getItemLabel = (hierarchyItem: HierarchyItem) => {
+interface GetItemLabelOptions {
+  onFocus?: React.FocusEventHandler | undefined;
+}
+
+const getItemLabel = (hierarchyItem: HierarchyItem, options: GetItemLabelOptions = {}) => {
   const usesRichText =
     hierarchyItem?.label?.startsWith('<p>') ||
     hierarchyItem?.label?.startsWith('<ul>') ||
@@ -168,10 +174,12 @@ const getItemLabel = (hierarchyItem: HierarchyItem) => {
   const hasParent = 'parentId' in hierarchyItem?.item && Boolean(hierarchyItem?.item?.parentId);
   const itemTypeLabel = getItemTypeConfig(hierarchyItem.type)?.displayLabel;
 
+  const { onFocus } = options;
+
   if (usesRichText && hasParent) {
     return (
       <>
-        <h3>{itemTypeLabel}</h3>
+        <h3 onFocus={onFocus}>{itemTypeLabel}</h3>
         <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
       </>
     );
@@ -180,7 +188,7 @@ const getItemLabel = (hierarchyItem: HierarchyItem) => {
   if (!usesRichText && hasParent) {
     return (
       <>
-        <h3>
+        <h3 onFocus={onFocus}>
           {itemTypeLabel}: {hierarchyItem.label}
         </h3>
       </>
@@ -190,14 +198,14 @@ const getItemLabel = (hierarchyItem: HierarchyItem) => {
   if (usesRichText && !hasParent) {
     return (
       <>
-        <h2>{itemTypeLabel}</h2>
+        <h2 onFocus={onFocus}>{itemTypeLabel}</h2>
         <div dangerouslySetInnerHTML={{ __html: hierarchyItem.label }} />
       </>
     );
   }
 
   return (
-    <h2>
+    <h2 onFocus={onFocus}>
       {itemTypeLabel}: {hierarchyItem.label}
     </h2>
   );
@@ -212,9 +220,19 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
   );
 };
 
-const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children }) => {
+const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children, onFocus }) => {
   const listItems = hierarchyItem.children ?? [];
   const metadata = hierarchyItem.metadata;
+
+  const handleFocus = useCallback((e: React.FocusEvent) => {
+    if (e.currentTarget.contains(e.relatedTarget as Node)) {
+      return;
+    }
+
+    if (onFocus) {
+      onFocus(e);
+    }
+  }, [onFocus]);
 
   return (
     <details
@@ -222,8 +240,10 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, c
       open={!!metadata.searchMatch && metadata.searchMatch !== 'default'}
       data-subtype={subtype}
     >
-      <summary className="a11ywb-accordion-header">
-        {getItemLabel(hierarchyItem)}
+      <summary className="a11ywb-accordion-header" 
+        onFocus={handleFocus}
+      >
+        {getItemLabel(hierarchyItem, { onFocus })}
 
         <div className="a11ywb-board-item__metadata">
           {metadata && (
@@ -375,8 +395,10 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
   const colorKey = hierarchyItem.item?.style.fillColor;
   const colorLabel = getColorConfig(hierarchyItem.item)?.displayLabel;
 
+  const { onFocus } = useEarcon({ category: hierarchyItem.item })
+
   return (
-    <TreeBoardItem hierarchyItem={hierarchyItem}>
+    <TreeBoardItem hierarchyItem={hierarchyItem} onFocus={onFocus}>
       <span className="a11ywb-board-item__metadata-color" data-color={colorKey}>
         color: {colorLabel}
       </span>

@@ -25,6 +25,7 @@
       "@models/*": ["./src/models/*"],
       "@utils/*": ["./src/utils/*"],
       "@data/*": ["./data/*"],
+      "@audio": ["/src/assets/audio"],
     }
   },
   "include": [
