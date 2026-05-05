@@ -13,14 +13,10 @@ const App: React.FC = () => {
   const [successMessage, setSuccessMessage] = React.useState<string>('');
 
   React.useEffect(() => {
-    const focusTitle = () => title?.current?.focus();
-
-    window.addEventListener('DOMContentLoaded', focusTitle);
-
-    return () => {
-      window.removeEventListener('DOMContentLoaded', focusTitle);
-    };
-  }, [window, title]);
+    if (modalData) {
+      requestAnimationFrame(() => title.current?.focus());
+    }
+  }, [modalData]);
 
   const fetchModalData = async () => {
     try {
