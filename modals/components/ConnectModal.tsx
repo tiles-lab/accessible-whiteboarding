@@ -1,5 +1,6 @@
 import { ConnectModalProperties } from '../../src/models/modals';
-import { Connector, Group, Item, StickyNote, Tag } from '@mirohq/websdk-types';
+import { Connector, Group, Item, Tag } from '@mirohq/websdk-types';
+import { notifyBoardUpdate } from '@utils/board-sync';
 import { useEffect, useState } from 'react';
 
 type ConnectModalProps = {
@@ -59,7 +60,7 @@ export const ConnectModal = (props: ConnectModalProps) => {
     endItem: ItemWithoutConnector,
   ) => {
     try {
-      const connector = await miro.board.createConnector({
+      await miro.board.createConnector({
         start: {
           item: startItem.id,
           snapTo: 'right',
@@ -70,24 +71,7 @@ export const ConnectModal = (props: ConnectModalProps) => {
         },
       });
 
-      window.sessionStorage.setItem(
-        'updated_miro_items',
-        JSON.stringify([
-          connector,
-          {
-            ...startItem,
-            connectorIds: startItem?.connectorIds
-              ? [...startItem.connectorIds, connector.id]
-              : [connector.id],
-          },
-          {
-            ...endItem,
-            connectorIds: endItem?.connectorIds
-              ? [...endItem.connectorIds, connector.id]
-              : [connector.id],
-          },
-        ]),
-      );
+      notifyBoardUpdate();
 
       handleToast('Connection added');
     } catch (error) {
@@ -95,24 +79,11 @@ export const ConnectModal = (props: ConnectModalProps) => {
     }
   };
 
-  const onRemoveConnection = async (connector: Connector, connectionItem: ItemWithoutConnector) => {
+  const onRemoveConnection = async (connector: Connector) => {
     try {
       await miro.board.remove(connector);
 
-      window.sessionStorage.setItem(
-        'updated_miro_items',
-        JSON.stringify([
-          connector,
-          {
-            ...connectionItem,
-            connectorIds: connectionItem?.connectorIds?.filter((id) => id !== connector.id),
-          },
-          {
-            ...currentItem,
-            connectorIds: currentItem?.connectorIds?.filter((id) => id !== connector.id),
-          },
-        ]),
-      );
+      notifyBoardUpdate();
 
       handleToast('Connection removed');
     } catch (error) {
@@ -212,11 +183,7 @@ export const ConnectModal = (props: ConnectModalProps) => {
           {existingConnections.map((connection) => {
             return (
               <li key={connection.connector.id}>
-                <button
-                  onClick={() =>
-                    onRemoveConnection(connection.connector, connection.connectionItem)
-                  }
-                >
+                <button onClick={() => onRemoveConnection(connection.connector)}>
                   {getItemText(connection.is_start, connection.connectionItem)}
                 </button>
               </li>
