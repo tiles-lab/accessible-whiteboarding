@@ -20,7 +20,7 @@ export const useAudio = (
       audioRef.current = new Audio(src);
     };
 
-    window.addEventListener('keydown', init, { once: true });
+    window.addEventListener('keydown', init, { once: false });
 
     return () => window.removeEventListener('keydown', init);
   }, [src, shouldPlay]);

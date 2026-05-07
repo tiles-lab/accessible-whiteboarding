@@ -1,22 +1,12 @@
-import { isStickyNote } from '@utils/items';
 import { useAudio } from './useAudio';
-import { HierarchyItemType } from '@models/item';
-import { EarconRegistry } from '@config/earcons';
+import { EarconOptions, getEarcon } from '@utils/a11y';
 
-interface UseEarconOptions {
-  category: HierarchyItemType;
-  enabled?: boolean;
+interface UseEarconOptions extends EarconOptions {
+  enabled?: boolean; 
 }
 
-export const useEarcon = ({ category, enabled }: UseEarconOptions) => {
-    let audioSrc: string | undefined;
+export const useEarcon = ({ category, color, enabled }: UseEarconOptions) => {
+  const audioSrc = getEarcon({ category, color });
 
-    if (isStickyNote(category)) {
-        const config = EarconRegistry.sticky_note[category.style.fillColor];
-
-        if (config.audio) {
-            audioSrc = config.audio;
-        }
-    }
   return useAudio(audioSrc ?? '', { enabled: enabled });
 };
