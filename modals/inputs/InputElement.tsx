@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ColorOptions } from './ColorOptions';
 import { RichTextInput } from './RichTextInput';
 import type { AddModalProperties, EditModalProperties } from '../../src/models/modals';
 import { Frame } from '@mirohq/websdk-types';
+import { getEarcon } from '@utils/a11y';
 
 type AddField =
   | NonNullable<AddModalProperties['frameFields']>[number]
@@ -16,6 +17,7 @@ type Field = AddField | EditField;
 type InputElementProps = {
   field: Field;
   parentFrames?: Frame[];
+  onFocusColorOption?: React.FocusEventHandler;
 };
 
 const getReadableFieldName = (fieldName: string): string => {
@@ -36,12 +38,20 @@ export const InputElement = (props: InputElementProps): React.ReactElement | nul
   const required = field.required ?? false;
   const readableFieldName = getReadableFieldName(field.fieldName);
 
+  const handleColorSelectChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const audioSrc = getEarcon({ color: e.target.value });
+    const audio = new Audio(audioSrc);
+
+    audio.play();
+
+  }, []);
+
   switch (field.fieldType) {
     case 'color_map':
       return (
         <label className="ally-wb-edit-form-label">
           <span className="ally-wb-edit-form-label-text">{readableFieldName}</span>
-          <select name={field.fieldName} id={field.fieldName} required={required}>
+          <select name={field.fieldName} id={field.fieldName} required={required} size={5} onChange={handleColorSelectChange}>
             <ColorOptions currentColor={currentValue ?? defaultValue ?? ''} />
           </select>
         </label>

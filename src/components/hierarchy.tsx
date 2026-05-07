@@ -395,7 +395,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
   const colorKey = hierarchyItem.item?.style.fillColor;
   const colorLabel = getColorConfig(hierarchyItem.item)?.displayLabel;
 
-  const { onFocus } = useEarcon({ category: hierarchyItem.item })
+  const { onFocus } = useEarcon({ category: hierarchyItem.item });
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem} onFocus={onFocus}>
