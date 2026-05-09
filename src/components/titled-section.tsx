@@ -17,11 +17,7 @@ export const HeadingTagMap: Record<string, keyof JSX.IntrinsicElements> = {
   h6: 'h6',
 };
 
-const TitledSection: React.FC<TitledSectionProps> = ({
-  title,
-  headingLevel,
-  children,
-}) => {
+const TitledSection: React.FC<TitledSectionProps> = ({ title, headingLevel, children }) => {
   const HeadingTag = HeadingTagMap[headingLevel] as keyof JSX.IntrinsicElements;
   const headingId = title.replaceAll(' ', '_');
   return (

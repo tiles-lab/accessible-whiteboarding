@@ -258,7 +258,12 @@ const BoardItem: React.FC<BoardItemProps<Item>> = ({ hierarchyItem, children }) 
   );
 };
 
-const TreeBoardItem: React.FC<TreeBoardItemProps> = ({ hierarchyItem, subtype, children, onFocus }) => {
+const TreeBoardItem: React.FC<TreeBoardItemProps> = ({
+  hierarchyItem,
+  subtype,
+  children,
+  onFocus,
+}) => {
   const listItems = hierarchyItem.children ?? [];
   const metadata = hierarchyItem.metadata;
 
@@ -427,7 +432,7 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
   const colorKey = hierarchyItem.item?.style.fillColor;
   const colorLabel = getColorConfig(hierarchyItem.item)?.displayLabel;
 
-  const { onFocus } = useEarcon({ category: hierarchyItem.item })
+  const { onFocus } = useEarcon({ category: hierarchyItem.item });
 
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem} onFocus={onFocus}>

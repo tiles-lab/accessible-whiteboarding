@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import dns from 'dns';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/server-options.html#server-host
@@ -18,14 +18,11 @@ const collectHtmlEntries = (dir: string, prefix = '') =>
       if (fs.statSync(fullPath).isDirectory()) {
         Object.assign(acc, collectHtmlEntries(fullPath, `${prefix}${file}/`));
       } else if (path.extname(file) === '.html') {
-        acc[`${prefix}${path.basename(file, '.html')}`] = path.resolve(
-          __dirname,
-          fullPath
-        );
+        acc[`${prefix}${path.basename(file, '.html')}`] = path.resolve(__dirname, fullPath);
       }
       return acc;
     },
-    {} as Record<string, string>
+    {} as Record<string, string>,
   );
 
 const allHtmlEntries = collectHtmlEntries('.');
