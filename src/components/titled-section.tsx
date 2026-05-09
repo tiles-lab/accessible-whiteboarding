@@ -1,12 +1,14 @@
 import * as React from 'react';
 
+export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 export interface TitledSectionProps {
   title: string;
-  headingLevel: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  headingLevel: HeadingLevel;
   children: React.ReactNode;
 }
 
-const HeadingTagMap: Record<string, keyof JSX.IntrinsicElements> = {
+export const HeadingTagMap: Record<string, keyof JSX.IntrinsicElements> = {
   h1: 'h1',
   h2: 'h2',
   h3: 'h3',
