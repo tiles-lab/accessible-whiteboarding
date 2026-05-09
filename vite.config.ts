@@ -50,6 +50,7 @@ export default defineConfig({
       '@components': path.resolve(__dirname, './src/components'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@audio': path.resolve(__dirname, './src/assets/audio'),
+      '@icons': path.resolve(__dirname, './src/assets/icons'),
     },
   },
 });

@@ -26,6 +26,7 @@
       "@utils/*": ["./src/utils/*"],
       "@data/*": ["./data/*"],
       "@audio": ["/src/assets/audio"],
+      "@icons": ["/src/assets/icons"]
     }
   },
   "include": [
