@@ -43,69 +43,114 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
 
         if (frameId) {
             frame = await miro.board.getById(frameId) as Frame;
-
-            const futurePlacement = await findFuturePlacement(item, { 
-                width: item.width, 
-                height: item.height,
-                parent,
-                frame,
-            });
-
-            if (futurePlacement && isConnectableItem(item)) {
-                const parentAbsolutePos = getAbsolutePosition(parent.item, frame);
-                const parentRect = {
-                    x: parentAbsolutePos.x,
-                    y: parentAbsolutePos.y,
-                    height: parent.item.height,
-                    width: parent.item.width,
-                };
-
-                if (parent.id !== frameId) {
-                    // only add connectors if parent exists and is not a frame
-                    const connectorEndpoints = calculateConnectorEndpoints(parentRect, futurePlacement);
-
-                    await miro.board.createConnector({
-                        shape: 'curved',
-                        start: {
-                            item: parent.item.id,
-                            snapTo: connectorEndpoints.start.snapTo,
-                        },
-                        end: {
-                            item: item.id,
-                            snapTo: connectorEndpoints.end.snapTo,
-                        }
-                    });
-                }
-
-                item.x = futurePlacement.x;
-                item.y = futurePlacement.y;
-
-                await item.sync();
-                await frame.add(item);
-            } else {
-                // cannot add to frame, but we rearrange so it does not overlap other failed attempts
-
-                const emptySpot = await findFramePlacement(item);
-                item.x = emptySpot.x;
-                item.y = emptySpot.y;
-                await item.sync();
-            }
         }
+
+        let futurePlacement = await findFuturePlacement(item, { 
+            width: item.width, 
+            height: item.height,
+            parent,
+            frame,
+        });
+
+        if (isConnectableItem(item)) {
+            if (!futurePlacement) {
+                futurePlacement = await findFramePlacement(item);
+            }
+
+            const parentAbsolutePos = getAbsolutePosition(parent.item, frame);
+            const parentRect = {
+                x: parentAbsolutePos.x,
+                y: parentAbsolutePos.y,
+                height: parent.item.height,
+                width: parent.item.width,
+            };
+
+            if (isConnectableItem(parent.item) || parent.id !== frameId) {
+                // only add connectors if parent exists and is not a frame
+                const connectorEndpoints = calculateConnectorEndpoints(parentRect, futurePlacement);
+
+                await miro.board.createConnector({
+                    shape: 'curved',
+                    start: {
+                        item: parent.item.id,
+                        snapTo: connectorEndpoints.start.snapTo,
+                    },
+                    end: {
+                        item: item.id,
+                        snapTo: connectorEndpoints.end.snapTo,
+                    }
+                });
+            }
+
+            item.x = futurePlacement.x;
+            item.y = futurePlacement.y;
+
+            await item.sync();
+
+            if (frame) {
+                await frame.add(item);
+            }
+        } else {
+            
+        }
+        
+    } else { // board-level
+        let futurePlacement: Position | null = await findFuturePlacement(item, { 
+            width: item.width, 
+            height: item.height,
+        });
+
+        if (!futurePlacement) {
+            futurePlacement = await findFramePlacement(item);
+        }
+
+        item.x = futurePlacement.x;
+        item.y = futurePlacement.y;
+
+        await item.sync();
     }
 }
 
 export async function findFuturePlacement(item: ConnectableItem, options?: ItemPlacementOptions): Promise<RelativeBounds | null> {
     const { parent, frame } = options ?? {};
 
-    // base case, delegate to Miro's auto-placement
+    // base case: board-level placement
     if (!frame && !parent) {
-        const autoPosition = await miro.board.findEmptySpace(item);
-        
-        item.x = autoPosition.x;
-        item.y = autoPosition.y;
-        item.sync();
+        const boardItems = await miro.board.get();
 
-        return item;
+        const existingItems: Rect[] = boardItems
+            .map(boardItem => {
+                if (isConnectableItem(boardItem) && !boardItem.parentId) {
+                    const absolutePosition = getAbsolutePosition(boardItem);
+                    return {
+                        ...absolutePosition,
+                        width: boardItem.width,
+                        height: boardItem.height,
+                    }
+
+                } else if (isFrame(boardItem)) {
+                    const absolutePosition = { x: boardItem.x, y: boardItem.y };
+                    return {
+                        ...absolutePosition,
+                        width: boardItem.width,
+                        height: boardItem.height,
+                    }
+                } else {
+                    return null;
+                }
+            }).filter(boardItem => !!boardItem);
+
+        let spiralOrigin: RelativeBounds = { 
+            x: 0, 
+            y: 0, 
+            width: 10000, 
+            height: 10000, 
+            relativeTo: 'canvas_center' 
+        };
+
+        const attemptBounds = spiralSearch(item, existingItems, spiralOrigin);
+
+        return attemptBounds;
     }
 
     // case 2: frame parent, no connectors
@@ -169,7 +214,7 @@ export async function findFuturePlacement(item: ConnectableItem, options?: ItemP
     return null;
 };
 
-export async function findFramePlacement(options?: ItemPlacementOptions): Promise<{ x: number; y: number }> {
+export async function findFramePlacement(options?: ItemPlacementOptions): Promise<RelativeBounds> {
     const x = options?.x ?? 0;
     const y = options?.y ?? 0;
     const height = options?.height ?? 200; // todo: move to config
@@ -186,6 +231,9 @@ export async function findFramePlacement(options?: ItemPlacementOptions): Promis
     return {
         x: candidateEmptySpace.x,
         y: candidateEmptySpace.y,
+        height,
+        width,
+        relativeTo: 'canvas_center',
     };
 };
 
