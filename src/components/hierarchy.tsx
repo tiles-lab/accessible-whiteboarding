@@ -75,7 +75,7 @@ export const HierarchyBoard: React.FC<HierarchyBoardProps> = ({
       }}
       children={
         <>
-          <section role="group" aria-labelledby="button-group-add-item-to-board">
+          <section role="toolbar" aria-labelledby="button-group-add-item-to-board">
             <h2 id="button-group-add-item-to-board">Add Item to Board</h2>
             <button
               type="button"
@@ -269,9 +269,11 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({
 
   const itemSummary = getItemLabel(hierarchyItem, { onFocus });
 
+  const accordionId = `${hierarchyItem.type}-${hierarchyItem.id}`
+
   return (
     <Accordion
-      id={hierarchyItem.type + hierarchyItem.id}
+      id={accordionId}
       defaultOpen={!!metadata.searchMatch && metadata.searchMatch !== 'default'}
       data-subtype={subtype}
       detailsClassNames={['a11ywb-board-item', `a11ywb-board-item--type-${hierarchyItem.type}`]}
@@ -281,7 +283,7 @@ const TreeBoardItem: React.FC<TreeBoardItemProps> = ({
         description: itemSummary.headingDescription,
         focusAction: onFocus,
         content: (
-          <div className="a11ywb-board-item__metadata">
+          <div role="status" className="a11ywb-board-item__metadata">
             {metadata && (
               <>
                 <p>{hierarchyItem.metadata?.treeChildCount} total sub-topics</p>
@@ -320,100 +322,103 @@ const TextTypeBoardItem: React.FC<TextTypeBoardItemProps> = ({ hierarchyItem }) 
 
   return (
     <BoardItem hierarchyItem={hierarchyItem}>
-      <button
-        id={`edit-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openEditModal({
-            item: hierarchyItem.item,
-            title: 'Edit Text',
-            fields: [
-              {
-                fieldName: 'content',
-                currentValue: hierarchyItem.label,
-                fieldType: 'extended_rich_text',
-                required: true,
-              },
-              {
-                fieldName: 'parentId',
-                currentValue: hierarchyItem.item.parentId ?? '',
-                fieldType: 'parent',
-              },
-            ],
-          })
-        }
-      >
-        Edit Text
-      </button>
-      <button
-        id={`connect-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openConnectModal({
-            item: hierarchyItem.item,
-            title: 'Text Connections',
-          })
-        }
-      >
-        Text Connections
-      </button>
-      <button
-        id={`delete-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openDeleteModal({
-            id: hierarchyItem.id,
-            title: 'Delete Text',
-          })
-        }
-      >
-        Delete Text
-      </button>
 
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add child Sticky Note',
-            stickyNoteFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'rich_text',
-                required: true,
-              },
-              {
-                fieldName: 'style.fillColor',
-                fieldType: 'color_map',
-                defaultValue: hierarchyItem.item.style.fillColor,
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add child Sticky Note
-      </button>
+      <div role="toolbar" aria-label="Text Actions">
+        <button
+          id={`edit-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openEditModal({
+              item: hierarchyItem.item,
+              title: 'Edit Text',
+              fields: [
+                {
+                  fieldName: 'content',
+                  currentValue: hierarchyItem.label,
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'parentId',
+                  currentValue: hierarchyItem.item.parentId ?? '',
+                  fieldType: 'parent',
+                },
+              ],
+            })
+          }
+        >
+          Edit Text
+        </button>
+        <button
+          id={`connect-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openConnectModal({
+              item: hierarchyItem.item,
+              title: 'Text Connections',
+            })
+          }
+        >
+          Text Connections
+        </button>
+        <button
+          id={`delete-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openDeleteModal({
+              id: hierarchyItem.id,
+              title: 'Delete Text',
+            })
+          }
+        >
+          Delete Text
+        </button>
 
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add child Text',
-            textFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'extended_rich_text',
-                required: true,
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add child Text
-      </button>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add child Sticky Note',
+              stickyNoteFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color_map',
+                  defaultValue: hierarchyItem.item.style.fillColor,
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add child Sticky Note
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add child Text',
+              textFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add child Text
+        </button>
+      </div>
 
       {hierarchyChildren?.length ? (
         <ul>
@@ -441,108 +446,111 @@ const StickyNoteTypeBoardItem: React.FC<StickyNoteTypeBoardItemProps> = ({ hiera
       </span>
       <Tags tags={hierarchyItem.tags} />
 
-      <button
-        id={`edit-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openEditModal({
-            item: hierarchyItem.item,
-            title: 'Edit Sticky Note',
-            fields: [
-              {
-                fieldName: 'content',
-                currentValue: hierarchyItem.label,
-                fieldType: 'rich_text',
-                required: true,
-              },
-              {
-                fieldName: 'style.fillColor',
-                currentValue: hierarchyItem.item.style.fillColor,
-                fieldType: 'color_map',
-                required: false,
-              },
-              {
-                fieldName: 'parentId',
-                currentValue: hierarchyItem.item.parentId ?? '',
-                fieldType: 'parent',
-              },
-            ],
-          })
-        }
-      >
-        Edit Sticky Note
-      </button>
 
-      <button
-        id={`connect-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openConnectModal({
-            item: hierarchyItem.item,
-            title: 'Sticky Note Connections',
-          })
-        }
-      >
-        Sticky Note Connections
-      </button>
+      <div role="toolbar" aria-label="Sticky Note Actions">
+        <button
+          id={`edit-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openEditModal({
+              item: hierarchyItem.item,
+              title: 'Edit Sticky Note',
+              fields: [
+                {
+                  fieldName: 'content',
+                  currentValue: hierarchyItem.label,
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  currentValue: hierarchyItem.item.style.fillColor,
+                  fieldType: 'color_map',
+                  required: false,
+                },
+                {
+                  fieldName: 'parentId',
+                  currentValue: hierarchyItem.item.parentId ?? '',
+                  fieldType: 'parent',
+                },
+              ],
+            })
+          }
+        >
+          Edit Sticky Note
+        </button>
 
-      <button
-        id={`delete-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openDeleteModal({
-            id: hierarchyItem.id,
-            title: 'Delete Sticky Note',
-          })
-        }
-      >
-        Delete Sticky Note
-      </button>
+        <button
+          id={`connect-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openConnectModal({
+              item: hierarchyItem.item,
+              title: 'Sticky Note Connections',
+            })
+          }
+        >
+          Sticky Note Connections
+        </button>
 
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add child Sticky Note',
-            stickyNoteFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'rich_text',
-                required: true,
-              },
-              {
-                fieldName: 'style.fillColor',
-                fieldType: 'color_map',
-                defaultValue: hierarchyItem.item.style.fillColor,
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add child Sticky Note
-      </button>
+        <button
+          id={`delete-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openDeleteModal({
+              id: hierarchyItem.id,
+              title: 'Delete Sticky Note',
+            })
+          }
+        >
+          Delete Sticky Note
+        </button>
 
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add child Text',
-            textFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'extended_rich_text',
-                required: true,
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add child Text
-      </button>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add child Sticky Note',
+              stickyNoteFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color_map',
+                  defaultValue: hierarchyItem.item.style.fillColor,
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add child Sticky Note
+        </button>
+
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add child Text',
+              textFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add child Text
+        </button>
+      </div>
     </TreeBoardItem>
   );
 };
@@ -554,82 +562,84 @@ const ClusterTypeBoardItem: React.FC<ClusterTypeBoardItemProps> = ({ hierarchyIt
 const FrameTypeBoardItem: React.FC<FrameTypeBoardItemProps> = ({ hierarchyItem }) => {
   return (
     <TreeBoardItem hierarchyItem={hierarchyItem}>
-      <button
-        id={`edit-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openEditModal({
-            item: hierarchyItem.item,
-            title: 'Edit Frame',
-            fields: [
-              {
-                fieldName: 'title',
-                currentValue: hierarchyItem.label,
-                fieldType: 'text',
-                required: true,
-              },
-            ],
-          })
-        }
-      >
-        Edit Frame
-      </button>
+      <div role="toolbar" aria-label="Frame Actions">
+        <button
+          id={`edit-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openEditModal({
+              item: hierarchyItem.item,
+              title: 'Edit Frame',
+              fields: [
+                {
+                  fieldName: 'title',
+                  currentValue: hierarchyItem.label,
+                  fieldType: 'text',
+                  required: true,
+                },
+              ],
+            })
+          }
+        >
+          Edit Frame
+        </button>
 
-      <button
-        id={`delete-${hierarchyItem.id}`}
-        type="button"
-        onClick={() =>
-          openDeleteModal({
-            id: hierarchyItem.id,
-            title: 'Delete Frame',
-          })
-        }
-      >
-        Delete Frame
-      </button>
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add Sticky Note in Frame',
-            stickyNoteFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'rich_text',
-                required: true,
-              },
-              {
-                fieldName: 'style.fillColor',
-                fieldType: 'color_map',
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add Sticky Note in Frame
-      </button>
+        <button
+          id={`delete-${hierarchyItem.id}`}
+          type="button"
+          onClick={() =>
+            openDeleteModal({
+              id: hierarchyItem.id,
+              title: 'Delete Frame',
+            })
+          }
+        >
+          Delete Frame
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Sticky Note in Frame',
+              stickyNoteFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'rich_text',
+                  required: true,
+                },
+                {
+                  fieldName: 'style.fillColor',
+                  fieldType: 'color_map',
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add Sticky Note in Frame
+        </button>
 
-      <button
-        type="button"
-        onClick={() =>
-          openAddModal({
-            title: 'Add Text in Frame',
-            textFields: [
-              {
-                fieldName: 'content',
-                fieldType: 'extended_rich_text',
-                required: true,
-              },
-            ],
-            hierarchyParentId: hierarchyItem.id,
-            hierarchyItem,
-          })
-        }
-      >
-        Add Text in Frame
-      </button>
+        <button
+          type="button"
+          onClick={() =>
+            openAddModal({
+              title: 'Add Text in Frame',
+              textFields: [
+                {
+                  fieldName: 'content',
+                  fieldType: 'extended_rich_text',
+                  required: true,
+                },
+              ],
+              hierarchyParentId: hierarchyItem.id,
+              hierarchyItem,
+            })
+          }
+        >
+          Add Text in Frame
+        </button>
+      </div>
     </TreeBoardItem>
   );
 };
