@@ -49,6 +49,7 @@ const SummaryHeading = (props: SummaryHeadingProps) => {
       aria-expanded={open}
       aria-controls={id}
       onClick={() => setOpen(!open)}
+      onFocus={handleFocus}
       className={`a11ywb-accordion-summary__button a11ywb-accordion-summary__button--${open ? 'open' : 'closed'}`}
     >
       {summary.text}
@@ -70,7 +71,7 @@ export const Accordion = (props: AccordionProps) => {
   const { defaultOpen, id, summary, children, detailsClassNames = [] } = props;
   const [open, setOpen] = useState<boolean>(defaultOpen);
 
-  const content_id = `allywb-accordion-content-${id}`;
+  const content_id = `a11ywb-accordion-content-${id}`;
 
   return (
     <div
