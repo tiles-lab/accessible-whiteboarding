@@ -1,6 +1,7 @@
 import { Frame, Rect } from "@mirohq/websdk-types";
 import { ConnectableItem } from "@models/item";
-import { getSpatialBounds, Position } from "./canvas-geometry";
+import { getAbsolutePosition, getSpatialBounds, Position } from "./canvas-geometry";
+import { isConnectableItem, isFrame } from "./items";
 
 export async function expandFrameTowardsItem(frame: Frame, item: Rect) {
     const frameBounds = getSpatialBounds(frame);
@@ -51,4 +52,32 @@ export function getSnapOffset(position: Position, item: ConnectableItem, snapTo?
         case 'right':  return { x: position.x + item.width * 0.5, y: position.y };
         default:       return position; // auto: todo: should calculate based on direction relative to counterpart
     }
+}
+
+export async function getToplevelRects(): Promise<Rect[]> {
+    const boardItems = await miro.board.get();
+    
+    const existingItems: Rect[] = boardItems
+        .map(boardItem => {
+            if (isConnectableItem(boardItem) && !boardItem.parentId) {
+                const absolutePosition = getAbsolutePosition(boardItem);
+                return {
+                    ...absolutePosition,
+                    width: boardItem.width,
+                    height: boardItem.height,
+                }
+
+            } else if (isFrame(boardItem)) {
+                const absolutePosition = { x: boardItem.x, y: boardItem.y };
+                return {
+                    ...absolutePosition,
+                    width: boardItem.width,
+                    height: boardItem.height,
+                }
+            } else {
+                return null;
+            }
+        }).filter(boardItem => !!boardItem);
+
+    return existingItems;
 }

@@ -7,6 +7,7 @@ import { parseFloatFromForm } from '@utils/forms';
 import { ConnectableItem, HierarchyItem } from '@models/item';
 import { isStickyNote } from '@utils/items';
 import { placeItem } from '@utils/item-placer';
+import { getFramePlacement } from '@utils/frame-placer';
 
 type AddModalProps = {
   handleError: (message: string, error: unknown) => void;
@@ -65,14 +66,20 @@ export const AddModal = (props: AddModalProps) => {
       }
 
       if (dataType === 'frame') {
+        const newFrameRect = await getFramePlacement({
+          x: 0,
+          y: 0,
+          width: newItemDimensions.width ?? 700,
+          height: newItemDimensions.height ?? 500,
+        });
+
         await miro.board.createFrame({
           title: formData.get('title') as string,
           style: {
             fillColor: (formData.get('style.fillColor') as string) ?? 'transparent',
           },
-          ...newItemDimensions,
-          x: 0, // for frames we might want to add it relative to the last created frame
-          y: 0,
+          ...newFrameRect,
+          relativeTo: 'canvas_center'
         });
       }
 

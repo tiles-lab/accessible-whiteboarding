@@ -82,3 +82,54 @@ export function spiralSearch(item: Rect, existingItems: Rect[], origin: Relative
     // giving up
     return lastAttempt;
 }
+
+export interface GridSearchOptions {
+    itemsPerRow?: number;
+    columnGap?: number;
+    rowGap?: number;
+}
+
+export const GRID_SEARCH_DEFAULT_OPTIONS: Required<GridSearchOptions> = {
+    itemsPerRow: 4,
+    columnGap: 20,
+    rowGap: 20,
+};
+
+// assumed all item positions are absolute
+export function gridSearch(
+    item: Rect,
+    existingItems: Rect[],
+    origin: RelativeBounds,
+    options?: GridSearchOptions
+): RelativeBounds | null {
+    const itemsPerRow = options?.itemsPerRow ?? GRID_SEARCH_DEFAULT_OPTIONS.itemsPerRow;
+    const columnGap = options?.columnGap ?? GRID_SEARCH_DEFAULT_OPTIONS.columnGap;
+    const rowGap = options?.rowGap ?? GRID_SEARCH_DEFAULT_OPTIONS.rowGap;
+
+    const cellWidth = item.width + columnGap;
+    const cellHeight = item.height + rowGap;
+
+    // Grid expands row by row
+    const maxRows = Math.ceil((existingItems.length + 1) / itemsPerRow) + 1;
+
+    for (let row = 0; row < maxRows; row++) {
+        for (let col = 0; col < itemsPerRow; col++) {
+            const candidate: RelativeBounds = {
+                relativeTo: origin.relativeTo,
+                x: origin.x + col * cellWidth,
+                y: origin.y + row * cellHeight,
+                width: item.width,
+                height: item.height,
+            };
+
+            const isFreeSpace = !existingItems.length ||
+                existingItems.every(existing => !isOverlapping(existing, candidate));
+
+            if (isFreeSpace) {
+                return candidate;
+            }
+        }
+    }
+
+    return null;
+}

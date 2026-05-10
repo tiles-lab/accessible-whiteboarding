@@ -4,7 +4,7 @@ import { ConnectableItem, HierarchyItem, HierarchyItemType } from "@models/item"
 import { isConnectableItem, isConnector, isFrame, isHierarchyItem } from "./items";
 import { canBeContainedIn, getAbsolutePosition, getSpatialBounds, Position, RelativeBounds } from "./canvas-geometry";
 import { spiralSearch } from "./placement-strategy";
-import { expandFrameTowardsItem, getSnapOffset } from "./canvas-items";
+import { expandFrameTowardsItem, getSnapOffset, getToplevelRects } from "./canvas-items";
 
 export interface ItemPlacementOptions {
     x?: number | null;
@@ -33,10 +33,10 @@ export async function getItemFrameId(
     return item.parentId;
 }
 
-export async function placeItem(item: ConnectableItem, options: ItemPlacementOptions = {}): Promise<void> {
+export async function placeItem(item: HierarchyItemType, options: ItemPlacementOptions = {}): Promise<void> {
     const { parent } = options;
 
-    if (isHierarchyItem(parent?.item)) {
+    if (isHierarchyItem(parent?.item) && isConnectableItem(item)) {
         let frame: Frame | undefined = undefined;
 
         const frameId = await getItemFrameId(item, { parent, frame: options.frame });
@@ -54,7 +54,7 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
 
         if (isConnectableItem(item)) {
             if (!futurePlacement) {
-                futurePlacement = await findFramePlacement(item);
+                futurePlacement = await findBoardPlacement(item);
             }
 
             const parentAbsolutePos = getAbsolutePosition(parent.item, frame);
@@ -90,8 +90,6 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
             if (frame) {
                 await frame.add(item);
             }
-        } else {
-            
         }
         
     } else { // board-level
@@ -101,7 +99,7 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
         });
 
         if (!futurePlacement) {
-            futurePlacement = await findFramePlacement(item);
+            futurePlacement = await findBoardPlacement(item);
         }
 
         item.x = futurePlacement.x;
@@ -111,34 +109,12 @@ export async function placeItem(item: ConnectableItem, options: ItemPlacementOpt
     }
 }
 
-export async function findFuturePlacement(item: ConnectableItem, options?: ItemPlacementOptions): Promise<RelativeBounds | null> {
+export async function findFuturePlacement(item: HierarchyItemType, options?: ItemPlacementOptions): Promise<RelativeBounds | null> {
     const { parent, frame } = options ?? {};
 
     // base case: board-level placement
     if (!frame && !parent) {
-        const boardItems = await miro.board.get();
-
-        const existingItems: Rect[] = boardItems
-            .map(boardItem => {
-                if (isConnectableItem(boardItem) && !boardItem.parentId) {
-                    const absolutePosition = getAbsolutePosition(boardItem);
-                    return {
-                        ...absolutePosition,
-                        width: boardItem.width,
-                        height: boardItem.height,
-                    }
-
-                } else if (isFrame(boardItem)) {
-                    const absolutePosition = { x: boardItem.x, y: boardItem.y };
-                    return {
-                        ...absolutePosition,
-                        width: boardItem.width,
-                        height: boardItem.height,
-                    }
-                } else {
-                    return null;
-                }
-            }).filter(boardItem => !!boardItem);
+        const existingItems = await getToplevelRects();
 
         let spiralOrigin: RelativeBounds = { 
             x: 0, 
@@ -214,7 +190,7 @@ export async function findFuturePlacement(item: ConnectableItem, options?: ItemP
     return null;
 };
 
-export async function findFramePlacement(options?: ItemPlacementOptions): Promise<RelativeBounds> {
+export async function findBoardPlacement(options?: ItemPlacementOptions): Promise<RelativeBounds> {
     const x = options?.x ?? 0;
     const y = options?.y ?? 0;
     const height = options?.height ?? 200; // todo: move to config
