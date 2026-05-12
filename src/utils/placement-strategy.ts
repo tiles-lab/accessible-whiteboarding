@@ -1,19 +1,10 @@
 import { Rect } from "@mirohq/websdk-types";
 import { isOverlapping, RelativeBounds } from "./canvas-geometry";
+import { GRID_SEARCH_DEFAULT_OPTIONS, GridSearchOptions, SPIRAL_SEARCH_DEFAULT_OPTIONS, SpiralSearchOptions } from "@config/placement";
 
-export interface SpiralSearchOptions {
-    startingRingSize?: number;
-    ringMargin?: number;
-    maxRingCount?: number;
-}
-
-export const SPIRAL_SEARCH_DEFAULT_OPTIONS: Required<SpiralSearchOptions> = {
-    startingRingSize: 20,
-    ringMargin: 20,
-    maxRingCount: 10
-}
-
-// assumed all item positions are absolute
+/**
+ * Find a non-occupied space to place an item following a clockwise radial/spiral order. Each ring could accommodate around 8 items.
+ */
 export function spiralSearch(item: Rect, existingItems: Rect[], origin: RelativeBounds, options?: SpiralSearchOptions): RelativeBounds | null {
     if (!existingItems?.length) {
         return origin;
@@ -41,7 +32,7 @@ export function spiralSearch(item: Rect, existingItems: Rect[], origin: Relative
             // avoid making a grid-like alignment
             const sliceAngle = (2 * Math.PI) / ringSliceCount;
             const ringOffset = ((ringIndex + 1) % 2) * sliceAngle * 0.5;
-            const angle = ringOffset + ((Math.PI / 2) - (sliceIndex / ringSliceCount) * 2 * Math.PI);
+            const angle = ringOffset - (Math.PI / 2) + sliceIndex * sliceAngle;
 
             // NOTE: leaving this commented for now, not sure if we want this optimization
             //
@@ -83,19 +74,10 @@ export function spiralSearch(item: Rect, existingItems: Rect[], origin: Relative
     return lastAttempt;
 }
 
-export interface GridSearchOptions {
-    itemsPerRow?: number;
-    columnGap?: number;
-    rowGap?: number;
-}
-
-export const GRID_SEARCH_DEFAULT_OPTIONS: Required<GridSearchOptions> = {
-    itemsPerRow: 4,
-    columnGap: 20,
-    rowGap: 20,
-};
-
-// assumed all item positions are absolute
+/**
+ * Find a non-occupied space to place an item following a top-bottom left-right order.
+ * By default, each row contains 4 items
+ */
 export function gridSearch(
     item: Rect,
     existingItems: Rect[],
