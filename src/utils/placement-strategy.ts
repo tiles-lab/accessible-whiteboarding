@@ -1,0 +1,117 @@
+import { Rect } from "@mirohq/websdk-types";
+import { isOverlapping, RelativeBounds } from "./canvas-geometry";
+import { GRID_SEARCH_DEFAULT_OPTIONS, GridSearchOptions, SPIRAL_SEARCH_DEFAULT_OPTIONS, SpiralSearchOptions } from "@config/placement";
+
+/**
+ * Find a non-occupied space to place an item following a clockwise radial/spiral order. Each ring could accommodate around 8 items.
+ */
+export function spiralSearch(item: Rect, existingItems: Rect[], origin: RelativeBounds, options?: SpiralSearchOptions): RelativeBounds | null {
+    if (!existingItems?.length) {
+        return origin;
+    }
+
+    const startingRingSize = options?.startingRingSize ?? SPIRAL_SEARCH_DEFAULT_OPTIONS.startingRingSize;
+    const ringMargin = options?.ringMargin ?? SPIRAL_SEARCH_DEFAULT_OPTIONS.ringMargin;
+    const maxRingCount = options?.maxRingCount ?? SPIRAL_SEARCH_DEFAULT_OPTIONS.maxRingCount;
+
+    const ringWidth = Math.max(item.width, item.height) + ringMargin;
+
+    let lastAttempt: RelativeBounds | null = null;
+    for (let ringIndex = 0; ringIndex < maxRingCount; ringIndex++) {
+        const radiusOffset = startingRingSize;
+        const ringSliceCount = (ringIndex + 1) * 4 + 4;
+        const radius = radiusOffset + ringWidth * (ringIndex + 1) * 1.5; // radius from origin
+
+        // NOTE: leaving this commented for now, not sure if we want this optimization
+        // const minAngularOffset = Math.atan2(
+        //     Math.max(item.width, item.height),
+        //     radius,
+        // ); // leave space for arrows to pass through
+
+        for (let sliceIndex = 0; sliceIndex < ringSliceCount; sliceIndex++) {
+            // avoid making a grid-like alignment
+            const sliceAngle = (2 * Math.PI) / ringSliceCount;
+            const ringOffset = ((ringIndex + 1) % 2) * sliceAngle * 0.5;
+            const angle = ringOffset - (Math.PI / 2) + sliceIndex * sliceAngle;
+
+            // NOTE: leaving this commented for now, not sure if we want this optimization
+            //
+            // since board items can be placed manually by sighted users, we have no control
+            // over whether the next ideal placement lands neatly within the slice
+            // so we do an additional check to ensure enough space for arrows to pass through
+            // const isBelowOffset = existingItems.some(existingItem => {
+            //     const existingAngle = Math.atan2(existingItem.y - origin.y, existingItem.x - origin.x);
+            //     const angleDifference = Math.abs(angle - existingAngle);
+            //     const wraparound = Math.min(angleDifference, 2 * Math.PI - angleDifference);
+
+            //     return wraparound < minAngularOffset;
+            // });
+
+            // if (isBelowOffset) {
+                // skip to next slice
+                // continue;
+            // }
+
+            const candidate: RelativeBounds = {
+                relativeTo: 'canvas_center',
+                x: origin.x + radius * Math.cos(angle),
+                y: origin.y + radius * Math.sin(angle),
+                width: item.width,
+                height: item.height,
+            };
+
+            lastAttempt = candidate;
+
+            const isFreeSpace = existingItems.every(existingItem => !isOverlapping(existingItem, candidate));
+
+            if (isFreeSpace) {
+                return lastAttempt;
+            }
+        }
+    }
+
+    // giving up
+    return lastAttempt;
+}
+
+/**
+ * Find a non-occupied space to place an item following a top-bottom left-right order.
+ * By default, each row contains 4 items
+ */
+export function gridSearch(
+    item: Rect,
+    existingItems: Rect[],
+    origin: RelativeBounds,
+    options?: GridSearchOptions
+): RelativeBounds | null {
+    const itemsPerRow = options?.itemsPerRow ?? GRID_SEARCH_DEFAULT_OPTIONS.itemsPerRow;
+    const columnGap = options?.columnGap ?? GRID_SEARCH_DEFAULT_OPTIONS.columnGap;
+    const rowGap = options?.rowGap ?? GRID_SEARCH_DEFAULT_OPTIONS.rowGap;
+
+    const cellWidth = item.width + columnGap;
+    const cellHeight = item.height + rowGap;
+
+    // Grid expands row by row
+    const maxRows = Math.ceil((existingItems.length + 1) / itemsPerRow) + 1;
+
+    for (let row = 0; row < maxRows; row++) {
+        for (let col = 0; col < itemsPerRow; col++) {
+            const candidate: RelativeBounds = {
+                relativeTo: origin.relativeTo,
+                x: origin.x + col * cellWidth,
+                y: origin.y + row * cellHeight,
+                width: item.width,
+                height: item.height,
+            };
+
+            const isFreeSpace = !existingItems.length ||
+                existingItems.every(existing => !isOverlapping(existing, candidate));
+
+            if (isFreeSpace) {
+                return candidate;
+            }
+        }
+    }
+
+    return null;
+}

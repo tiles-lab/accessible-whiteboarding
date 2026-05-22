@@ -1,0 +1,104 @@
+:root {
+    --sticky-note-color-gray: rgb(243, 245, 247);
+    --sticky-note-color-light_yellow: rgb(255, 247, 158);
+    --sticky-note-color-yellow: rgb(255, 232, 109);
+    --sticky-note-color-orange: rgb(255, 181, 117);
+    --sticky-note-color-light_green: rgb(209, 240, 159);
+    --sticky-note-color-green: rgb(179, 230, 95);
+    --sticky-note-color-dark_green: rgb(106, 224, 141);
+    --sticky-note-color-cyan: rgb(129, 231, 222);
+    --sticky-note-color-light_pink: rgb(255, 210, 242);
+    --sticky-note-color-pink: rgb(253, 154, 231);
+    --sticky-note-color-violet: rgb(184, 172, 251);
+    --sticky-note-color-red: rgb(255, 158, 158);
+    --sticky-note-color-light_blue: rgb(178, 208, 254);
+    --sticky-note-color-blue: rgb(156, 230, 255);
+    --sticky-note-color-dark_blue: rgb(134, 180, 249);
+    --sticky-note-color-black: rgb(21, 21, 21);
+}
+
+.a11ywb-board-item__metadata-color {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+
+    &[data-color="red"] {
+        background-color: var(--sticky-note-color-red);
+        color: black;
+    }
+
+    &[data-color="pink"] {
+        background-color: var(--sticky-note-color-pink);
+        color: black;
+    }
+
+    &[data-color="light_pink"] {
+        background-color: var(--sticky-note-color-light_pink);
+        color: black;
+    }
+
+    &[data-color="blue"] {
+        background-color: var(--sticky-note-color-blue);
+        color: black;
+    }
+
+    &[data-color="light_blue"] {
+        background-color: var(--sticky-note-color-light_blue);
+        color: black;
+    }
+
+    &[data-color="dark_blue"] {
+        background-color: var(--sticky-note-color-dark_blue);
+        color: black;
+    }
+
+    &[data-color="cyan"] {
+        background-color: var(--sticky-note-color-cyan);
+        color: black;
+    }
+
+    &[data-color="green"] {
+        background-color: var(--sticky-note-color-green);
+        color: black;
+    }
+
+    &[data-color="light_green"] {
+        background-color: var(--sticky-note-color-light_green);
+        color: black;
+    }
+
+    &[data-color="dark_green"] {
+        background-color: var(--sticky-note-color-dark_green);
+        color: black;
+    }
+
+    &[data-color="yellow"] {
+        background-color: var(--sticky-note-color-yellow);
+        color: black;
+    }
+
+    &[data-color="light_yellow"] {
+        background-color: var(--sticky-note-color-light_yellow);
+        color: black;
+    }
+    
+    &[data-color="orange"] {
+        background-color: var(--sticky-note-color-orange);
+        color: black;
+    }
+
+    &[data-color="violet"] {
+        background-color: var(--sticky-note-color-violet);
+        color: black;
+    }
+
+    &[data-color="gray"] {
+        background-color: var(--sticky-note-color-gray);
+        color: black;
+    }
+
+    &[data-color="black"] {
+        background-color: var(--sticky-note-color-black);
+        color: white;
+    }
+}
