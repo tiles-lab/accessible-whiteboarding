@@ -3,7 +3,7 @@ import { Connector, Frame, Group, Item, Tag } from '@mirohq/websdk-types';
 import { FormEvent, useEffect, useState } from 'react';
 import { notifyBoardUpdate } from '../../src/utils/board-sync';
 import { InputElement } from '../inputs/InputElement';
-import { findFramePlacement, placeItem } from '@utils/item-placer';
+import { findBoardPlacement, placeItem } from '@utils/item-placer';
 import { isConnectableItem } from '@utils/items';
 import { HierarchyItem } from '@models/item';
 import { disconnectFromParent } from '@utils/connections';
@@ -84,7 +84,7 @@ export const EditModal = (props: EditModalProps) => {
           }
         } else {
           // center items in board
-          const emptySpot = await findFramePlacement({ 
+          const emptySpot = await findBoardPlacement({ 
             x: 0, 
             y: 0,
           });
